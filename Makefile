@@ -6,7 +6,7 @@ OBJECTS = $(subst .c,.o,$(SOURCES))
 
 LIBFT = libft/libft.a
 
-FLAGS = -Wall -Wextra #-Werror
+FLAGS = -g -Wall -Wextra #-Werror
 LINKS = -I libft -L libft -l ft
 
 MSG = \033[38;5;214m

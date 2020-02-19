@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 20:15:20 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/18 20:41:11 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/19 20:59:22 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*strany(const char *string, const char *specifiers)
 		while (specifiers[b])
 		{
 			if (string[a] == specifiers[b])
-				return (&string[a]);
+				return (char *)(&string[a]);
 			++b;
 		}
 		++a;
@@ -40,7 +40,7 @@ char	*strcany(const char *string, const char specifier)
 	while (string[i])
 	{
 		if(string[i] == specifier)
-			return (string + i);
+			return (char *)(string + i);
 	}
 	return (NULL);
 }
