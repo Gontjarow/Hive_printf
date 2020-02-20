@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:31:26 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/19 21:24:51 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/20 20:34:58 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	output_uint(unsigned int arg, t_flag flag)
 	char	*str = NULL;
 	int		written = 0;
 
-	printf("\tOutput: uint\n");
+	// printf("\tOutput: uint\n");
 	if (flag.type == 'X' || flag.type == 'x')
 		str = ft_itoa_base(arg, 16);
 	else if (flag.type == 'u')

@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/19 21:27:59 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/20 20:38:56 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int			ft_printf(const char *format, ...)
 	va_start(ap, format);
 	while (*format)
 	{
-		printf("\treading str: %c\n", *format);
+		//printf("\treading str: %c\n", *format);
 		if (*format == '%')
 		{
-			printf("\tTry parsing...\n");
+			////printf("\tTry parsing...\n");
 			bytes = 1;
 			bytes += try_parsing(format, ap);
 			format += bytes;
-			printf("\tskipping to %c after parse.\n", *format);
+			//printf("\tskipping to %c after parse.\n", *format);
 			continue ;
 		}
 		write(1, format, 1);
@@ -47,11 +47,11 @@ static char	try_parsing(const char *format, va_list ap)
 
 	if (0 == (parsed = parse_format(++format, &flag)))
 	{
-		printf("\tparse_format said NO!\n");
+		//printf("\tparse_format said NO!\n");
 		return (0);
 	}
 
-	printf("\tLet's see wht it is...\n");
+	//printf("\tLet's see what it is...\n");
 	if (flag.type == 's')
 		written = output_str(va_arg(ap, char *), flag);
 	else if (strcany("dci", flag.type))
@@ -59,7 +59,7 @@ static char	try_parsing(const char *format, va_list ap)
 	else if (strcany("Xxuo", flag.type))
 		written = output_uint(va_arg(ap, unsigned int), flag);
 
-	printf("\tParsed: %d\n", parsed);
+	//printf("\tParsed: %d\n", parsed);
 	return (parsed);
 }
 
@@ -69,5 +69,8 @@ int			main(int argc, char **argv)
 	// printf("argin %d\n", argument_index("2$"));
 	// printf("|%-05d|\n", 5);
 	printf("\treal> %s, and good night\n", "hello world");
-	ft_printf("mine> %s, and good night\n", "hello world");
+	ft_printf("\tmine> %s, and good night\n", "hello world");
+	ft_putendl("");
+	printf("\treal> %15s, and good night\n", "hello world");
+	ft_printf("\tmine> %15s, and good night\n", "hello world");
 }

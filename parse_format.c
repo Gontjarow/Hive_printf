@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/19 21:25:07 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/20 20:31:54 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,41 +30,46 @@
 
 char	parse_format(const char *format, t_flag *flag)
 {
-	int bytes;
+	int		bytes;
+	char	*temp;
 
-	printf("\tEntering parse_format...\n");
+	// printf("\tEntering parse_format...\n");
 	if (*format == '%')
 	{
-		printf("\tT'was just a %%\n");
+		// printf("\tT'was just a %%\n");
 		write(1, format, 1);
 		return (1);
 	}
 	bytes = 0;
 	while (*format)
 	{
-		printf("\tparsing flag specifier: %c\n", *format);
+		++bytes;
+		// printf("\tparsing flag specifier: %c\n", *format);
 		if (*format == '-')
 		{
-			printf("\tIt's a sign!\n");
+			// printf("\tIt's a sign!\n");
 			flag->pad = PAD_RIGHT;
 			++format;
 		}
 		while (*format == '0')
 		{
-			printf("\tAin't no hero.\n");
+			// printf("\tAin't no hero.\n");
 			flag->pad |= PAD_ZERO;
 			++format;
 		}
 		while (ft_isdigit(*format))
 		{
-			printf("\tWide boi\n");
+			// printf("\tWide boi\n");
 			flag->width *= 10;
 			flag->width += (*format - '0');
 			++format;
 		}
-		flag->type = *strcany("sdcinouxX", *format);
-		printf("\tflag->type = %c\n", flag->type);
-		if (!(flag->type))
+		temp = strcany("sdcinouxX", *format);
+		flag->type = (temp ? *temp : 0);
+		// printf("\tflag->type = %c\n", flag->type);
+		if (flag->type)
+			break ;
+		else
 		{
 			ft_putstr("{All we had to do was follow the damn flags, printf!}");
 			return (0);
@@ -72,6 +77,6 @@ char	parse_format(const char *format, t_flag *flag)
 		++format;
 	}
 
-	printf("\tparse_format finished after %d bytes.\n", bytes);
+	// printf("\tparse_format finished after %d bytes.\n", bytes);
 	return (bytes);
 }
