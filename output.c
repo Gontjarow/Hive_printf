@@ -6,60 +6,62 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:31:26 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/20 20:34:58 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/23 07:51:21 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	output_str(char *arg, t_flag flag)
+int	output_str(char *arg, t_flag *flag)
 {
 	int		written = 0;
 	char	padder = ' ';
-	int		len = ft_strlen(arg);
+	int		len = (arg ? ft_strlen(arg) : 6);
 
-	printf("\tOutput: str\n");
-	if (flag.width > 0)
+	// printf("\tOutput: str\n");
+	if (flag->width > 0)
 	{
-		if (len >= flag.width)
-			flag.width = 0;
+		if (len >= flag->width)
+			flag->width = 0;
 		else
-			flag.width -= len;
-		if (flag.pad & PAD_ZERO)
+			flag->width -= len;
+		if (flag->pad & PAD_ZERO)
 			padder = '0';
 	}
-	if (!(flag.pad & PAD_RIGHT))
+	if (!(flag->pad & PAD_RIGHT))
 	{
-		while (flag.width > 0)
+		while (flag->width > 0)
 		{
-			putchar(padder);
+			ft_putchar(padder);
+			--flag->width;
 			++written;
 		}
 	}
-	ft_putstr(arg);
+	ft_putstr((arg ? arg : "(null)"));
 	written += len;
-	while (flag.width > 0)
+	while (flag->width > 0)
 	{
-		putchar(padder);
+		ft_putchar(padder);
+		--flag->width;
 		++written;
 	}
 	return (written);
 }
 
-int	output_int(int arg, t_flag flag)
+int	output_int(int arg, t_flag *flag)
 {
 	char	*str = NULL;
 	int		written = 0;
 
-	printf("\tOutput: int\n");
-	if (flag.type == 'd' || flag.type == 'i')
+	// printf("\tOutput: int\n");
+	if (flag->type == 'd' || flag->type == 'i')
 	{
 		str = ft_itoa(arg);
 		ft_putstr(str);
 		written = ft_strlen(str);
 		free(str);
 	}
-	else if (flag.type == 'c')
+	else if (flag->type == 'c')
 	{
 		ft_putchar(arg);
 		written = 1;
@@ -69,17 +71,17 @@ int	output_int(int arg, t_flag flag)
 	return (written);
 }
 
-int	output_uint(unsigned int arg, t_flag flag)
+int	output_uint(unsigned int arg, t_flag *flag)
 {
 	char	*str = NULL;
 	int		written = 0;
 
 	// printf("\tOutput: uint\n");
-	if (flag.type == 'X' || flag.type == 'x')
+	if (flag->type == 'X' || flag->type == 'x')
 		str = ft_itoa_base(arg, 16);
-	else if (flag.type == 'u')
+	else if (flag->type == 'u')
 		str = ft_itoa(arg);
-	else if (flag.type == 'o')
+	else if (flag->type == 'o')
 		str = ft_itoa_base(arg, 8);
 	else
 		ft_putstr("{oh no, uint}");

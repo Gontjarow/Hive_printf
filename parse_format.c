@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/20 20:31:54 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/23 07:56:38 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,28 @@ char	parse_format(const char *format, t_flag *flag)
 		if (*format == '-')
 		{
 			// printf("\tIt's a sign!\n");
-			flag->pad = PAD_RIGHT;
+			flag->pad |= PAD_RIGHT;
 			++format;
+			++bytes;
 		}
 		while (*format == '0')
 		{
 			// printf("\tAin't no hero.\n");
 			flag->pad |= PAD_ZERO;
 			++format;
+			++bytes;
+		}
+		if (format[0] == '.' && format[1] == '*')
+		{
+			flag->precision = va_arg(flag->ap, int);
+			format += 2;
+			bytes += 2;
+		}
+		else if (format[0] == '*')
+		{
+			flag->width = va_arg(flag->ap, int);
+			++format;
+			++bytes;
 		}
 		while (ft_isdigit(*format))
 		{
@@ -63,6 +77,7 @@ char	parse_format(const char *format, t_flag *flag)
 			flag->width *= 10;
 			flag->width += (*format - '0');
 			++format;
+			++bytes;
 		}
 		temp = strcany("sdcinouxX", *format);
 		flag->type = (temp ? *temp : 0);
