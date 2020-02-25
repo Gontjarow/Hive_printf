@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/25 19:37:15 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/25 19:41:02 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int			main(int argc, char **argv)
 	// ft_putendl("");
 
 	printf("|%s %% %s|\n", "hello", "world");
-	ft_printf("|%s %% %s|\n", "hello", "world")
+	ft_printf("|%s %% %s|\n", "hello", "world");
 
 	// ft_putendl("regular string");
 	// printf("\treal> %s, and good night\n", "hello world");
