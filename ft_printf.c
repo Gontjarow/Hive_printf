@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/25 19:41:02 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/25 20:18:34 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ int			ft_printf(const char *format, ...)
 		{
 			////printf("\tTry parsing...\n");
 			bytes = 1;
+			flag.pad = 0;
+			flag.width = 0;
+			flag.precision = 0;
+			flag.type = 0;
 			bytes += try_parsing(format, &flag);
 			format += bytes;
 			//printf("\tskipping to %c after parse.\n", *format);
@@ -67,71 +71,73 @@ int			main(int argc, char **argv)
 {
 	(void)argc; (void)argv;
 
-	// ft_putendl("wrong flags");
-	// printf("|%5.d|\n", 0);
-	// ft_printf("|%5.d|\n", 0);
+	ft_putendl("wrong flags");
+	printf("|%5.d|\n", 0);
+	ft_printf("|%5.d|\n", 0);
+	ft_putendl("");
 
 	// ft_putendl("asterisk");
-	// printf("%%*s 15 		|%*s|\n", 15, "hello world");
-	// ft_printf("%%*s 15 		|%*s|\n", 15, "hello world");
+	// printf("real> %%*s 15 		|%*s|\n", 15, "hello world");
+	// ft_printf("mine> %%*s 15 		|%*s|\n", 15, "hello world");
 	// ft_putendl("");
 
-	// printf("%%-*s 15 	|%-*s|\n", 15, "hello world");
-	// ft_printf("%%-*s 15 	|%-*s|\n", 15, "hello world");
+	// printf("real> %%-*s 15 	|%-*s|\n", 15, "hello world");
+	// ft_printf("mine> %%-*s 15 	|%-*s|\n", 15, "hello world");
 	// ft_putendl("");
 
-	// printf("%%*s -15 	|%*s|\n", -15, "hello world");
-	// ft_printf("%%*s -15 	|%*s|\n", -15, "hello world");
+	// printf("real> %%*s -15 	|%*s|\n", -15, "hello world");
+	// ft_printf("mine> %%*s -15 	|%*s|\n", -15, "hello world");
 	// ft_putendl("");
 
-	// printf("%%-*s -15 	|%-*s|\n", -15, "hello world");
-	// ft_printf("%%-*s -15 	|%-*s|\n", -15, "hello world");
+	// printf("real> %%-*s -15 	|%-*s|\n", -15, "hello world");
+	// ft_printf("mine> %%-*s -15 	|%-*s|\n", -15, "hello world");
 	// ft_putendl("");
 
-	printf("|%s %% %s|\n", "hello", "world");
-	ft_printf("|%s %% %s|\n", "hello", "world");
+	// printf("real> |%s %% %s|\n", "hello", "world");
+	// ft_printf("mine> |%s %% %s|\n", "hello", "world");
+	// ft_putendl("");
 
 	// ft_putendl("regular string");
-	// printf("\treal> %s, and good night\n", "hello world");
-	// ft_printf("\tmine> %s, and good night\n", "hello world");
+	// printf("real> |%s, and good night|\n", "hello world");
+	// ft_printf("mine> |%s, and good night|\n", "hello world");
 	// ft_putendl("");
 
 	// ft_putendl("null string");
-	// printf("\treal> %s, and good night\n", NULL);
-	// ft_printf("\tmine> %s, and good night\n", NULL);
+	// printf("real> |%s, and good night|\n", NULL);
+	// ft_printf("mine> |%s, and good night|\n", NULL);
 	// ft_putendl("");
 
 	// ft_putendl("width positive");
-	// printf("\treal> %15s, and good night\n", "hello world");
-	// ft_printf("\tmine> %15s, and good night\n", "hello world");
+	// printf("real> |%15s, and good night|\n", "hello world");
+	// ft_printf("mine> |%15s, and good night|\n", "hello world");
 	// ft_putendl("");
 
-	// printf("\treal> %15s, and good night\n", NULL);
-	// ft_printf("\tmine> %15s, and good night\n", NULL);
+	// printf("real> |%15s, and good night|\n", NULL);
+	// ft_printf("mine> |%15s, and good night|\n", NULL);
 	// ft_putendl("");
 
-	// printf("\treal> %1s, and good night\n", "hello world");
-	// ft_printf("\tmine> %1s, and good night\n", "hello world");
+	// printf("real> |%1s, and good night|\n", "hello world");
+	// ft_printf("mine> |%1s, and good night|\n", "hello world");
 	// ft_putendl("");
 
-	// printf("\treal> %1s, and good night\n", NULL);
-	// ft_printf("\tmine> %1s, and good night\n", NULL);
+	// printf("real> |%1s, and good night|\n", NULL);
+	// ft_printf("mine> |%1s, and good night|\n", NULL);
 	// ft_putendl("");
 
 	// ft_putendl("width negative");
-	// printf("\treal> %-15s, and good night\n", "hello world");
-	// ft_printf("\tmine> %-15s, and good night\n", "hello world");
+	// printf("real> |%-15s, and good night|\n", "hello world");
+	// ft_printf("mine> |%-15s, and good night|\n", "hello world");
 	// ft_putendl("");
 
-	// printf("\treal> %-15s, and good night\n", NULL);
-	// ft_printf("\tmine> %-15s, and good night\n", NULL);
+	// printf("real> |%-15s, and good night|\n", NULL);
+	// ft_printf("mine> |%-15s, and good night|\n", NULL);
 	// ft_putendl("");
 
-	// printf("\treal> %-1s, and good night\n", "hello world");
-	// ft_printf("\tmine> %-1s, and good night\n", "hello world");
+	// printf("real> |%-1s, and good night|\n", "hello world");
+	// ft_printf("mine> |%-1s, and good night|\n", "hello world");
 	// ft_putendl("");
 
-	// printf("\treal> %-1s, and good night\n", NULL);
-	// ft_printf("\tmine> %-1s, and good night\n", NULL);
+	// printf("real> |%-1s, and good night|\n", NULL);
+	// ft_printf("mine> |%-1s, and good night|\n", NULL);
 	// ft_putendl("");
 }

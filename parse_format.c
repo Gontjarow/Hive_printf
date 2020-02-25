@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/25 19:36:54 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/25 20:31:00 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,21 @@ char	parse_format(const char *format, t_flag *flag)
 			++format;
 			++bytes;
 		}
+		if (*format == '.')
+		{
+			++format;
+			++bytes;
+		}
 		while (ft_isdigit(*format))
 		{
 			// printf("\tWide boi\n");
 			flag->width *= 10;
 			flag->width += (*format - '0');
+			++format;
+			++bytes;
+		}
+		if (*format == '.')
+		{
 			++format;
 			++bytes;
 		}
