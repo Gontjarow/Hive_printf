@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/23 07:50:36 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:54:27 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 typedef struct	s_flag
 {
 	va_list			ap;
-	unsigned char	width;
-	char			precision;
-	char			pad;
+	int				width;
+	int				precision;
+	int				pad;
 	char			type;
 }				t_flag;
 

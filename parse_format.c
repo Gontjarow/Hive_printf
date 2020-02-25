@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/23 07:56:38 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/25 19:36:54 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ char	parse_format(const char *format, t_flag *flag)
 		else if (format[0] == '*')
 		{
 			flag->width = va_arg(flag->ap, int);
+			if (flag->width < 0)
+			{
+				flag->pad |= PAD_RIGHT;
+				flag->width = -flag->width;
+			}
 			++format;
 			++bytes;
 		}
