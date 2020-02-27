@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/27 19:00:23 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/27 20:39:11 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,8 @@
 char	parse_format(const char *format, t_flag *flag)
 {
 	int		bytes;
-	char	*temp;
+	char	*type;
 
-	if (*format == '%')
-	{
-		write(1, format, 1);
-		return (1);
-	}
 	bytes = 0;
 	while (*format)
 	{
@@ -41,6 +36,7 @@ char	parse_format(const char *format, t_flag *flag)
 			++format;
 			++bytes;
 		}
+
 		// ???
 		if (*format == '*')
 		{
@@ -84,13 +80,13 @@ char	parse_format(const char *format, t_flag *flag)
 		}
 		// ???
 
-		temp = ft_strchr("sdcinouxX", *format);
-		flag->type = (temp ? *temp : 0);
+		type = ft_strchr("sdciXxu%o", *format);
+		flag->type = (type ? *type : 0);
 		if (flag->type)
 			break ;
 		else
 		{
-			ft_putstr("{All we had to do was follow the damn flags, printf!}");
+			ft_putstr("{Unrecognized type}");
 			return (0);
 		}
 		++format;
