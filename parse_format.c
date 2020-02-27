@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/27 21:05:52 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/27 21:33:09 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ char		parse_format(const char *format, t_flag *flag)
 		++bytes;
 		while (*format == '-')
 		{
-			flag->pad |= PAD_RIGHT;
+			flag->pad = PAD_RIGHT;
 			++format;
 			++bytes;
 		}
 		while (*format == '0')
 		{
-			flag->pad |= PAD_ZERO;
+			flag->padder = '0';
 			++format;
 			++bytes;
 		}

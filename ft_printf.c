@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/27 20:38:52 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/27 22:27:22 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			ft_printf(const char *format, ...)
 	t_flag	flag;
 	char	bytes;
 
-	flag = (t_flag){{{0}}, 0, 0, 0, 0};
+	flag = (t_flag){{{0}}, 0, 0, 0, 0, 0};
 	va_start(flag.ap, format);
 	while (*format)
 	{
@@ -29,6 +29,7 @@ int			ft_printf(const char *format, ...)
 			////printf("\tTry parsing...\n");
 			bytes = 1;
 			flag.pad = 0;
+			flag.padder = ' ';
 			flag.width = 0;
 			flag.precision = 0;
 			flag.type = 0;
@@ -73,24 +74,55 @@ int			main(int argc, char **argv)
 {
 	(void)argc; (void)argv;
 
-	   printf("real: |%10.5d|\n", 123);
-	   printf("real: |%*.*d|\n", 10, 5, 123);
-	   printf("real: |%10.*d|\n", 5, 123);
-	   printf("real: |%*.5d|\n", 10, 123);
-	ft_printf("mine: |%10.5d|\n", 123);
-	ft_printf("mine: |%*.*d|\n", 10, 5, 123);
-	ft_printf("mine: |%10.*d|\n", 5, 123);
-	ft_printf("mine: |%*.5d|\n", 10, 123);
-	ft_putendl("");
+// 	   printf("real: |%10.5d|\n", 123);
+// 	   printf("real: |%*.*d|\n", 10, 5, 123);
+// 	   printf("real: |%10.*d|\n", 5, 123);
+// 	   printf("real: |%*.5d|\n", 10, 123);
+// 	ft_printf("mine: |%10.5d|\n", 123);
+// 	ft_printf("mine: |%*.*d|\n", 10, 5, 123);
+// 	ft_printf("mine: |%10.*d|\n", 5, 123);
+// 	ft_printf("mine: |%*.5d|\n", 10, 123);
+// 	ft_putendl("");
 
-	   printf("real: |%10.5d|\n", -123);
-	   printf("real: |%*.*d|\n", 10, 5, -123);
-	   printf("real: |%10.*d|\n", 5, -123);
-	   printf("real: |%*.5d|\n", 10, -123);
-	ft_printf("mine: |%10.5d|\n", -123);
-	ft_printf("mine: |%*.*d|\n", 10, 5, -123);
-	ft_printf("mine: |%10.*d|\n", 5, -123);
-	ft_printf("mine: |%*.5d|\n", 10, -123);
+// 	   printf("real: |%10.5d|\n", -123);
+// 	   printf("real: |%*.*d|\n", 10, 5, -123);
+// 	   printf("real: |%10.*d|\n", 5, -123);
+// 	   printf("real: |%*.5d|\n", 10, -123);
+// 	ft_printf("mine: |%10.5d|\n", -123);
+// 	ft_printf("mine: |%*.*d|\n", 10, 5, -123);
+// 	ft_printf("mine: |%10.*d|\n", 5, -123);
+// 	ft_printf("mine: |%*.5d|\n", 10, -123);
+// 	ft_putendl("");
+
+// 	   printf("real: |%0.5d|\n", 123);
+// 	   printf("real: |%*.*d|\n", 0, 5, 123);
+// 	   printf("real: |%0.*d|\n", 5, 123);
+// 	   printf("real: |%*.5d|\n", 0, 123);
+// 	ft_printf("mine: |%0.5d|\n", 123);
+// 	ft_printf("mine: |%*.*d|\n", 0, 5, 123);
+// 	ft_printf("mine: |%0.*d|\n", 5, 123);
+// 	ft_printf("mine: |%*.5d|\n", 0, 123);
+// 	ft_putendl("");
+
+// 	   printf("real: |%10.0d|\n", -123);
+// 	   printf("real: |%*.*d|\n", 10, 0, -123);
+// 	   printf("real: |%10.*d|\n", 0, -123);
+// 	   printf("real: |%*.0d|\n", 10, -123);
+// 	ft_printf("mine: |%10.0d|\n", -123);
+// 	ft_printf("mine: |%*.*d|\n", 10, 0, -123);
+// 	ft_printf("mine: |%10.*d|\n", 0, -123);
+// 	ft_printf("mine: |%*.0d|\n", 10, -123);
+// 	ft_putendl("");
+
+// 	   printf("real: |%10.5c|\n", '?');
+// 	   printf("real: |%*.*c|\n", 10, 5, '?');
+// 	   printf("real: |%10.*c|\n", 5, '?');
+// 	   printf("real: |%*.5c|\n", 10, '?');
+// 	ft_printf("mine: |%10.5c|\n", '?');
+// 	ft_printf("mine: |%*.*c|\n", 10, 5, '?');
+// 	ft_printf("mine: |%10.*c|\n", 5, '?');
+// 	ft_printf("mine: |%*.5c|\n", 10, '?');
+// 	ft_putendl("");
 
 
 // ft_putendl("asterisk");

@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/27 18:04:03 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/27 21:31:58 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@
 
 typedef struct	s_flag
 {
-	va_list			ap;
-	int				width;
-	int				precision;
-	int				pad;
-	char			type;
+	va_list	ap;
+	int		width;
+	int		precision;
+	int		pad;
+	char	padder;
+	char	type;
 }				t_flag;
 
 int				ft_printf(const char *format, ...);
