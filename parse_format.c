@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/27 20:50:45 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/27 21:05:52 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	parse_precision(const char **format, t_flag *flag)
 	bytes = 0;
 	if (**format == '.')
 	{
-		++*format;
+		++(*format);
 		++bytes;
 		if (**format == '*')
 		{
@@ -104,7 +104,6 @@ char		parse_format(const char *format, t_flag *flag)
 			ft_putstr("{Unrecognized type}");
 			return (0);
 		}
-		++format;
 	}
 	return (bytes);
 }
