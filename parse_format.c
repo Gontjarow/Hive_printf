@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/25 20:31:00 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/27 19:00:23 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,13 @@
 // width, precision, signage, justification, fill
 // https://www.cypress.com/file/54441/download
 
-// char	argument_index(const char * format)
-// {
-// 	char	bytes;
-// 	char	*c;
-
-// 	bytes = 0;
-// 	if (ft_isdigit(*format) && (c = ft_strchr(format, '$')))
-// 	{
-// 		bytes = c - format;
-// 	}
-// 	return (bytes + 1);
-// }
-
 char	parse_format(const char *format, t_flag *flag)
 {
 	int		bytes;
 	char	*temp;
 
-	// printf("\tEntering parse_format...\n");
 	if (*format == '%')
 	{
-		// printf("\tT'was just a %%\n");
 		write(1, format, 1);
 		return (1);
 	}
@@ -44,28 +29,20 @@ char	parse_format(const char *format, t_flag *flag)
 	while (*format)
 	{
 		++bytes;
-		// printf("\tparsing flag specifier: %c\n", *format);
-		if (*format == '-')
+		while (*format == '-')
 		{
-			// printf("\tIt's a sign!\n");
 			flag->pad |= PAD_RIGHT;
 			++format;
 			++bytes;
 		}
 		while (*format == '0')
 		{
-			// printf("\tAin't no hero.\n");
 			flag->pad |= PAD_ZERO;
 			++format;
 			++bytes;
 		}
-		if (format[0] == '.' && format[1] == '*')
-		{
-			flag->precision = va_arg(flag->ap, int);
-			format += 2;
-			bytes += 2;
-		}
-		else if (format[0] == '*')
+		// ???
+		if (*format == '*')
 		{
 			flag->width = va_arg(flag->ap, int);
 			if (flag->width < 0)
@@ -76,27 +53,39 @@ char	parse_format(const char *format, t_flag *flag)
 			++format;
 			++bytes;
 		}
-		if (*format == '.')
+		else if (ft_isdigit(*format))
 		{
-			++format;
-			++bytes;
-		}
-		while (ft_isdigit(*format))
-		{
-			// printf("\tWide boi\n");
-			flag->width *= 10;
-			flag->width += (*format - '0');
-			++format;
-			++bytes;
+			while (ft_isdigit(*format))
+			{
+				flag->width *= 10;
+				flag->width += (*format - '0');
+				++format;
+				++bytes;
+			}
 		}
 		if (*format == '.')
 		{
 			++format;
 			++bytes;
+			if (*format == '*')
+			{
+				flag->precision = va_arg(flag->ap, int);
+				++format;
+				++bytes;
+			}
+			else
+				while (ft_isdigit(*format))
+				{
+					flag->precision *= 10;
+					flag->precision += (*format - '0');
+					++format;
+					++bytes;
+				}
 		}
-		temp = strcany("sdcinouxX", *format);
+		// ???
+
+		temp = ft_strchr("sdcinouxX", *format);
 		flag->type = (temp ? *temp : 0);
-		// printf("\tflag->type = %c\n", flag->type);
 		if (flag->type)
 			break ;
 		else
@@ -106,7 +95,5 @@ char	parse_format(const char *format, t_flag *flag)
 		}
 		++format;
 	}
-
-	// printf("\tparse_format finished after %d bytes.\n", bytes);
 	return (bytes);
 }

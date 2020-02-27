@@ -6,21 +6,26 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 20:15:20 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/20 20:22:50 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/27 17:47:41 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*strany(const char *string, const char *specifiers)
+/*
+** strany
+** returns a pointer to the first matching character specifier(s).
+*/
+
+char	*strany(const char *string, char *specifiers)
 {
 	size_t a;
 	size_t b;
 
 	a = 0;
-	b = 0;
 	while (string[a])
 	{
+		b = 0;
 		while (specifiers[b])
 		{
 			if (string[a] == specifiers[b])
@@ -32,14 +37,46 @@ char	*strany(const char *string, const char *specifiers)
 	return (NULL);
 }
 
-char	*strcany(const char *string, const char specifier)
+/*
+** stranyskip, strcanyskip
+** returns a pointer to the first non-matching character specifier.
+*/
+
+char	*strany_skip(const char *string, char *specifiers)
+{
+	size_t	a;
+	size_t	b;
+	char	match;
+
+	a = 0;
+	while (string[a])
+	{
+		b = 0;
+		match = FALSE;
+		while (specifiers[b])
+		{
+			if (string[a] == specifiers[b])
+			{
+				match = TRUE;
+				break ;
+			}
+			++b;
+		}
+		if (match == FALSE)
+			return (char *)(&string[a]);
+		++a;
+	}
+	return (NULL);
+}
+
+char	*strchr_skip(const char *string, char specifier)
 {
 	size_t i;
 
 	i = 0;
 	while (string[i])
 	{
-		if(string[i] == specifier)
+		if(string[i] != specifier)
 			return (char *)(string + i);
 		++i;
 	}

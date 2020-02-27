@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/25 20:18:34 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/27 19:06:42 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ static char	try_parsing(const char *format, t_flag *flag)
 	// printf("\tLet's see what it is...\n");
 	if (flag->type == 's')
 		written = output_str(va_arg(flag->ap, char *), flag);
-	else if (strcany("dci", flag->type))
+	else if (ft_strchr("dci", flag->type))
 		written = output_int(va_arg(flag->ap, int), flag);
-	else if (strcany("Xxuo", flag->type))
+	else if (ft_strchr("Xxuo", flag->type))
 		written = output_uint(va_arg(flag->ap, unsigned int), flag);
 
 	//printf("\tParsed: %d\n", parsed);
@@ -71,10 +71,26 @@ int			main(int argc, char **argv)
 {
 	(void)argc; (void)argv;
 
-	ft_putendl("wrong flags");
-	printf("|%5.d|\n", 0);
-	ft_printf("|%5.d|\n", 0);
+	   printf("real: |%10.5d|\n", 123);
+	   printf("real: |%*.*d|\n", 10, 5, 123);
+	   printf("real: |%10.*d|\n", 5, 123);
+	   printf("real: |%*.5d|\n", 10, 123);
 	ft_putendl("");
+	ft_printf("mine: |%10.5d|\n", 123);
+	ft_printf("mine: |%*.*d|\n", 10, 5, 123);
+	ft_printf("mine: |%10.*d|\n", 5, 123);
+	ft_printf("mine: |%*.5d|\n", 10, 123);
+	ft_putendl("");
+
+	   printf("real: |%10.5d|\n", -123);
+	   printf("real: |%*.*d|\n", 10, 5, -123);
+	   printf("real: |%10.*d|\n", 5, -123);
+	   printf("real: |%*.5d|\n", 10, -123);
+	ft_putendl("");
+	ft_printf("mine: |%10.5d|\n", -123);
+	ft_printf("mine: |%*.*d|\n", 10, 5, -123);
+	ft_printf("mine: |%10.*d|\n", 5, -123);
+	ft_printf("mine: |%*.5d|\n", 10, -123);
 
 	// ft_putendl("asterisk");
 	// printf("real> %%*s 15 		|%*s|\n", 15, "hello world");

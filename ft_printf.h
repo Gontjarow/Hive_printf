@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/25 16:54:27 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/27 18:04:03 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int				output_str(char *arg, t_flag *flag);
 int				output_int(int arg, t_flag *flag);
 int				output_uint(unsigned int arg, t_flag *flag);
 
-char			*strany(const char *string, const char *specifiers);
-char			*strcany(const char *string, const char specifier);
+char			*strany(const char *string, char *specifiers);
+char			*stranyskip(const char *string, char *specifiers);
+char			*strchr_skip(const char *string, char specifier);
+
 
 #endif
