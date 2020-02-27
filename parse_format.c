@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/27 20:39:11 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/27 20:50:45 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,63 @@
 // width, precision, signage, justification, fill
 // https://www.cypress.com/file/54441/download
 
-char	parse_format(const char *format, t_flag *flag)
+static char	parse_width(const char **format, t_flag *flag)
+{
+	char bytes;
+
+	bytes = 0;
+	if (**format == '*')
+	{
+		flag->width = va_arg(flag->ap, int);
+		if (flag->width < 0)
+		{
+			flag->pad |= PAD_RIGHT;
+			flag->width = -flag->width;
+		}
+		++(*format);
+		++bytes;
+	}
+	else if (ft_isdigit(**format))
+	{
+		while (ft_isdigit(**format))
+		{
+			flag->width *= 10;
+			flag->width += (**format - '0');
+			++(*format);
+			++bytes;
+		}
+	}
+	return (bytes);
+}
+
+static char	parse_precision(const char **format, t_flag *flag)
+{
+	char bytes;
+
+	bytes = 0;
+	if (**format == '.')
+	{
+		++*format;
+		++bytes;
+		if (**format == '*')
+		{
+			flag->precision = va_arg(flag->ap, int);
+			++(*format);
+			++bytes;
+		}
+		else
+			while (ft_isdigit(**format))
+			{
+				flag->precision *= 10;
+				flag->precision += (**format - '0');
+				++(*format);
+				++bytes;
+			}
+	}
+	return (bytes);
+}
+
+char		parse_format(const char *format, t_flag *flag)
 {
 	int		bytes;
 	char	*type;
@@ -36,49 +92,8 @@ char	parse_format(const char *format, t_flag *flag)
 			++format;
 			++bytes;
 		}
-
-		// ???
-		if (*format == '*')
-		{
-			flag->width = va_arg(flag->ap, int);
-			if (flag->width < 0)
-			{
-				flag->pad |= PAD_RIGHT;
-				flag->width = -flag->width;
-			}
-			++format;
-			++bytes;
-		}
-		else if (ft_isdigit(*format))
-		{
-			while (ft_isdigit(*format))
-			{
-				flag->width *= 10;
-				flag->width += (*format - '0');
-				++format;
-				++bytes;
-			}
-		}
-		if (*format == '.')
-		{
-			++format;
-			++bytes;
-			if (*format == '*')
-			{
-				flag->precision = va_arg(flag->ap, int);
-				++format;
-				++bytes;
-			}
-			else
-				while (ft_isdigit(*format))
-				{
-					flag->precision *= 10;
-					flag->precision += (*format - '0');
-					++format;
-					++bytes;
-				}
-		}
-		// ???
+		bytes += parse_width(&format, flag);
+		bytes += parse_precision(&format, flag);
 
 		type = ft_strchr("sdciXxu%o", *format);
 		flag->type = (type ? *type : 0);
