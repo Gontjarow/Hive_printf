@@ -6,49 +6,51 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/27 22:27:22 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/28 23:30:38 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	try_parsing(const char *format, t_flag *flag);
+static char	try_parsing(const char *format, t_data *flag);
 
 int			ft_printf(const char *format, ...)
 {
-	t_flag	flag;
+	t_data	flag;
 	char	bytes;
 
-	flag = (t_flag){{{0}}, 0, 0, 0, 0, 0};
+	flag = (t_data){{{0}}, 0, 0, 0, 0, 0, 0};
 	va_start(flag.ap, format);
 	while (*format)
 	{
 		//printf("\treading str: %c\n", *format);
 		if (*format == '%')
 		{
-			////printf("\tTry parsing...\n");
+			//printf("\tTry parsing...\n");
 			bytes = 1;
 			flag.pad = 0;
 			flag.padder = ' ';
 			flag.width = 0;
 			flag.precision = 0;
 			flag.type = 0;
+			flag.written = 0;
 			bytes += try_parsing(format, &flag);
 			format += bytes;
+			flag.written += bytes;
 			//printf("\tskipping to %c after parse.\n", *format);
 			continue ;
 		}
 		write(1, format, 1);
 		++format;
+		++flag.written;
 	}
 	va_end(flag.ap);
-	return (0);
+	return (flag.written);
 }
 
-static char	try_parsing(const char *format, t_flag *flag)
+static char	try_parsing(const char *format, t_data *flag)
 {
 	char	parsed;
-	int		written;
 
 	if (0 == (parsed = parse_format(++format, flag)))
 	{
@@ -58,13 +60,16 @@ static char	try_parsing(const char *format, t_flag *flag)
 
 	// printf("\tLet's see what it is...\n");
 	if (flag->type == 's')
-		written = output_str(va_arg(flag->ap, char *), flag);
+		flag->written = output_str(va_arg(flag->ap, char *), flag);
 	else if (flag->type == '%')
-		written = output_str("%", flag);
+		flag->written = output_str("%", flag);
 	else if (ft_strchr("dci", flag->type))
-		written = output_int(va_arg(flag->ap, int), flag);
+		flag->written = output_int(va_arg(flag->ap, int), flag);
 	else if (ft_strchr("Xxuo", flag->type))
-		written = output_uint(va_arg(flag->ap, unsigned int), flag);
+	{
+		// printf("xxuo\n");
+		flag->written = output_uint(va_arg(flag->ap, unsigned int), flag);
+	}
 
 	//printf("\tParsed: %d\n", parsed);
 	return (parsed);
@@ -74,6 +79,17 @@ int			main(int argc, char **argv)
 {
 	(void)argc; (void)argv;
 
+	int a, b;
+
+	a=   printf("real: |%u|\n", 123);
+	b=ft_printf("mine: |%u|\n", 123);
+	printf("%d == %d\n", a, b);
+	a=   printf("real: |%u|\n", -123);
+	b=ft_printf("mine: |%u|\n", -123);
+	printf("%d == %d\n", a, b);
+
+// todo: precision higher than width?
+// ft_putendl("width & precision, positive numbers");
 // 	   printf("real: |%10.5d|\n", 123);
 // 	   printf("real: |%*.*d|\n", 10, 5, 123);
 // 	   printf("real: |%10.*d|\n", 5, 123);
@@ -82,16 +98,6 @@ int			main(int argc, char **argv)
 // 	ft_printf("mine: |%*.*d|\n", 10, 5, 123);
 // 	ft_printf("mine: |%10.*d|\n", 5, 123);
 // 	ft_printf("mine: |%*.5d|\n", 10, 123);
-// 	ft_putendl("");
-
-// 	   printf("real: |%10.5d|\n", -123);
-// 	   printf("real: |%*.*d|\n", 10, 5, -123);
-// 	   printf("real: |%10.*d|\n", 5, -123);
-// 	   printf("real: |%*.5d|\n", 10, -123);
-// 	ft_printf("mine: |%10.5d|\n", -123);
-// 	ft_printf("mine: |%*.*d|\n", 10, 5, -123);
-// 	ft_printf("mine: |%10.*d|\n", 5, -123);
-// 	ft_printf("mine: |%*.5d|\n", 10, -123);
 // 	ft_putendl("");
 
 // 	   printf("real: |%0.5d|\n", 123);
@@ -104,6 +110,17 @@ int			main(int argc, char **argv)
 // 	ft_printf("mine: |%*.5d|\n", 0, 123);
 // 	ft_putendl("");
 
+// ft_putendl("width & precision, negative numbers");
+// 	   printf("real: |%10.5d|\n", -123);
+// 	   printf("real: |%*.*d|\n", 10, 5, -123);
+// 	   printf("real: |%10.*d|\n", 5, -123);
+// 	   printf("real: |%*.5d|\n", 10, -123);
+// 	ft_printf("mine: |%10.5d|\n", -123);
+// 	ft_printf("mine: |%*.*d|\n", 10, 5, -123);
+// 	ft_printf("mine: |%10.*d|\n", 5, -123);
+// 	ft_printf("mine: |%*.5d|\n", 10, -123);
+// 	ft_putendl("");
+
 // 	   printf("real: |%10.0d|\n", -123);
 // 	   printf("real: |%*.*d|\n", 10, 0, -123);
 // 	   printf("real: |%10.*d|\n", 0, -123);
@@ -114,6 +131,7 @@ int			main(int argc, char **argv)
 // 	ft_printf("mine: |%*.0d|\n", 10, -123);
 // 	ft_putendl("");
 
+// ft_putendl("width & precision, char");
 // 	   printf("real: |%10.5c|\n", '?');
 // 	   printf("real: |%*.*c|\n", 10, 5, '?');
 // 	   printf("real: |%10.*c|\n", 5, '?');

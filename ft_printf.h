@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/27 21:31:58 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/28 23:30:24 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define PAD_ZERO		0b10
 # define PAD_RIGHT		 0b1
 
-typedef struct	s_flag
+typedef struct	s_data
 {
 	va_list	ap;
 	int		width;
@@ -29,17 +29,19 @@ typedef struct	s_flag
 	int		pad;
 	char	padder;
 	char	type;
-}				t_flag;
+	size_t	written;
+}				t_data;
 
 int				ft_printf(const char *format, ...);
-char			parse_format(const char * format, t_flag *flag);
-int				output_str(char *arg, t_flag *flag);
-int				output_int(int arg, t_flag *flag);
-int				output_uint(unsigned int arg, t_flag *flag);
+char			parse_format(const char * format, t_data *flag);
+int				output_str(char *arg, t_data *flag);
+int				output_int(int arg, t_data *flag);
+int				output_uint(unsigned int arg, t_data *flag);
 
 char			*strany(const char *string, char *specifiers);
 char			*stranyskip(const char *string, char *specifiers);
 char			*strchr_skip(const char *string, char specifier);
+char			*utoa(unsigned int num);
 
 
 #endif

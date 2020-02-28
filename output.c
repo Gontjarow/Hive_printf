@@ -6,13 +6,13 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:31:26 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/27 22:28:41 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/28 23:30:37 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	width_padder(int length, t_flag *flag, int arg)
+static int	width_padder(int length, t_data *flag, int arg)
 {
 	int		written;
 
@@ -38,7 +38,7 @@ static int	width_padder(int length, t_flag *flag, int arg)
 	return (written);
 }
 
-static int zero_padder(int length, t_flag *flag, int arg)
+static int zero_padder(int length, t_data *flag, int arg)
 {
 	int		written;
 
@@ -59,7 +59,7 @@ static int zero_padder(int length, t_flag *flag, int arg)
 	return (written);
 }
 
-int			output_str(char *arg, t_flag *flag)
+int			output_str(char *arg, t_data *flag)
 {
 	int		written = 0;
 	char	padder = ' ';
@@ -94,7 +94,7 @@ int			output_str(char *arg, t_flag *flag)
 	return (written);
 }
 
-int			output_int(int arg, t_flag *flag)
+int			output_int(int arg, t_data *flag)
 {
 	char	*str = NULL;
 	int		written = 0;
@@ -123,24 +123,25 @@ int			output_int(int arg, t_flag *flag)
 	return (written);
 }
 
-int			output_uint(unsigned int arg, t_flag *flag)
+int			output_uint(unsigned int arg, t_data *flag)
 {
 	char	*str = NULL;
+	int		length;
 	int		written = 0;
 
-	// printf("\tOutput: uint\n");
 	if (flag->type == 'X' || flag->type == 'x')
 		str = ft_itoa_base(arg, 16);
 	else if (flag->type == 'u')
-		str = ft_itoa(arg);
+		str = utoa(arg);
 	else if (flag->type == 'o')
 		str = ft_itoa_base(arg, 8);
 	else
 		ft_putstr("{oh no, uint}");
-
+	length = ft_strlen(str);
+	written = width_padder(length, flag, arg);
+	written += zero_padder(length, flag, (flag->type == 'u' ? 1 : arg));
 	ft_putstr(str);
 	written = ft_strlen(str);
 	free(str);
-
 	return (written);
 }

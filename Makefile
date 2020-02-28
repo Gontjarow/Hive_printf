@@ -1,6 +1,6 @@
 NAME = ft_printf
 
-SOURCES = ft_printf.c strany.c parse_format.c output.c
+SOURCES = ft_printf.c strany.c parse_format.c output.c utoa.c
 
 OBJECTS = $(subst .c,.o,$(SOURCES))
 

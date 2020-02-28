@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/27 21:33:09 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/02/28 23:30:36 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // width, precision, signage, justification, fill
 // https://www.cypress.com/file/54441/download
 
-static char	parse_width(const char **format, t_flag *flag)
+static char	parse_width(const char **format, t_data *flag)
 {
 	char bytes;
 
@@ -44,7 +44,7 @@ static char	parse_width(const char **format, t_flag *flag)
 	return (bytes);
 }
 
-static char	parse_precision(const char **format, t_flag *flag)
+static char	parse_precision(const char **format, t_data *flag)
 {
 	char bytes;
 
@@ -71,7 +71,7 @@ static char	parse_precision(const char **format, t_flag *flag)
 	return (bytes);
 }
 
-char		parse_format(const char *format, t_flag *flag)
+char		parse_format(const char *format, t_data *flag)
 {
 	int		bytes;
 	char	*type;
