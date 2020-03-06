@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/28 23:30:38 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:55:32 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ static char	try_parsing(const char *format, t_data *flag)
 	else if (ft_strchr("dci", flag->type))
 		flag->written = output_int(va_arg(flag->ap, int), flag);
 	else if (ft_strchr("Xxuo", flag->type))
-	{
-		// printf("xxuo\n");
 		flag->written = output_uint(va_arg(flag->ap, unsigned int), flag);
-	}
 
 	//printf("\tParsed: %d\n", parsed);
 	return (parsed);
@@ -81,24 +78,64 @@ int			main(int argc, char **argv)
 
 	int a, b;
 
-	a=   printf("real: |%u|\n", 123);
-	b=ft_printf("mine: |%u|\n", 123);
-	printf("%d == %d\n", a, b);
-	a=   printf("real: |%u|\n", -123);
-	b=ft_printf("mine: |%u|\n", -123);
-	printf("%d == %d\n", a, b);
+	// a=   printf("real: |%u|\n", 123);
+	// b=ft_printf("mine: |%u|\n", 123);
+	// printf("%d == %d\n", a, b);
+	// a=   printf("real: |%u|\n", -123);
+	// b=ft_printf("mine: |%u|\n", -123);
+	// printf("%d == %d\n", a, b);
 
-// todo: precision higher than width?
-// ft_putendl("width & precision, positive numbers");
-// 	   printf("real: |%10.5d|\n", 123);
-// 	   printf("real: |%*.*d|\n", 10, 5, 123);
-// 	   printf("real: |%10.*d|\n", 5, 123);
-// 	   printf("real: |%*.5d|\n", 10, 123);
-// 	ft_printf("mine: |%10.5d|\n", 123);
-// 	ft_printf("mine: |%*.*d|\n", 10, 5, 123);
-// 	ft_printf("mine: |%10.*d|\n", 5, 123);
-// 	ft_printf("mine: |%*.5d|\n", 10, 123);
-// 	ft_putendl("");
+ft_putendl("width & precision, positive numbers");
+	   printf("real: |%20.5d|\n", -123);
+	   printf("real: |%*.*d|\n", 20, 5, -123);
+	   printf("real: |%20.*d|\n", 5, -123);
+	   printf("real: |%*.5d|\n", 20, -123);
+	ft_putendl("");
+	ft_printf("mine: |%20.5d|\n", -123);
+	ft_printf("mine: |%*.*d|\n", 20, 5, -123);
+	ft_printf("mine: |%20.*d|\n", 5, -123);
+	ft_printf("mine: |%*.5d|\n", 20, -123);
+	ft_putendl("");
+
+	   printf("real: |%20.20d|\n", -123);
+	   printf("real: |%*.*d|\n", 20, 20, -123);
+	   printf("real: |%20.*d|\n", 20, -123);
+	   printf("real: |%*.20d|\n", 20, -123);
+	ft_putendl("");
+	ft_printf("mine: |%20.20d|\n", -123);
+	ft_printf("mine: |%*.*d|\n", 20, 20, -123);
+	ft_printf("mine: |%20.*d|\n", 20, -123);
+	ft_printf("mine: |%*.20d|\n", 20, -123);
+	ft_putendl("");
+
+	   printf("real: |%20.25d|\n", -123);
+	   printf("real: |%*.*d|\n", 20, 25, -123);
+	   printf("real: |%20.*d|\n", 25, -123);
+	   printf("real: |%*.25d|\n", 20, -123);
+	ft_putendl("");
+	ft_printf("mine: |%20.25d|\n", -123);
+	ft_printf("mine: |%*.*d|\n", 20, 25, -123);
+	ft_printf("mine: |%20.*d|\n", 25, -123);
+	ft_printf("mine: |%*.25d|\n", 20, -123);
+	ft_putendl("");
+
+	   printf("real: |%.13d|\n", -123);
+	   printf("real: |%.13i|\n", -123);
+	   printf("real: |%.13u|\n", -123);
+	   printf("real: |%.13o|\n", -123);
+	   printf("real: |%.13x|\n", -123);
+	   printf("real: |%.13X|\n", -123);
+	ft_putendl("");
+	ft_printf("mine: |%.13d|\n", -123);
+	ft_printf("mine: |%.13i|\n", -123);
+	ft_printf("mine: |%.13u|\n", -123);
+	ft_printf("mine: |%.13o|\n", -123);
+	ft_printf("mine: |%.13x|\n", -123);
+	ft_printf("mine: |%.13X|\n", -123);
+	ft_putendl("");
+		printf("real: |%d|\n", -123);
+	ft_printf("mine: |%d|\n", -123);
+
 
 // 	   printf("real: |%0.5d|\n", 123);
 // 	   printf("real: |%*.*d|\n", 0, 5, 123);

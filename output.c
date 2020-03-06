@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:31:26 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/28 23:30:37 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:53:01 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,26 @@ static int	width_padder(int length, t_data *flag, int arg)
 	if (flag->width > 0)
 	{
 		if (flag->precision > 0 && flag->precision < flag->width)
+		{
 			flag->width -= flag->precision + (arg < 0);
-		else if (length < flag->width)
-			flag->width -= length + (arg < 0);
-		else
+			// printf("Has precision but less than width\n");
+		}
+		else if (flag->precision >= flag->width)
+		{
 			flag->width = 0;
+			// printf("Has precision greater than width\n");
+		}
+		else if (length < flag->width - 1)
+		{
+			flag->width -= length + (arg < 0);
+			// printf("Account for the '-' sign with integer output\n");
+		}
 	}
 	if ((flag->pad & PAD_RIGHT) == FALSE)
 	{
 		while (flag->width > 0)
 		{
-			write(1, &flag->padder, 1);
+			write(1, &flag->padder, 1); //? whitespace or '0'
 			--flag->width;
 			++written;
 		}
@@ -42,7 +51,8 @@ static int zero_padder(int length, t_data *flag, int arg)
 {
 	int		written;
 
-	write(1, "-", written = (arg < 0));
+	if (flag->type == 'd' || flag->type == 'i')
+		write(1, (arg < 0 ? "-" : ""), written = (arg < 0));
 	if (flag->precision > 0)
 	{
 		if (length < flag->precision)
@@ -100,20 +110,20 @@ int			output_int(int arg, t_data *flag)
 	int		written = 0;
 	int		length;
 
-	if (arg < 0)
-		str = ft_itoa(-arg);
-	else
-		str = ft_itoa(arg);
-	length = ft_strlen(str);
 	if (flag->type == 'd' || flag->type == 'i')
 	{
-		written = width_padder(length, flag, arg);
+		if (arg < 0)
+			str = ft_itoa(-arg); //? str is always unsigned
+		else
+			str = ft_itoa(arg);
+		length = ft_strlen(str);
+		written = width_padder(length, flag, arg); //? Arg needed for <0 check
 		written += zero_padder(length, flag, arg);
 		ft_putstr(str);
 	}
 	else if (flag->type == 'c')
 	{
-		written = width_padder(1, flag, arg);
+		written = width_padder(1, flag, arg); //? Length is always 1
 		written += zero_padder(1, flag, arg);
 		write(1, &arg, written = 1);
 	}
