@@ -12,6 +12,31 @@
 
 #include "ft_printf.h"
 
+static void putstr_case(const char *str, int mode)
+{
+	int		i;
+	char	c;
+
+	if (mode == 0)
+		ft_putstr(str);
+	else
+	{
+		if (str != NULL)
+		{
+			i = 0;
+			while (str[i])
+			{
+				if (mode < 0)
+					c = ft_tolower(str[i]);
+				else
+					c = ft_toupper(str[i]);
+				write(1, &c, 1);
+				++i;
+			}
+		}
+	}
+}
+
 static int	width_padder(int length, t_data *flag, int arg)
 {
 	int		written;
@@ -150,7 +175,7 @@ int			output_uint(unsigned int arg, t_data *flag)
 	length = ft_strlen(str);
 	written = width_padder(length, flag, arg);
 	written += zero_padder(length, flag, (flag->type == 'u' ? 1 : arg));
-	ft_putstr(str);
+	putstr_case(str, (flag->type == 'X'));
 	written = ft_strlen(str);
 	free(str);
 	return (written);
