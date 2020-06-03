@@ -44,12 +44,13 @@ static int	width_padder(int length, t_data *flag, int arg)
 	written = 0;
 	if (flag->width > 0)
 	{
-		if (flag->precision > 0 && flag->precision < flag->width)
+		if (flag->precision > 0 && flag->precision < flag->width
+			&& flag->type != 'c')
 		{
 			flag->width -= flag->precision + (arg < 0);
 			// printf("Has precision but less than width\n");
 		}
-		else if (flag->precision >= flag->width)
+		else if (flag->precision >= flag->width && flag->type != 'c')
 		{
 			flag->width = 0;
 			// printf("Has precision greater than width\n");
@@ -113,7 +114,7 @@ int			output_str(char *arg, t_data *flag)
 	{
 		while (flag->width > 0)
 		{
-			ft_putchar(padder);
+			write(1, &padder, 1);
 			--flag->width;
 			++written;
 		}
@@ -122,7 +123,7 @@ int			output_str(char *arg, t_data *flag)
 	written += len;
 	while (flag->width > 0)
 	{
-		ft_putchar(padder);
+		write(1, &padder, 1);
 		--flag->width;
 		++written;
 	}
@@ -149,7 +150,8 @@ int			output_int(int arg, t_data *flag)
 	else if (flag->type == 'c')
 	{
 		written = width_padder(1, flag, arg); //? Length is always 1
-		written += zero_padder(1, flag, arg);
+		// if (flag->padder == PAD_ZERO)
+			// written += zero_padder(1, flag, arg);
 		write(1, &arg, written = 1);
 	}
 	else
