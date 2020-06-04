@@ -50,7 +50,8 @@ static int	width_padder(int length, t_data *flag, int arg)
 			flag->width -= flag->precision + (arg < 0);
 			// printf("Has precision but less than width\n");
 		}
-		else if (flag->precision >= flag->width && flag->type != 'c')
+		else if (flag->precision >= flag->width
+			&& flag->type != 'c')
 		{
 			flag->width = 0;
 			// printf("Has precision greater than width\n");
@@ -61,11 +62,11 @@ static int	width_padder(int length, t_data *flag, int arg)
 			// printf("Account for the '-' sign with integer output\n");
 		}
 	}
-	if ((flag->pad & PAD_RIGHT) == FALSE)
+	if (!(flag->bit & FLAG_JUSTIFY_LEFT))
 	{
 		while (flag->width > 0)
 		{
-			write(1, &flag->padder, 1); //? whitespace or '0'
+			write(1, (flag->bit & FLAG_PAD_ZERO ? "0" : " "), 1);
 			--flag->width;
 			++written;
 		}
@@ -98,7 +99,6 @@ static int zero_padder(int length, t_data *flag, int arg)
 int			output_str(char *arg, t_data *flag)
 {
 	int		written = 0;
-	char	padder = ' ';
 	int		len = (arg ? ft_strlen(arg) : 6);
 
 	if (flag->width > 0)
@@ -107,14 +107,12 @@ int			output_str(char *arg, t_data *flag)
 			flag->width = 0;
 		else
 			flag->width -= len;
-		if (flag->pad & PAD_ZERO)
-			padder = '0';
 	}
-	if (!(flag->pad & PAD_RIGHT))
+	if (!(flag->bit & FLAG_JUSTIFY_LEFT))
 	{
 		while (flag->width > 0)
 		{
-			write(1, &padder, 1);
+			write(1, &flag->padder, 1);
 			--flag->width;
 			++written;
 		}
@@ -123,7 +121,7 @@ int			output_str(char *arg, t_data *flag)
 	written += len;
 	while (flag->width > 0)
 	{
-		write(1, &padder, 1);
+		write(1, &flag->padder, 1);
 		--flag->width;
 		++written;
 	}
@@ -150,8 +148,6 @@ int			output_int(int arg, t_data *flag)
 	else if (flag->type == 'c')
 	{
 		written = width_padder(1, flag, arg); //? Length is always 1
-		// if (flag->padder == PAD_ZERO)
-			// written += zero_padder(1, flag, arg);
 		write(1, &arg, written = 1);
 	}
 	else
@@ -177,8 +173,21 @@ int			output_uint(unsigned int arg, t_data *flag)
 	length = ft_strlen(str);
 	written = width_padder(length, flag, arg);
 	written += zero_padder(length, flag, (flag->type == 'u' ? 1 : arg));
-	putstr_case(str, (flag->type == 'X'));
+
+	if (flag->type == 'x')
+		putstr_case(str, -1);
+	else if (flag->type == 'X')
+		putstr_case(str, 1);
+	else
+		ft_putstr(str);
+
 	written = ft_strlen(str);
 	free(str);
 	return (written);
+}
+
+int			output_pointer(void *arg, t_data *flag)
+{
+	flag->type = 'x';
+	return (output_uint((uintptr_t)arg, flag));
 }

@@ -46,23 +46,23 @@ char	*strany_skip(const char *string, char *specifiers)
 {
 	size_t	a;
 	size_t	b;
-	char	match;
+	char	skip;
 
 	a = 0;
 	while (string[a])
 	{
 		b = 0;
-		match = FALSE;
+		skip = FALSE;
 		while (specifiers[b])
 		{
 			if (string[a] == specifiers[b])
 			{
-				match = TRUE;
+				skip = TRUE;
 				break ;
 			}
 			++b;
 		}
-		if (match == FALSE)
+		if (skip == FALSE)
 			return (char *)(&string[a]);
 		++a;
 	}
