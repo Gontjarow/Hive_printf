@@ -37,10 +37,11 @@ static void putstr_case(const char *str, int mode)
 	}
 }
 
-static int	width_padder(int length, t_data *flag, int arg)
+static int	width_padder(int length, t_data *flag, long long arg)
 {
 	int		written;
 
+	// printf("length:%d, width:%d, arg:%lld\n", length, flag->width, arg);
 	written = 0;
 	if (flag->width > 0)
 	{
@@ -59,14 +60,19 @@ static int	width_padder(int length, t_data *flag, int arg)
 		else if (length < flag->width - 1)
 		{
 			flag->width -= length + (arg < 0);
-			// printf("Account for the '-' sign with integer output\n");
+			// printf("Has width greater than length\n");
+			// printf("length (%d) < flag->width (%d)\n", length, flag->width - 1);
+		}
+		else if (length >= flag->width)
+		{
+			flag->width = 0;
 		}
 	}
 	if (!(flag->bit & FLAG_JUSTIFY_LEFT))
 	{
 		while (flag->width > 0)
 		{
-			write(1, (flag->bit & FLAG_PAD_ZERO ? "0" : " "), 1);
+			write(1, (flag->bit & FLAG_PAD_ZERO ? "0" : " "), 1); //! 'u'
 			--flag->width;
 			++written;
 		}
@@ -74,12 +80,15 @@ static int	width_padder(int length, t_data *flag, int arg)
 	return (written);
 }
 
-static int zero_padder(int length, t_data *flag, int arg)
+static int zero_padder(int length, t_data *flag, long long arg)
 {
 	int		written;
 
 	if (flag->type == 'd' || flag->type == 'i')
+	{
+		// ft_putstr(arg < 0 ? "@" : "");
 		write(1, (arg < 0 ? "-" : ""), written = (arg < 0));
+	}
 	if (flag->precision > 0)
 	{
 		if (length < flag->precision)
@@ -99,7 +108,7 @@ static int zero_padder(int length, t_data *flag, int arg)
 int			output_str(char *arg, t_data *flag)
 {
 	int		written = 0;
-	int		len = (arg ? ft_strlen(arg) : 6);
+	int		len = (arg ? ft_strlen(arg) : 6); // "(null)"
 
 	if (flag->width > 0)
 	{
@@ -128,18 +137,24 @@ int			output_str(char *arg, t_data *flag)
 	return (written);
 }
 
-int			output_int(int arg, t_data *flag)
+int			output_int(long long arg, t_data *flag)
 {
 	char	*str = NULL;
 	int		written = 0;
 	int		length;
 
+	// printf("output_int:%lld\n", arg);
 	if (flag->type == 'd' || flag->type == 'i')
 	{
-		if (arg < 0)
-			str = ft_itoa(-arg); //? str is always unsigned
+		if (flag->specifier == SPECIFIER_HH)
+			str = ft_itoa((char)arg < 0 ? (char)-arg : (char)arg);
+		else if (flag->specifier == SPECIFIER_H)
+			str = ft_itoa((short)arg < 0 ? (short)-arg : (short)arg);
+		else if (flag->specifier == SPECIFIER_L
+			|| flag->specifier == SPECIFIER_LL)
+			str = ft_itoa(arg < 0 ? -arg : arg);
 		else
-			str = ft_itoa(arg);
+			str = ft_itoa((int)arg < 0 ? (int)-arg : (int)arg);
 		length = ft_strlen(str);
 		written = width_padder(length, flag, arg); //? Arg needed for <0 check
 		written += zero_padder(length, flag, arg);
@@ -156,12 +171,13 @@ int			output_int(int arg, t_data *flag)
 	return (written);
 }
 
-int			output_uint(unsigned int arg, t_data *flag)
+int			output_uint(unsigned long long arg, t_data *flag)
 {
 	char	*str = NULL;
 	int		length;
 	int		written = 0;
 
+	// printf("\noutput_uint:%llu\n", arg);
 	if (flag->type == 'X' || flag->type == 'x')
 		str = ft_itoa_base(arg, 16);
 	else if (flag->type == 'u')
@@ -170,8 +186,10 @@ int			output_uint(unsigned int arg, t_data *flag)
 		str = ft_itoa_base(arg, 8);
 	else
 		ft_putstr("{oh no, uint}");
+	// printf("\noutput_uint str:'%s'\n", str);
 	length = ft_strlen(str);
-	written = width_padder(length, flag, arg);
+	// printf("\nlength:%d\n", length);
+	written = width_padder(length, flag, (flag->type == 'u' ? 1 : arg));
 	written += zero_padder(length, flag, (flag->type == 'u' ? 1 : arg));
 
 	if (flag->type == 'x')
@@ -188,6 +206,15 @@ int			output_uint(unsigned int arg, t_data *flag)
 
 int			output_pointer(void *arg, t_data *flag)
 {
-	flag->type = 'x';
-	return (output_uint((uintptr_t)arg, flag));
+	char *str = NULL;
+	int length = 0;
+	int written = 0;
+
+	str = ft_itoa_base((uintptr_t)arg, 16);
+	length = ft_strlen(str);
+	written = width_padder(length+2, flag, (uintptr_t)arg);
+	ft_putstr("0x");
+	written += zero_padder(length+2, flag, (uintptr_t)arg);
+	putstr_case(str, -1);
+	return (written);
 }

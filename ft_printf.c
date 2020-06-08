@@ -65,9 +65,16 @@ static char	try_parsing(const char *format, t_data *flag)
 	else if (flag->type == '%')
 		flag->written = output_str("%", flag);
 	else if (ft_strchr("dci", flag->type))
-		flag->written = output_int(va_arg(flag->ap, int), flag);
+	{
+		if (flag->specifier == SPECIFIER_L)
+			flag->written = output_int(va_arg(flag->ap, long), flag);
+		else if (flag->specifier == SPECIFIER_LL)
+			flag->written = output_int(va_arg(flag->ap, long long), flag);
+		else
+			flag->written = output_int(va_arg(flag->ap, int), flag);
+	}
 	else if (ft_strchr("Xxuo", flag->type))
-		flag->written = output_uint(va_arg(flag->ap, unsigned int), flag);
+		flag->written = output_uint(va_arg(flag->ap, unsigned long long), flag);
 	else if (flag->type == 'p')
 		flag->written = output_pointer(va_arg(flag->ap, void *), flag);
 	//printf("\tParsed: %d\n", parsed);
@@ -80,6 +87,7 @@ int			main(int argc, char **argv)
 
 	int a, b;
 
+	printf("int:%lu ll int:%lu\n", sizeof(int), sizeof(long long int));
 	a =    printf("real: |%u|\n", 123);
 	b = ft_printf("mine: |%u|\n", 123);
 	printf("%d == %d\n", a, b); //!
@@ -89,38 +97,73 @@ int			main(int argc, char **argv)
 	printf("%d == %d\n", a, b); //!
 	ft_putendl("");
 
-	   printf("test %10.10lu\n", (unsigned long)-1);
-	ft_printf("test %10.10lu\n", (unsigned long)-1);
+	ft_putendl("-1 signed types");
+	   printf("test hhu |%10hhu|\n", (unsigned char)-1);
+	ft_printf("test hhu |%10hhu|\n", (unsigned char)-1);
+	ft_putendl("");
+	   printf("test hu  |%10hu|\n", (unsigned short)-1);
+	ft_printf("test hu  |%10hu|\n", (unsigned short)-1);
+	ft_putendl("");
+	   printf("test u   |%10u|\n", (unsigned int)-1);
+	ft_printf("test u   |%10u|\n", (unsigned int)-1);
+	ft_putendl("");
+	   printf("test lu  |%10lu|\n", (unsigned long)-1);
+	ft_printf("test lu  |%10lu|\n", (unsigned long)-1);
+	ft_putendl("");
+	   printf("test llu |%10llu|\n", (unsigned long long)-1);
+	ft_printf("test llu |%10llu|\n", (unsigned long long)-1);
+
 	ft_putendl("");
 	   printf("test h	%hd\n", -1);
 	ft_printf("test h	%hd\n", -1);
+	   printf("test h	%hd\n", (short)-1);
+	ft_printf("test h	%hd\n", (short)-1);
 	ft_putendl("");
 	   printf("test hh	%hhd\n", -1);
 	ft_printf("test hh	%hhd\n", -1);
+	   printf("test hh	%hhd\n", (char)-1);
+	ft_printf("test hh	%hhd\n", (char)-1);
 	ft_putendl("");
 	   printf("test l	%ld\n", -1);
 	ft_printf("test l	%ld\n", -1);
+	   printf("test l	%ld\n", (long)-1);
+	ft_printf("test l	%ld\n", (long)-1);
 	ft_putendl("");
 	   printf("test ll	%lld\n", -1);
 	ft_printf("test ll	%lld\n", -1);
+	   printf("test ll	%lld\n", (long long)-1);
+	ft_printf("test ll	%lld\n", (long long)-1);
 	ft_putendl("");
-	   printf("test L	%Ld\n", -1);
-	ft_printf("test L	%Ld\n", -1);
-	ft_putendl("");
-	   printf("test LL	%LLd\n", -1);
-	ft_printf("test LL	%LLd\n", -1);
-	ft_putendl("");
-	   printf("test Ll	%Lld\n", -1);
-	ft_printf("test Ll	%Lld\n", -1);
-	ft_putendl("");
+	//    printf("undefined test L	%Ld\n", -1);
+	// ft_printf("undefined test L	%Ld\n", -1);
+	//    printf("undefined test L	%Ld\n", (long long)-1);
+	// ft_printf("undefined test L	%Ld\n", (long long)-1);
+	// ft_putendl("");
+	//    printf("undefined test LL	%LLd\n", -1);
+	// ft_printf("undefined test LL	%LLd\n", -1);
+	//    printf("undefined test LL	%LLd\n", (long long)-1);
+	// ft_printf("undefined test LL	%LLd\n", (long long)-1);
+	// ft_putendl("");
+	//    printf("undefined test Ll	%Lld\n", -1);
+	// ft_printf("undefined test Ll	%Lld\n", -1);
+	//    printf("undefined test Ll	%Lld\n", (long long)-1);
+	// ft_printf("undefined test Ll	%Lld\n", (long long)-1);
+	// ft_putendl("");
 
-	ft_putendl("pointers");
-	   printf("real: |%p| (uint %lu)\n", &a, (unsigned long)&a);
-	ft_printf("mine: |%p|\n", &a);
-	   printf("real: |%0.0p|\n", &a);
-	   printf("real: |%20.5p|\n", &a);
-	   printf("real: |%5.20p|\n", &a);
 	ft_putendl("");
+	ft_putendl("pointers");
+	   printf("real: |%p| (uint %llu)\n", &a, (unsigned long long)&a);
+	ft_printf("mine: |%p|\n", &a);
+	ft_putendl("");
+	//    printf("undefined real: |%0.0p|\n", &a);
+	// ft_printf("undefined mine: |%0.0p|\n", &a);
+	// ft_putendl("");
+	//    printf("undefined real: |%20.5p|\n", &a);
+	// ft_printf("undefined mine: |%20.5p|\n", &a);
+	// ft_putendl("");
+	//    printf("undefined real: |%5.20p|\n", &a);
+	// ft_printf("undefined mine: |%5.20p|\n", &a);
+	// ft_putendl("");
 
 	ft_putendl("width & precision, positive numbers");
 	   printf("real: |%20.5d|\n", -123);
@@ -156,25 +199,31 @@ int			main(int argc, char **argv)
 	ft_printf("mine: |%*.25d|\n", 20, -123);
 	ft_putendl("");
 
-	   printf("real: |%.13d|\n", -123);
-	   printf("real: |%.13i|\n", -123);
-	   printf("real: |%.13u|\n", -123);
-	   printf("real: |%.13o|\n", -123);
-	   printf("real: |%.13x|\n", -123);
-	   printf("real: |%.13X|\n", -123);
+	ft_putendl("all decimal types");
+	   printf("real d: |%.13d|\n", -123);
+	ft_printf("mine d: |%.13d|\n", -123);
 	ft_putendl("");
-	ft_printf("mine: |%.13d|\n", -123);
-	ft_printf("mine: |%.13i|\n", -123);
-	ft_printf("mine: |%.13u|\n", -123);
-	ft_printf("mine: |%.13o|\n", -123);
-	ft_printf("mine: |%.13x|\n", -123);
-	ft_printf("mine: |%.13X|\n", -123);
+	   printf("real i: |%.13i|\n", -123);
+	ft_printf("mine i: |%.13i|\n", -123);
+	ft_putendl("");
+	   printf("real u: |%.13u|\n", -123);
+	ft_printf("mine u: |%.13u|\n", -123);
+	ft_putendl("");
+	   printf("real o: |%.13o|\n", -123);
+	ft_printf("mine o: |%.13o|\n", -123);
+	ft_putendl("");
+	   printf("real x: |%.13x|\n", -123);
+	ft_printf("mine x: |%.13x|\n", -123);
+	ft_putendl("");
+	   printf("real X: |%.13X|\n", -123);
+	ft_printf("mine X: |%.13X|\n", -123);
 	ft_putendl("");
 
 	   printf("real: |%d|\n", -123);
 	ft_printf("mine: |%d|\n", -123);
 	ft_putendl("");
 
+	ft_putendl("variables");
 	   printf("real: |%0.5d|\n", 123);
 	   printf("real: |%*.*d|\n", 0, 5, 123);
 	   printf("real: |%0.*d|\n", 5, 123);

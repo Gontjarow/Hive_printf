@@ -47,14 +47,14 @@ typedef struct	s_data
 int				ft_printf(const char *format, ...);
 char			parse_format(const char * format, t_data *flag);
 int				output_str(char *arg, t_data *flag);
-int				output_int(int arg, t_data *flag);
-int				output_uint(unsigned int arg, t_data *flag);
+int				output_int(long long arg, t_data *flag);
+int				output_uint(unsigned long long arg, t_data *flag);
 int				output_pointer(void *arg, t_data *flag);
 
 char			*strany(const char *string, char *specifiers);
 char			*strany_skip(const char *string, char *specifiers);
 char			*strchr_skip(const char *string, char specifier);
-char			*utoa(unsigned int num);
+char			*utoa(unsigned long long num);
 
 
 #endif

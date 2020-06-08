@@ -10,20 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft_printf.h"
 
-char	*utoa(unsigned int num)
+char	*utoa(unsigned long long number)
 {
-	char			string[10 + 1];
-	unsigned int	number;
-	unsigned int	length;
+	char				string[20 + 1];
+	unsigned int		length;
 
-	if (num == 0)
+	// printf("utoa:%llu\n", number);
+	if (number == 0)
 		return (ft_strdup("0"));
-	ft_memset(string, 0, 11);
-	length = ft_numlen(num);
-	number = num;
+	ft_memset(string, 0, 21);
+	length = ft_numlen(number);
+	// printf("utoa numlen:%u\n", length);
 	while (length--)
 	{
 		if (number)
