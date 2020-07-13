@@ -1,6 +1,13 @@
 NAME = ft_printf
 
-SOURCES = ft_printf.c strany.c parse_format.c output.c utoa.c
+SOURCES = ft_printf.c \
+	strany.c \
+	parse_format.c \
+	output.c \
+	utoa.c \
+	ft_ftoa.c \
+	binary.c \
+	output_helper.c \
 
 OBJECTS = $(subst .c,.o,$(SOURCES))
 

@@ -76,7 +76,7 @@ char	*strchr_skip(const char *string, char specifier)
 	i = 0;
 	while (string[i])
 	{
-		if(string[i] != specifier)
+		if (string[i] != specifier)
 			return (char *)(string + i);
 		++i;
 	}

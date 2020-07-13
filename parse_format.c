@@ -31,7 +31,7 @@ static char	parse_width(const char **format, t_data *flag)
 		++(*format);
 		++bytes;
 	}
-	else if (ft_isdigit(**format))
+	else
 	{
 		while (ft_isdigit(**format))
 		{
@@ -49,17 +49,27 @@ static char	parse_precision(const char **format, t_data *flag)
 	char bytes;
 
 	bytes = 0;
+	// printf("piss %c\n", **format);
 	if (**format == '.')
 	{
 		++(*format);
 		++bytes;
+		// printf("parse next: %c\n", **format);
 		if (**format == '*')
 		{
+			// ft_putendl("?????????\n");
 			flag->precision = va_arg(flag->ap, int);
 			++(*format);
 			++bytes;
 		}
+		else if (**format == 'f' || **format == 'L')
+		{
+			// ft_putendl("!!!!!!!!!!\n");
+			flag->precision = 0;
+		}
 		else
+		{
+			// ft_putendl("BRAAAAAANCH\n");
 			while (ft_isdigit(**format))
 			{
 				flag->precision *= 10;
@@ -67,7 +77,11 @@ static char	parse_precision(const char **format, t_data *flag)
 				++(*format);
 				++bytes;
 			}
+		}
+		if (flag->precision < -1)
+			flag->precision = -flag->precision;
 	}
+	// ft_putendl("BAIIIII");
 	return (bytes);
 }
 
@@ -143,22 +157,27 @@ char		parse_format(const char *format, t_data *flag)
 	char	*type;
 
 	bytes = 0;
-	while (*format)
+	// while (*format)
+	// {
+	// printf("SURELY\n");
+	// printf("format first char: %c\n", *format);
+	++bytes;
+	// printf("\nbytes: %d (first)\n", bytes);
+	bytes += parse_flags(&format, flag);
+	// printf("bytes: %d (flags)\n", bytes);
+	bytes += parse_width(&format, flag);
+	// printf("bytes: %d (width)\n", bytes);
+	bytes += parse_precision(&format, flag);
+	// printf("bytes: %d (precision)\n", bytes);
+	bytes += parse_specifier(&format, flag);
+	// printf("bytes: %d (specifier)\n\n", bytes);
+	type = ft_strchr("sdfciXxu%op", *format);
+	flag->type = (type ? *type : 0);
+	if (!flag->type)
 	{
-		++bytes;
-		bytes += parse_flags(&format, flag);
-		bytes += parse_width(&format, flag);
-		bytes += parse_precision(&format, flag);
-		bytes += parse_specifier(&format, flag);
-		type = ft_strchr("sdciXxu%op", *format);
-		flag->type = (type ? *type : 0);
-		if (flag->type)
-			break ;
-		else
-		{
-			ft_putstr("{Unrecognized type}");
-			return (0);
-		}
+		ft_putstr("{Unrecognized type}");
+		return (0);
 	}
+	// }
 	return (bytes);
 }

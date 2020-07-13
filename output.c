@@ -12,105 +12,25 @@
 
 #include "ft_printf.h"
 
-static void putstr_case(const char *str, int mode)
-{
-	int		i;
-	char	c;
-
-	if (mode == 0)
-		ft_putstr(str);
-	else
-	{
-		if (str != NULL)
-		{
-			i = 0;
-			while (str[i])
-			{
-				if (mode < 0)
-					c = ft_tolower(str[i]);
-				else
-					c = ft_toupper(str[i]);
-				write(1, &c, 1);
-				++i;
-			}
-		}
-	}
-}
-
-static int	width_padder(int length, t_data *flag, long long arg)
-{
-	int		written;
-
-	// printf("length:%d, width:%d, arg:%lld\n", length, flag->width, arg);
-	written = 0;
-	if (flag->width > 0)
-	{
-		if (flag->precision > 0 && flag->precision < flag->width
-			&& flag->type != 'c')
-		{
-			flag->width -= flag->precision + (arg < 0);
-			// printf("Has precision but less than width\n");
-		}
-		else if (flag->precision >= flag->width
-			&& flag->type != 'c')
-		{
-			flag->width = 0;
-			// printf("Has precision greater than width\n");
-		}
-		else if (length < flag->width - 1)
-		{
-			flag->width -= length + (arg < 0);
-			// printf("Has width greater than length\n");
-			// printf("length (%d) < flag->width (%d)\n", length, flag->width - 1);
-		}
-		else if (length >= flag->width)
-		{
-			flag->width = 0;
-		}
-	}
-	if (!(flag->bit & FLAG_JUSTIFY_LEFT))
-	{
-		while (flag->width > 0)
-		{
-			write(1, (flag->bit & FLAG_PAD_ZERO ? "0" : " "), 1); //! 'u'
-			--flag->width;
-			++written;
-		}
-	}
-	return (written);
-}
-
-static int zero_padder(int length, t_data *flag, long long arg)
-{
-	int		written;
-
-	if (flag->type == 'd' || flag->type == 'i')
-	{
-		// ft_putstr(arg < 0 ? "@" : "");
-		write(1, (arg < 0 ? "-" : ""), written = (arg < 0));
-	}
-	if (flag->precision > 0)
-	{
-		if (length < flag->precision)
-			flag->precision -= length;
-		else
-			flag->precision = 0;
-	}
-	while (flag->precision > 0)
-	{
-		write(1, "0", 1);
-		--flag->precision;
-		++written;
-	}
-	return (written);
-}
-
 int			output_str(char *arg, t_data *flag)
 {
-	int		written = 0;
-	int		len = (arg ? ft_strlen(arg) : 6); // "(null)"
+	printf("output_str got: '%s'\n", arg);
+	int		written;
+	int		len;
 
-	if (flag->width > 0)
+	written = 0;
+	len = (arg ? ft_strlen(arg) : 6); // "(null)"
+	printf("output_str: len %d wid %d prec %d\n", len, flag->width, flag->precision);
+	if (len > flag->precision && flag->precision != -1)
+	{
+		len -= (len - flag->precision);
+		// printf("{prec len = %d}\n", len);
+	}
+	else if (flag->precision == -1)
+	{
+		flag->precision = ft_strlen(arg);
+	}
+	if (flag->width)
 	{
 		if (len >= flag->width)
 			flag->width = 0;
@@ -126,7 +46,11 @@ int			output_str(char *arg, t_data *flag)
 			++written;
 		}
 	}
-	ft_putstr((arg ? arg : "(null)"));
+	// printf("{prec - wid = %d}\n", flag->precision - flag->width);
+	if (arg)
+		ft_putnstr(arg, flag->precision - flag->width);
+	else
+		ft_putstr("(null)");
 	written += len;
 	while (flag->width > 0)
 	{
@@ -139,10 +63,12 @@ int			output_str(char *arg, t_data *flag)
 
 int			output_int(long long arg, t_data *flag)
 {
-	char	*str = NULL;
-	int		written = 0;
+	char	*str;
+	int		written;
 	int		length;
 
+	str = NULL;
+	written = 0;
 	// printf("output_int:%lld\n", arg);
 	if (flag->type == 'd' || flag->type == 'i')
 	{
@@ -173,10 +99,12 @@ int			output_int(long long arg, t_data *flag)
 
 int			output_uint(unsigned long long arg, t_data *flag)
 {
-	char	*str = NULL;
+	char	*str;
 	int		length;
-	int		written = 0;
+	int		written;
 
+	str = NULL;
+	written = 0;
 	// printf("\noutput_uint:%llu\n", arg);
 	if (flag->type == 'X' || flag->type == 'x')
 		str = ft_itoa_base(arg, 16);
@@ -186,19 +114,19 @@ int			output_uint(unsigned long long arg, t_data *flag)
 		str = ft_itoa_base(arg, 8);
 	else
 		ft_putstr("{oh no, uint}");
-	// printf("\noutput_uint str:'%s'\n", str);
 	length = ft_strlen(str);
+	// printf("\noutput_uint str:'%s'\n", str);
 	// printf("\nlength:%d\n", length);
 	written = width_padder(length, flag, (flag->type == 'u' ? 1 : arg));
 	written += zero_padder(length, flag, (flag->type == 'u' ? 1 : arg));
-
+	;
 	if (flag->type == 'x')
 		putstr_case(str, -1);
 	else if (flag->type == 'X')
 		putstr_case(str, 1);
 	else
 		ft_putstr(str);
-
+	;
 	written = ft_strlen(str);
 	free(str);
 	return (written);
@@ -206,15 +134,35 @@ int			output_uint(unsigned long long arg, t_data *flag)
 
 int			output_pointer(void *arg, t_data *flag)
 {
-	char *str = NULL;
-	int length = 0;
-	int written = 0;
+	char	*str;
+	int		length;
+	int		written;
 
+	str = NULL;
+	length = 0;
+	written = 0;
 	str = ft_itoa_base((uintptr_t)arg, 16);
 	length = ft_strlen(str);
-	written = width_padder(length+2, flag, (uintptr_t)arg);
+	written = width_padder(length + 2, flag, (uintptr_t)arg);
 	ft_putstr("0x");
-	written += zero_padder(length+2, flag, (uintptr_t)arg);
+	written += zero_padder(length + 2, flag, (uintptr_t)arg);
 	putstr_case(str, -1);
+	return (written);
+}
+
+int			output_double(long double arg, t_data *flag)
+{
+	char	*str;
+	int		written;
+
+	// printf("output_double got: %f\n", arg);
+	written = 0;
+	// printf("output double prec: %d\n", flag->precision);
+	if ((str = ft_ftoa(arg, flag->precision == -1 ? 6 : flag->precision)))
+	{
+		written = ft_strlen(str);
+		ft_putstr(str);
+		free(str);
+	}
 	return (written);
 }
