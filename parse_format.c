@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/28 23:30:36 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/20 20:24:50 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,26 @@ static char	parse_precision(const char **format, t_data *flag)
 		// printf("parse next: %c\n", **format);
 		if (**format == '*')
 		{
-			// ft_putendl("?????????\n");
 			flag->precision = va_arg(flag->ap, int);
 			++(*format);
 			++bytes;
 		}
 		else if (**format == 'f' || **format == 'L')
 		{
-			// ft_putendl("!!!!!!!!!!\n");
 			flag->precision = 0;
 		}
 		else
 		{
-			// ft_putendl("BRAAAAAANCH\n");
+			if (!ft_isdigit(**format))
+				flag->precision = 0;
 			while (ft_isdigit(**format))
 			{
-				flag->precision *= 10;
-				flag->precision += (**format - '0');
+				if (flag->precision == -1)
+					flag->precision = (**format - '0');
+				else
+				{
+					flag->precision = (flag->precision * 10) + (**format - '0');
+				}
 				++(*format);
 				++bytes;
 			}
@@ -81,7 +84,7 @@ static char	parse_precision(const char **format, t_data *flag)
 		if (flag->precision < -1)
 			flag->precision = -flag->precision;
 	}
-	// ft_putendl("BAIIIII");
+	// printf("parse precision {%d}\n", flag->precision);
 	return (bytes);
 }
 
@@ -156,21 +159,21 @@ char		parse_format(const char *format, t_data *flag)
 	int		bytes;
 	char	*type;
 
-	bytes = 0;
-	// while (*format)
-	// {
-	// printf("SURELY\n");
-	// printf("format first char: %c\n", *format);
-	++bytes;
-	// printf("\nbytes: %d (first)\n", bytes);
+	bytes = 1;
+	// printf("format first char: %c\n\n", *format);
+
 	bytes += parse_flags(&format, flag);
-	// printf("bytes: %d (flags)\n", bytes);
+	// printf("bytes: %d (flags), next: %c\n", bytes, *format);
+
 	bytes += parse_width(&format, flag);
-	// printf("bytes: %d (width)\n", bytes);
+	// printf("bytes: %d (width), next: %c\n", bytes, *format);
+
 	bytes += parse_precision(&format, flag);
-	// printf("bytes: %d (precision)\n", bytes);
+	// printf("bytes: %d (precision), next: %c\n", bytes, *format);
+
 	bytes += parse_specifier(&format, flag);
-	// printf("bytes: %d (specifier)\n\n", bytes);
+	// printf("bytes: %d (specifier), next: %c\n\n", bytes, *format);
+
 	type = ft_strchr("sdfciXxu%op", *format);
 	flag->type = (type ? *type : 0);
 	if (!flag->type)
@@ -178,6 +181,5 @@ char		parse_format(const char *format, t_data *flag)
 		ft_putstr("{Unrecognized type}");
 		return (0);
 	}
-	// }
 	return (bytes);
 }

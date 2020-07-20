@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/02/28 23:30:24 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/20 12:15:52 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
 # include <stdio.h>
 # include <math.h>
 
-# define PAD_DEFAULT	0b00
-# define PAD_ZERO		0b10
-# define PAD_RIGHT		0b1
-
 # define SPECIFIER_H	1
 # define SPECIFIER_HH	2
 # define SPECIFIER_L	3
@@ -32,6 +28,16 @@
 # define FLAG_HIDE_SIGN		0b100
 # define FLAG_PREFIX		0b1000
 # define FLAG_PAD_ZERO		0b10000
+
+# define TX_NORMAL  "\x1B[0m"
+# define FG_BLACK   "\x1B[30m"
+# define FG_RED     "\x1B[31m"
+# define FG_GREEN   "\x1B[32m"
+# define FG_YELLOW  "\x1B[33m"
+# define FG_BLUE    "\x1B[34m"
+# define FG_MAGENTA "\x1B[35m"
+# define FG_CYAN    "\x1B[36m"
+# define FG_WHITE   "\x1B[37m"
 
 typedef struct	s_data
 {

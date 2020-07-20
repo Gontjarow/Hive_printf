@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:31:26 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/03/06 13:53:01 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/20 20:10:45 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,64 +14,77 @@
 
 int			output_str(char *arg, t_data *flag)
 {
-	printf("output_str got: '%s'\n", arg);
-	int		written;
+	// printf("output_str got: '%s'\n", arg);
 	int		len;
 
-	written = 0;
 	len = (arg ? ft_strlen(arg) : 6); // "(null)"
-	printf("output_str: len %d wid %d prec %d\n", len, flag->width, flag->precision);
-	if (len > flag->precision && flag->precision != -1)
+	// printf("output_str: {len %d wid %d prec %d}\n", len, flag->width, flag->precision);
+	if (flag->precision != -1 && len > flag->precision)
 	{
+		// printf("precision given && len > precision\n");
 		len -= (len - flag->precision);
-		// printf("{prec len = %d}\n", len);
 	}
 	else if (flag->precision == -1)
 	{
+		// printf("precision default\n");
 		flag->precision = ft_strlen(arg);
 	}
+	// printf("len adjust 1 {%d}\n", len);
 	if (flag->width)
 	{
 		if (len >= flag->width)
+		{
+			// printf("len >= flag->width\n");
 			flag->width = 0;
+		}
 		else
+		{
+			// printf("len < width\n");
 			flag->width -= len;
+		}
 	}
-	if (!(flag->bit & FLAG_JUSTIFY_LEFT))
+	// printf("len adjust 2 {%d, width %d}\n", len, flag->width);
+	if (~flag->bit & FLAG_JUSTIFY_LEFT) // changed //? pad left if not justified
 	{
 		while (flag->width > 0)
 		{
 			write(1, &flag->padder, 1);
+			++flag->written;
 			--flag->width;
-			++written;
 		}
 	}
-	// printf("{prec - wid = %d}\n", flag->precision - flag->width);
+	// printf("{len %d wid %d prec %d}\n", len, flag->width, flag->precision);
+	// printf("{'%s' prec - wid = %d}\n", arg, flag->precision - flag->width);
 	if (arg)
-		ft_putnstr(arg, flag->precision - flag->width);
+		ft_putnstr(arg, flag->precision);
 	else
 		ft_putstr("(null)");
-	written += len;
-	while (flag->width > 0)
+	flag->written += len;
+	while (flag->width > 0) //? maybe use width_padder
 	{
 		write(1, &flag->padder, 1);
+		++flag->written;
 		--flag->width;
-		++written;
 	}
-	return (written);
+	return (0);
 }
+
+/*
+** Int output:
+** Always full output, even if precision is low.
+*/
 
 int			output_int(long long arg, t_data *flag)
 {
 	char	*str;
-	int		written;
 	int		length;
 
 	str = NULL;
-	written = 0;
 	// printf("output_int:%lld\n", arg);
-	if (flag->type == 'd' || flag->type == 'i')
+	if ((flag->type == 'd' || flag->type == 'i'))
 	{
+		if (arg == 0 && flag->precision == 0)
+			return (0);
 		if (flag->specifier == SPECIFIER_HH)
 			str = ft_itoa((char)arg < 0 ? (char)-arg : (char)arg);
 		else if (flag->specifier == SPECIFIER_H)
@@ -82,30 +95,34 @@ int			output_int(long long arg, t_data *flag)
 		else
 			str = ft_itoa((int)arg < 0 ? (int)-arg : (int)arg);
 		length = ft_strlen(str);
-		written = width_padder(length, flag, arg); //? Arg needed for <0 check
-		written += zero_padder(length, flag, arg);
+		flag->precision = (length > flag->precision ? length : flag->precision);
+		// printf("{w%d p%d}\n", flag->width, flag->precision);
+		width_padder(length, flag, arg); //? Arg needed for <0 check
+		zero_padder(length, flag, arg);
 		ft_putstr(str);
+		flag->written += length;
 	}
 	else if (flag->type == 'c')
 	{
-		written = width_padder(1, flag, arg); //? Length is always 1
-		write(1, &arg, written = 1);
+		width_padder(1, flag, arg); //? Length is always 1
+		write(1, &arg, 1);
+		++flag->written;
 	}
 	else
 		ft_putstr("{oh no, int}");
 	free(str);
-	return (written);
+	return (0);
 }
 
 int			output_uint(unsigned long long arg, t_data *flag)
 {
 	char	*str;
 	int		length;
-	int		written;
 
 	str = NULL;
-	written = 0;
-	// printf("\noutput_uint:%llu\n", arg);
+	// printf("\noutput_uint: {%c %llu, w%d p%d}\n", flag->type, arg, flag->width, flag->precision);
+	// if (arg == 0 && flag->precision == 0)
+	// 	return (0);
 	if (flag->type == 'X' || flag->type == 'x')
 		str = ft_itoa_base(arg, 16);
 	else if (flag->type == 'u')
@@ -115,54 +132,79 @@ int			output_uint(unsigned long long arg, t_data *flag)
 	else
 		ft_putstr("{oh no, uint}");
 	length = ft_strlen(str);
-	// printf("\noutput_uint str:'%s'\n", str);
+	// printf("output_uint {'%s'}\n", str);
 	// printf("\nlength:%d\n", length);
-	written = width_padder(length, flag, (flag->type == 'u' ? 1 : arg));
-	written += zero_padder(length, flag, (flag->type == 'u' ? 1 : arg));
-	;
+
+	width_padder(length, flag, (flag->type == 'u' ? 1 : arg));
+
+	if (flag->bit & FLAG_PREFIX)
+	{
+		if (flag->type == 'o' && arg)
+		{
+			ft_putstr("0");
+			// ft_putstr("<o>");
+		}
+		else if ((flag->type == 'x' || flag->type == 'X') && arg)
+		{
+			ft_putstr("0x");
+			// ft_putstr("<x>");
+		}
+	}
+
+	if (flag->precision == 0 && arg == 0)
+	{
+		if (flag->bit & FLAG_PREFIX && flag->type == 'o')
+			ft_putstr(FG_RED "0" TX_NORMAL); // todo: remove color
+		return (0);
+	}
+	zero_padder(length, flag, (flag->type == 'u' ? 1 : arg));
+
 	if (flag->type == 'x')
 		putstr_case(str, -1);
 	else if (flag->type == 'X')
 		putstr_case(str, 1);
 	else
 		ft_putstr(str);
-	;
-	written = ft_strlen(str);
+	flag->written += length;
 	free(str);
-	return (written);
+	return (0);
 }
+
+/*
+** Pointer output:
+** Always outputs whole pointer, even if precision is low.
+*/
 
 int			output_pointer(void *arg, t_data *flag)
 {
 	char	*str;
 	int		length;
-	int		written;
 
 	str = NULL;
 	length = 0;
-	written = 0;
 	str = ft_itoa_base((uintptr_t)arg, 16);
-	length = ft_strlen(str);
-	written = width_padder(length + 2, flag, (uintptr_t)arg);
+	length = 2 + ft_strlen(str);
+	flag->precision = (length > flag->precision ? length : flag->precision);
+	width_padder(length, flag, 0);
 	ft_putstr("0x");
-	written += zero_padder(length + 2, flag, (uintptr_t)arg);
+	zero_padder(length, flag, 0);
 	putstr_case(str, -1);
-	return (written);
+	flag->written += length;
+	return (0);
 }
 
 int			output_double(long double arg, t_data *flag)
 {
 	char	*str;
-	int		written;
 
 	// printf("output_double got: %f\n", arg);
-	written = 0;
 	// printf("output double prec: %d\n", flag->precision);
 	if ((str = ft_ftoa(arg, flag->precision == -1 ? 6 : flag->precision)))
 	{
-		written = ft_strlen(str);
+		// ft_putstr("ftoa out:"); ft_putendl(str);
+		flag->written += ft_strlen(str);
 		ft_putstr(str);
 		free(str);
 	}
-	return (written);
+	return (0);
 }
