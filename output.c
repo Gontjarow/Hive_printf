@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:31:26 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/20 20:10:45 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/21 16:57:03 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,11 @@ int			output_int(long long arg, t_data *flag)
 	return (0);
 }
 
+/*
+** Int output:
+** Always full output, even if precision is low.
+*/
+
 int			output_uint(unsigned long long arg, t_data *flag)
 {
 	char	*str;
@@ -202,8 +207,14 @@ int			output_double(long double arg, t_data *flag)
 	if ((str = ft_ftoa(arg, flag->precision == -1 ? 6 : flag->precision)))
 	{
 		// ft_putstr("ftoa out:"); ft_putendl(str);
-		flag->written += ft_strlen(str);
 		ft_putstr(str);
+		flag->written += ft_strlen(str);
+		if (flag->bit & FLAG_PREFIX && flag->precision == 0)
+		{
+			write(1, ".", 1);
+			++flag->written;
+		}
+
 		free(str);
 	}
 	return (0);

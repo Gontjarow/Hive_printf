@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/20 20:20:57 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/21 16:59:34 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -463,22 +463,23 @@ int			main(int argc, char **argv)
 	printf("%d == %d\n\n", a, b);
 	ft_putendl("");
 
-	printf("\n====================\n\n");
-	printf("char: '%c'\n", '\0');
-	printf("digit: '%+ 11.11d'\n", 123);
-	printf("float1: '%.f'\n", .99);
-	printf("float2: '%3.0f'\n", 1.0000001);
-	printf("Hex 0: %0.0X\n", 0);
-	printf("Oct 0: %0.0o\n", 0);
-	printf("Hex 15: %2x\n", 15);
-	ft_putendl("");
- ft_printf("char: '%c'\n", '\0');
- ft_printf("digit: '%+ 11.11d'\n", 123);
- ft_printf("float1: '%.f'\n", .99);
- ft_printf("float2: '%3.0f'\n", 1.0000001);
- ft_printf("Hex 0: %0.0X\n", 0);
- ft_printf("Oct 0: %0.0o\n", 0);
- ft_printf("Hex 15: %2x\n", 15);
+// 	printf("\n====================\n\n"); // ? ok
+// 	printf("char: '%c'\n", '\0');
+// 	printf("digit: '%+ 11.11d'\n", 123);
+// 	printf("float1: '%.f'\n", .99);
+// 	printf("float2: '%3.0f'\n", 1.0000001);
+// 	printf("Hex 0: %0.0X\n", 0);
+// 	printf("Oct 0: %0.0o\n", 0);
+// 	printf("Hex 15: %2x\n", 15);
+// 	ft_putendl("");
+//  ft_printf("char: '%c'\n", '\0');
+//  ft_printf("digit: '%+ 11.11d'\n", 123);
+//  ft_printf("float1: '%.f'\n", .99);
+//  ft_printf("float2: '%3.0f'\n", 1.0000001);
+//  ft_printf("Hex 0: %0.0X\n", 0);
+//  ft_printf("Oct 0: %0.0o\n", 0);
+//  ft_printf("Hex 15: %2x\n", 15);
+
 	// printf("'%.0i'\n", 0);
 	// ft_putendl("variables");
 	//    printf("real: |%0.5d|\n", 123);
@@ -667,96 +668,127 @@ int			main(int argc, char **argv)
 	// b = ft_printf("mine: '%d' '%i' '%o' '%u' '%x' '%X'\n", 0, 0, 0, 0, 0, 0);
 	// printf("%d == %d\n\n", a, b);
 
-// 	printf("\n====================\n\n");
-// 	printf("alt forms\n");
-// 	// For o conversion, it increases the precision to force the first digit of the result to be a zero (if the value and precision are both 0, a single 0 is printed).
-// 	printf("o conversions (no flags)\n");
-// 	printf("real: '%o' '%o' '%o' '%o'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%o' '%o' '%o' '%o'\n", 0, 9, 16, 34128);
-// 	printf("o conversions\n");
-// 	printf("real: '%#o' '%#o' '%#o' '%#o'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%#o' '%#o' '%#o' '%#o'\n", 0, 9, 16, 34128);
-// 	printf("o conversions, 0 precision\n");
-// 	printf("real zero: '%#.0o' '%#.0o' '%#.0o' '%#.0o'\n", 0, 9, 16, 34128);
-//  ft_printf("mine zero: '%#.0o' '%#.0o' '%#.0o' '%#.0o'\n", 0, 9, 16, 34128);
-//  printf("\n");
+	printf("\n====================\n\n");
+	printf("alt forms\n");
+	// For o conversion, it increases the precision to force the first digit of the result to be a zero (if the value and precision are both 0, a single 0 is printed).
+	printf("o conversions (no flags)\n");
+	printf("real: '%o' '%o' '%o' '%o'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%o' '%o' '%o' '%o'\n", 0, 9, 16, 34128);
+	printf("o conversions\n");
+	printf("real: '%#o' '%#o' '%#o' '%#o'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%#o' '%#o' '%#o' '%#o'\n", 0, 9, 16, 34128);
+	printf("o conversions, 0 precision\n");
+	printf("real zero: '%#.0o' '%#.0o' '%#.0o' '%#.0o'\n", 0, 9, 16, 34128);
+ ft_printf("mine zero: '%#.0o' '%#.0o' '%#.0o' '%#.0o'\n", 0, 9, 16, 34128);
+ printf("\n");
 
-// 	printf("o conversions (no #)\n");
-// 	printf("real: '%o' '%o' '%o' '%o'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%o' '%o' '%o' '%o'\n", 0, 9, 16, 34128);
-// 	printf("real zero: '%.0o' '%.0o' '%.0o' '%.0o'\n", 0, 9, 16, 34128);
-//  ft_printf("mine zero: '%.0o' '%.0o' '%.0o' '%.0o'\n", 0, 9, 16, 34128);
-// 	printf("real: '%.5o' '%.5o' '%.5o' '%.5o'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%.5o' '%.5o' '%.5o' '%.5o'\n", 0, 9, 16, 34128);
-//  printf("\n");
+	printf("o conversions (no #)\n");
+	printf("real: '%o' '%o' '%o' '%o'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%o' '%o' '%o' '%o'\n", 0, 9, 16, 34128);
+	printf("real zero: '%.0o' '%.0o' '%.0o' '%.0o'\n", 0, 9, 16, 34128);
+ ft_printf("mine zero: '%.0o' '%.0o' '%.0o' '%.0o'\n", 0, 9, 16, 34128);
+	printf("real: '%.5o' '%.5o' '%.5o' '%.5o'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%.5o' '%.5o' '%.5o' '%.5o'\n", 0, 9, 16, 34128);
+ printf("\n");
 
-// 	// For x (or X) conversion, a nonzero result has 0x (or 0X) prefixed to it.
-// 	printf("x conversions (no flags)\n");
-// 	printf("real: '%x' '%x' '%x' '%x'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%x' '%x' '%x' '%x'\n", 0, 9, 16, 34128);
-// 	printf("x conversions\n");
-// 	printf("real: '%#x' '%#x' '%#x' '%#x'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%#x' '%#x' '%#x' '%#x'\n", 0, 9, 16, 34128);
-// 	printf("x conversions, 0 precision\n");
-// 	printf("real zero: '%#.0x' '%#.0x' '%#.0x' '%#.0x'\n", 0, 9, 16, 34128);
-//  ft_printf("mine zero: '%#.0x' '%#.0x' '%#.0x' '%#.0x'\n", 0, 9, 16, 34128);
-// 	printf("x conversions, 1 precision\n");
-// 	printf("real: '%#.5x' '%#.5x' '%#.5x' '%#.5x'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%#.5x' '%#.5x' '%#.5x' '%#.5x'\n", 0, 9, 16, 34128);
-//  printf("\n");
+	// For x (or X) conversion, a nonzero result has 0x (or 0X) prefixed to it.
+	printf("x conversions (no flags)\n");
+	printf("real: '%x' '%x' '%x' '%x'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%x' '%x' '%x' '%x'\n", 0, 9, 16, 34128);
+	printf("x conversions\n");
+	printf("real: '%#x' '%#x' '%#x' '%#x'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%#x' '%#x' '%#x' '%#x'\n", 0, 9, 16, 34128);
+	printf("x conversions, 0 precision\n");
+	printf("real zero: '%#.0x' '%#.0x' '%#.0x' '%#.0x'\n", 0, 9, 16, 34128);
+ ft_printf("mine zero: '%#.0x' '%#.0x' '%#.0x' '%#.0x'\n", 0, 9, 16, 34128);
+	printf("x conversions, 1 precision\n");
+	printf("real: '%#.5x' '%#.5x' '%#.5x' '%#.5x'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%#.5x' '%#.5x' '%#.5x' '%#.5x'\n", 0, 9, 16, 34128);
+ printf("\n");
 
-// 	printf("x conversions (no #)\n");
-// 	printf("real: '%x' '%x' '%x' '%x'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%x' '%x' '%x' '%x'\n", 0, 9, 16, 34128);
-// 	printf("real zero: '%.0x' '%.0x' '%.0x' '%.0x'\n", 0, 9, 16, 34128);
-//  ft_printf("mine zero: '%.0x' '%.0x' '%.0x' '%.0x'\n", 0, 9, 16, 34128);
-// 	printf("real: '%.5x' '%.5x' '%.5x' '%.5x'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%.5x' '%.5x' '%.5x' '%.5x'\n", 0, 9, 16, 34128);
-//  printf("\n");
+	printf("x conversions (no #)\n");
+	printf("real: '%x' '%x' '%x' '%x'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%x' '%x' '%x' '%x'\n", 0, 9, 16, 34128);
+	printf("real zero: '%.0x' '%.0x' '%.0x' '%.0x'\n", 0, 9, 16, 34128);
+ ft_printf("mine zero: '%.0x' '%.0x' '%.0x' '%.0x'\n", 0, 9, 16, 34128);
+	printf("real: '%.5x' '%.5x' '%.5x' '%.5x'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%.5x' '%.5x' '%.5x' '%.5x'\n", 0, 9, 16, 34128);
+ printf("\n");
 
-// 	printf("d conversions (no flags)\n");
-// 	printf("real: '%d' '%d' '%d' '%d'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%d' '%d' '%d' '%d'\n", 0, 9, 16, 34128);
-// 	printf("d conversions\n");
-// 	printf("real: '%#d' '%#d' '%#d' '%#d'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%#d' '%#d' '%#d' '%#d'\n", 0, 9, 16, 34128);
-// 	printf("d conversions, 0 precision\n");
-// 	printf("real: '%#.0d' '%#.0d' '%#.0d' '%#.0d'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%#.0d' '%#.0d' '%#.0d' '%#.0d'\n", 0, 9, 16, 34128);
-//  printf("\n");
+	printf("d conversions (no flags)\n");
+	printf("real: '%d' '%d' '%d' '%d'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%d' '%d' '%d' '%d'\n", 0, 9, 16, 34128);
+	printf("d conversions\n");
+	printf("real: '%#d' '%#d' '%#d' '%#d'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%#d' '%#d' '%#d' '%#d'\n", 0, 9, 16, 34128);
+	printf("d conversions, 0 precision\n");
+	printf("real: '%#.0d' '%#.0d' '%#.0d' '%#.0d'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%#.0d' '%#.0d' '%#.0d' '%#.0d'\n", 0, 9, 16, 34128);
+ printf("\n");
 
-// 	printf("d conversions (no #)\n");
-// 	printf("real: '%d' '%d' '%d' '%d'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%d' '%d' '%d' '%d'\n", 0, 9, 16, 34128);
-// 	printf("real zero: '%.0d' '%.0d' '%.0d' '%.0d'\n", 0, 9, 16, 34128);
-//  ft_printf("mine zero: '%.0d' '%.0d' '%.0d' '%.0d'\n", 0, 9, 16, 34128);
-// 	printf("real: '%.5d' '%.5d' '%.5d' '%.5d'\n", 0, 9, 16, 34128);
-//  ft_printf("mine: '%.5d' '%.5d' '%.5d' '%.5d'\n", 0, 9, 16, 34128);
-//  printf("\n");
+	printf("d conversions (no #)\n");
+	printf("real: '%d' '%d' '%d' '%d'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%d' '%d' '%d' '%d'\n", 0, 9, 16, 34128);
+	printf("real zero: '%.0d' '%.0d' '%.0d' '%.0d'\n", 0, 9, 16, 34128);
+ ft_printf("mine zero: '%.0d' '%.0d' '%.0d' '%.0d'\n", 0, 9, 16, 34128);
+	printf("real: '%.5d' '%.5d' '%.5d' '%.5d'\n", 0, 9, 16, 34128);
+ ft_printf("mine: '%.5d' '%.5d' '%.5d' '%.5d'\n", 0, 9, 16, 34128);
+ printf("\n");
 
-	// todo:
 	// For a, A, e, E, f, F, g, and G conversions, the result of converting a floating-point number always contains a decimal-point wide character, even if no digits follow it.
 	// (Normally, a decimal-point wide character appears in the result of these conversions only if a digit follows it.)
-	// For g and G conversions, trailing zeros are not removed from the result.
-	// For other conversions, the behavior is undefined.
+		printf("f conversions (no flags)\n");
+	printf("real: '%f' '%f' '%f' '%f'\n", 0.0, 9.0, 16.0, 34128.0);
+ ft_printf("mine: '%f' '%f' '%f' '%f'\n", 0.0, 9.0, 16.0, 34128.0);
+	printf("f conversions\n");
+	printf("real: '%#f' '%#f' '%#f' '%#f'\n", 0.0, 9.0, 16.0, 34128.0);
+ ft_printf("mine: '%#f' '%#f' '%#f' '%#f'\n", 0.0, 9.0, 16.0, 34128.0);
+	printf("f conversions, 0 precision\n");
+	printf("real: '%#.0f' '%#.0f' '%#.0f' '%#.0f'\n", 0.0, 9.0, 16.0, 34128.0);
+ ft_printf("mine: '%#.0f' '%#.0f' '%#.0f' '%#.0f'\n", 0.0, 9.0, 16.0, 34128.0);
+ printf("\n");
+
+	printf("f conversions (no #)\n");
+	printf("real: '%f' '%f' '%f' '%f'\n", 0.0, 9.0, 16.0, 34128.0);
+ ft_printf("mine: '%f' '%f' '%f' '%f'\n", 0.0, 9.0, 16.0, 34128.0);
+	printf("real zero: '%.0f' '%.0f' '%.0f' '%.0f'\n", 0.0, 9.0, 16.0, 34128.0);
+ ft_printf("mine zero: '%.0f' '%.0f' '%.0f' '%.0f'\n", 0.0, 9.0, 16.0, 34128.0);
+	printf("real: '%.5f' '%.5f' '%.5f' '%.5f'\n", 0.0, 9.0, 16.0, 34128.0);
+ ft_printf("mine: '%.5f' '%.5f' '%.5f' '%.5f'\n", 0.0, 9.0, 16.0, 34128.0);
+ printf("\n");
 
 	// todo:
-	// For d, i, o, u, x, X, a, A, e, E, f, F, g, and G conversions, leading zeros (following any indication of sign or base) are used to pad to the field width rather than performing space padding, except when converting an infinity or NaN. If the 0 and - flags both appear, the 0 flag is ignored. For d, i, o, u, x, and X conversions, if a precision is specified, the 0 flag is ignored. For other conversions, the behavior is undefined.
-	printf("\n====================\n\n");
-	   printf("real: |%#10.5x|\n", 1);
-	ft_printf("mine: |%010.5d|\n", 1);
-	   printf("real: |%#10.5x|\n", 0);
-	ft_printf("mine: |%010.5d|\n", 0);
-	ft_putendl("");
-	   printf("real: |%#5.10x|\n", 1);
-	ft_printf("mine: |%05.10d|\n", 1);
-	   printf("real: |%#5.10x|\n", 0);
-	ft_printf("mine: |%05.10d|\n", 0);
-	ft_putendl("");
-	   printf("real: |%01.0d|\n", 1);
-	ft_printf("mine: |%01.0d|\n", 1);
-	   printf("real: |%01.0d|\n", 0);
-	ft_printf("mine: |%01.0d|\n", 0);
-	ft_putendl("");
+	// For d, i, o, u, x, X, a, A, e, E, f, F, g, and G conversions, leading zeros (following any indication of sign or base)
+	// are used to pad to the field width rather than performing space padding, except when converting an infinity or NaN.
+	// If the 0 and - flags both appear, the 0 flag is ignored.
+	// For d, i, o, u, x, and X conversions, if a precision is specified, the 0 flag is ignored.
+	// For other conversions, the behavior is undefined.
+	// printf("\n====================\n\n");
+	//    printf("real: |%#10.5x|\n", 1);
+	// ft_printf("mine: |%010.5d|\n", 1);
+	//    printf("real: |%#10.5x|\n", 0);
+	// ft_printf("mine: |%010.5d|\n", 0);
+	// ft_putendl("");
+	//    printf("real: |%#5.10x|\n", 1);
+	// ft_printf("mine: |%05.10d|\n", 1);
+	//    printf("real: |%#5.10x|\n", 0);
+	// ft_printf("mine: |%05.10d|\n", 0);
+	// ft_putendl("");
+	//    printf("real: |%01.0d|\n", 1);
+	// ft_printf("mine: |%01.0d|\n", 1);
+	//    printf("real: |%01.0d|\n", 0);
+	// ft_printf("mine: |%01.0d|\n", 0);
+	// ft_putendl("");
+
+	// printf("\n====================\n\n"); // ? ok
+	//    printf("%.0u\n", 5592);
+	// ft_printf("%.0u\n", 5592);
+	// ft_putendl("");
+	//    printf("%.1u\n", 5592);
+	// ft_printf("%.1u\n", 5592);
+	// ft_putendl("");
+	//    printf("%.10u\n", 5592);
+	// ft_printf("%.10u\n", 5592);
+	// ft_putendl("");
 
 }
