@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 18:31:26 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/21 16:57:03 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/21 20:33:39 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,14 +144,15 @@ int			output_uint(unsigned long long arg, t_data *flag)
 
 	if (flag->bit & FLAG_PREFIX)
 	{
+		// ft_putstr(FG_GREEN "prefix" TX_NORMAL);
 		if (flag->type == 'o' && arg)
 		{
-			ft_putstr("0");
+			ft_putstr(FG_GREEN "0" TX_NORMAL);
 			// ft_putstr("<o>");
 		}
 		else if ((flag->type == 'x' || flag->type == 'X') && arg)
 		{
-			ft_putstr("0x");
+			ft_putstr(FG_GREEN "0x" TX_NORMAL);
 			// ft_putstr("<x>");
 		}
 	}

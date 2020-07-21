@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/20 20:24:50 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/21 20:37:25 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,16 @@ static char	parse_precision(const char **format, t_data *flag)
 		// printf("parse next: %c\n", **format);
 		if (**format == '*')
 		{
-			flag->precision = va_arg(flag->ap, int);
+			flag->precision = va_arg(flag->ap, int); // ? negative = none
+			flag->precision = (flag->precision < 0 ? 0 : flag->precision);
 			++(*format);
 			++bytes;
 		}
-		else if (**format == 'f' || **format == 'L')
+		else if (**format == 'f' || **format == 'L') // todo: needed?
 		{
 			flag->precision = 0;
 		}
-		else
+		else //if (**format != 'f' || **format != 'L') // todo: test
 		{
 			if (!ft_isdigit(**format))
 				flag->precision = 0;
@@ -130,55 +131,75 @@ static char	parse_flags(const char **format, t_data *flag)
 	int bytes;
 
 	bytes = 0;
-	while (**format == '-' && ++(*format) && ++bytes)
+	while (**format == '-'
+		|| **format == '+'
+		|| **format == ' '
+		|| **format == '#'
+		|| **format == '0')
 	{
-		flag->bit |= FLAG_JUSTIFY_LEFT;
-	}
-	while (**format == '+' && ++(*format) && ++bytes)
-	{
-		flag->bit |= FLAG_FORCE_SIGN;
-	}
-	while (**format == ' ' && ++(*format) && ++bytes)
-	{
-		flag->bit |= FLAG_HIDE_SIGN;
-	}
-	while (**format == '#' && ++(*format) && ++bytes)
-	{
-		flag->bit |= FLAG_PREFIX;
-	}
-	while (**format == '0' && ++(*format) && ++bytes)
-	{
-		flag->bit |= FLAG_PAD_ZERO;
+		// printf("read: '%c'\n", **format);
+		if (**format == '-')
+		{
+			flag->bit |= FLAG_JUSTIFY_LEFT;
+			// printf("FLAG_JUSTIFY_LEFT set\n");
+
+		}
+		if (**format == '+')
+		{
+			flag->bit |= FLAG_FORCE_SIGN;
+			// printf("FLAG_FORCE_SIGN set\n");
+
+		}
+		if (**format == ' ')
+		{
+			flag->bit |= FLAG_HIDE_SIGN;
+			// printf("FLAG_HIDE_SIGN set\n");
+
+		}
+		if (**format == '#')
+		{
+			flag->bit |= FLAG_PREFIX;
+			// printf("FLAG_PREFIX set\n");
+
+		}
+		if (**format == '0')
+		{
+			flag->bit |= FLAG_PAD_ZERO;
+			// printf("FLAG_PAD_ZERO set\n");
+
+		}
+		(++(*format) && ++bytes);
 	}
 	return (bytes);
 }
-
 
 char		parse_format(const char *format, t_data *flag)
 {
 	int		bytes;
 	char	*type;
 
-	bytes = 1;
+	bytes = 1; // ? percentage-sign
 	// printf("format first char: %c\n\n", *format);
 
 	bytes += parse_flags(&format, flag);
-	// printf("bytes: %d (flags), next: %c\n", bytes, *format);
+	// printf("\nbytes: %d (flags), next: %c\n", bytes, *format);
+	// printf("Flags set: {%d}\n", flag->bit);
 
 	bytes += parse_width(&format, flag);
-	// printf("bytes: %d (width), next: %c\n", bytes, *format);
+	// printf("\nbytes: %d (width), next: %c\n", bytes, *format);
 
 	bytes += parse_precision(&format, flag);
-	// printf("bytes: %d (precision), next: %c\n", bytes, *format);
+	// printf("\nbytes: %d (precision), next: %c\n", bytes, *format);
 
 	bytes += parse_specifier(&format, flag);
-	// printf("bytes: %d (specifier), next: %c\n\n", bytes, *format);
+	// printf("\nbytes: %d (specifier), next: %c\n\n", bytes, *format);
 
 	type = ft_strchr("sdfciXxu%op", *format);
 	flag->type = (type ? *type : 0);
 	if (!flag->type)
 	{
-		ft_putstr("{Unrecognized type}");
+		// ft_putstr("{Unrecognized type}");
+		printf("{Unrecognized type:%s}\n", type);
 		return (0);
 	}
 	return (bytes);
