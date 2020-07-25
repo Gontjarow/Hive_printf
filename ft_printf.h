@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/20 12:15:52 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/25 22:45:00 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ typedef struct	s_data
 int				ft_printf(const char *format, ...);
 char			parse_format(const char *format, t_data *flag);
 
-int				output_str(char *arg, t_data *flag);
-int				output_int(long long arg, t_data *flag);
-int				output_uint(unsigned long long arg, t_data *flag);
-int				output_pointer(void *arg, t_data *flag);
-int				output_double(long double arg, t_data *flag);
+void			output_str(char *arg, t_data *flag);
+void			output_int(long long arg, t_data *flag);
+void			output_uint(unsigned long long arg, t_data *flag);
+void			output_pointer(void *arg, t_data *flag);
+void			output_double(long double arg, t_data *flag);
 
 void			putstr_case(const char *str, int mode);
 int				width_padder(int length, t_data *flag, long long arg);

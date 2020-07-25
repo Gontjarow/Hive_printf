@@ -1,4 +1,4 @@
-NAME = ft_printf
+NAME = libftprintf.a
 
 SOURCES = ft_printf.c \
 	strany.c          \
@@ -7,11 +7,7 @@ SOURCES = ft_printf.c \
 	output_pointer.c  \
 	output_float.c    \
 	output_uint.c     \
-	output_int.c      \
-	utoa.c            \
-	ft_ftoa.c         \
-	binary.c          \
-	test.c
+	output_int.c
 
 OBJECTS = $(subst .c,.o,$(SOURCES))
 
@@ -28,7 +24,8 @@ END = \033[0m
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	@gcc $(OBJECTS) -o $(NAME) $(FLAGS) $(LINKS)
+	@ar -rc $(NAME) $(OBJECTS)
+	# @libtool -static -o $(NAME) $(NAME)
 	@echo "$(MSG)$(NAME) done!$(END)"
 
 $(OBJECTS): $(LIBFT) $(SOURCES)
@@ -49,3 +46,8 @@ fclean: clean
 	@echo "$(MSG)$(NAME) targets removed!$(END)"
 
 re: fclean all
+
+test: $(NAME)
+	@echo "$(MSG)Compiling test ...$(END)"
+	@gcc $(FLAGS) test.c -o FT_PRINTF -I. -L. -lftprintf -Ilibft -Llibft -lft
+	@echo "$(MSG)Done!$(END)"
