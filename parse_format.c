@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_format.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/21 20:37:25 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/25 04:26:45 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,33 +142,28 @@ static char	parse_flags(const char **format, t_data *flag)
 		{
 			flag->bit |= FLAG_JUSTIFY_LEFT;
 			// printf("FLAG_JUSTIFY_LEFT set\n");
-
 		}
 		if (**format == '+')
 		{
 			flag->bit |= FLAG_FORCE_SIGN;
 			// printf("FLAG_FORCE_SIGN set\n");
-
 		}
 		if (**format == ' ')
 		{
 			flag->bit |= FLAG_HIDE_SIGN;
 			// printf("FLAG_HIDE_SIGN set\n");
-
 		}
 		if (**format == '#')
 		{
 			flag->bit |= FLAG_PREFIX;
 			// printf("FLAG_PREFIX set\n");
-
 		}
 		if (**format == '0')
 		{
 			flag->bit |= FLAG_PAD_ZERO;
 			// printf("FLAG_PAD_ZERO set\n");
-
 		}
-		(++(*format) && ++bytes);
+		++(*format) && ++bytes; // ? Norminette is okay with this. I'm not, but it's better than potentially having to split this function in two.
 	}
 	return (bytes);
 }
