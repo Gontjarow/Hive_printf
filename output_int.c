@@ -50,7 +50,7 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	int		z;
 	int		len;
 
-	len = (int)ft_strlen(str);
+	len = (flag->precision == 0 && arg == 0) ? 0 : (int)ft_strlen(str);
 	// printf("len = %ld\n", len);
 
 	if (flag->precision == -1 || flag->precision < len - (arg < 0))
@@ -83,6 +83,12 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	if (z > 0)
 		w -= z;
 
+	if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0) && (w >= len + z))
+	{
+		z += w;
+		w = 0;
+	}
+
 	while (w > 0)
 	{
 		write(1, " ", 1);
@@ -100,6 +106,7 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	while (z > 0)
 	{
 		write(1, "0", 1);
+		// ft_putstr(FG_GREEN "0" TX_NORMAL);
 		++flag->written;
 		--z;
 	}
@@ -109,8 +116,8 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	flag->written += ft_putstrn(str, flag->p - (arg < 0));
 }
 
-// Undefined flags:
-// Applicable flags: -, +, ' ', #, 0
+// Undefined flags: #
+// Applicable flags: -, +, ' ', 0
 // Precision: Minimum amount of digits, leading zeroes if necessary.
 // If value is zero and precision is exactly zero, print nothing.
 // todo: Separate 'c' from here? It has significant difference to 'd' and 'i'
