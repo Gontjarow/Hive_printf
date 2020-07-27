@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/27 08:46:50 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/27 17:29:32 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 
 # define FLAG_JUSTIFY_LEFT	0b1
 # define FLAG_FORCE_SIGN	0b10
-# define FLAG_HIDE_SIGN		0b100
+# define FLAG_PAD_SIGN		0b100
 # define FLAG_PREFIX		0b1000
-# define FLAG_PAD_ZERO		0b10000
+# define FLAG_LEADING_ZERO	0b10000
 
 # define TX_NORMAL  "\x1B[0m"
 # define FG_BLACK   "\x1B[30m"

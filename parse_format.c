@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_format.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/25 04:26:45 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/27 17:29:21 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,8 @@ static char	parse_flags(const char **format, t_data *flag)
 		}
 		if (**format == ' ')
 		{
-			flag->bit |= FLAG_HIDE_SIGN;
-			// printf("FLAG_HIDE_SIGN set\n");
+			flag->bit |= FLAG_PAD_SIGN;
+			// printf("FLAG_PAD_SIGN set\n");
 		}
 		if (**format == '#')
 		{
@@ -160,8 +160,8 @@ static char	parse_flags(const char **format, t_data *flag)
 		}
 		if (**format == '0')
 		{
-			flag->bit |= FLAG_PAD_ZERO;
-			// printf("FLAG_PAD_ZERO set\n");
+			flag->bit |= FLAG_LEADING_ZERO;
+			// printf("FLAG_LEADING_ZERO set\n");
 		}
 		++(*format) && ++bytes; // ? Norminette is okay with this. I'm not, but it's better than potentially having to split this function in two.
 	}
