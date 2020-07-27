@@ -8,6 +8,7 @@ SOURCES = ft_printf.c \
 	output_float.c    \
 	output_uint.c     \
 	output_int.c      \
+	output_char.c     \
 	ft_abs.c
 
 OBJECTS = $(subst .c,.o,$(SOURCES))

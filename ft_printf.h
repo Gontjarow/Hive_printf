@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/26 05:56:04 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/27 08:46:50 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int				ft_printf(const char *format, ...);
 char			parse_format(const char *format, t_data *flag);
 
 void			output_str(char *arg, t_data *flag);
+void			output_char(unsigned char arg, t_data *flag);
 void			output_int(long long arg, t_data *flag);
 void			output_uint(unsigned long long arg, t_data *flag);
 void			output_pointer(void *arg, t_data *flag);

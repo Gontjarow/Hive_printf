@@ -94,60 +94,88 @@ int			main(int argc, char **argv)
 	// printf("\n===========================\n");
 	// printf("===========================\n\n");
 
-	printf("Pointer format:\n");
-	printf("\nbasic: (no flags, null, address)\n");
-	a =    printf("real: |%p|\n", NULL);
-	b = ft_printf("mine: |%p|\n", NULL);
-	assert(a == b);
-	a =    printf("real: |%p|\n", &a);
-	b = ft_printf("mine: |%p|\n", &a);
-	assert(a == b);
+	// printf("Pointer format:\n");
+	// printf("\nbasic: (no flags, null, address)\n");
+	// a =    printf("real: |%p|\n", NULL);
+	// b = ft_printf("mine: |%p|\n", NULL);
+	// assert(a == b);
+	// a =    printf("real: |%p|\n", &a);
+	// b = ft_printf("mine: |%p|\n", &a);
+	// assert(a == b);
 
-	printf("\nwidth (greater, smaller, equal)\n");
-	a =    printf("real: |%20p|\n", NULL);
-	b = ft_printf("mine: |%20p|\n", NULL);
-	assert(a == b);
-	a =    printf("real: |%20p|\n", &a);
-	b = ft_printf("mine: |%20p|\n", &a);
+	// printf("\nwidth (greater, smaller, equal)\n");
+	// a =    printf("real: |%20p|\n", NULL);
+	// b = ft_printf("mine: |%20p|\n", NULL);
+	// assert(a == b);
+	// a =    printf("real: |%20p|\n", &a);
+	// b = ft_printf("mine: |%20p|\n", &a);
+	// assert(a == b);
+	// printf("\n");
+
+	// a =    printf("real: |%2p|\n", NULL);
+	// b = ft_printf("mine: |%2p|\n", NULL);
+	// assert(a == b);
+	// a =    printf("real: |%2p|\n", &a);
+	// b = ft_printf("mine: |%2p|\n", &a);
+	// assert(a == b);
+	// printf("\n");
+
+	// a =    printf("real: |%5p|\n", NULL);
+	// b = ft_printf("mine: |%5p|\n", NULL);
+	// assert(a == b);
+	// a =    printf("real: |%14p|\n", &a);
+	// b = ft_printf("mine: |%14p|\n", &a);
+	// assert(a == b);
+
+	// printf("\nwidth (flags: -)\n");
+	// a =    printf("real: |%-20p|\n", NULL);
+	// b = ft_printf("mine: |%-20p|\n", NULL);
+	// assert(a == b);
+	// a =    printf("real: |%-20p|\n", &a);
+	// b = ft_printf("mine: |%-20p|\n", &a);
+	// assert(a == b);
+	// printf("\n");
+
+	// a =    printf("real: |%-2p|\n", NULL);
+	// b = ft_printf("mine: |%-2p|\n", NULL);
+	// assert(a == b);
+	// a =    printf("real: |%-2p|\n", &a);
+	// b = ft_printf("mine: |%-2p|\n", &a);
+	// assert(a == b);
+	// printf("\n");
+
+	// a =    printf("real: |%-5p|\n", NULL);
+	// b = ft_printf("mine: |%-5p|\n", NULL);
+	// assert(a == b);
+	// a =    printf("real: |%-14p|\n", &a);
+	// b = ft_printf("mine: |%-14p|\n", &a);
+	// assert(a == b);
+
+	// printf("\n===========================\n");
+	// printf("===========================\n\n");
+
+	printf("Character format\n");
+	printf("\nbasic: (no flags)\n");
+	a =    printf("real: |%c|\n", '@');
+	b = ft_printf("mine: |%c|\n", '@');
 	assert(a == b);
 	printf("\n");
 
-	a =    printf("real: |%2p|\n", NULL);
-	b = ft_printf("mine: |%2p|\n", NULL);
+	printf("\nwidth (greater, equal)\n");
+	a =    printf("real: |%5c|\n", '@');
+	b = ft_printf("mine: |%5c|\n", '@');
 	assert(a == b);
-	a =    printf("real: |%2p|\n", &a);
-	b = ft_printf("mine: |%2p|\n", &a);
+	a =    printf("real: |%1c|\n", '@');
+	b = ft_printf("mine: |%1c|\n", '@');
 	assert(a == b);
 	printf("\n");
-
-	a =    printf("real: |%5p|\n", NULL);
-	b = ft_printf("mine: |%5p|\n", NULL);
-	assert(a == b);
-	a =    printf("real: |%14p|\n", &a);
-	b = ft_printf("mine: |%14p|\n", &a);
-	assert(a == b);
 
 	printf("\nwidth (flags: -)\n");
-	a =    printf("real: |%-20p|\n", NULL);
-	b = ft_printf("mine: |%-20p|\n", NULL);
+	a =    printf("real: |%-5c|\n", '@');
+	b = ft_printf("mine: |%-5c|\n", '@');
 	assert(a == b);
-	a =    printf("real: |%-20p|\n", &a);
-	b = ft_printf("mine: |%-20p|\n", &a);
-	assert(a == b);
-	printf("\n");
-
-	a =    printf("real: |%-2p|\n", NULL);
-	b = ft_printf("mine: |%-2p|\n", NULL);
-	assert(a == b);
-	a =    printf("real: |%-2p|\n", &a);
-	b = ft_printf("mine: |%-2p|\n", &a);
+	a =    printf("real: |%-1c|\n", '@');
+	b = ft_printf("mine: |%-1c|\n", '@');
 	assert(a == b);
 	printf("\n");
-
-	a =    printf("real: |%-5p|\n", NULL);
-	b = ft_printf("mine: |%-5p|\n", NULL);
-	assert(a == b);
-	a =    printf("real: |%-14p|\n", &a);
-	b = ft_printf("mine: |%-14p|\n", &a);
-	assert(a == b);
 }
