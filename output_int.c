@@ -5,12 +5,13 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 	// printf("\n");
 
 	int		w;
-	size_t	len;
+	int		z;
+	int		len;
 
-	len = ft_strlen(str);
+	len = (flag->precision == 0 && arg == 0) ? 0 : (int)ft_strlen(str);
 	// printf("len = %ld\n", len);
 
-	if (flag->precision == -1)
+	if (flag->precision == -1 || flag->precision < len - (arg < 0))
 		flag->p = len;
 	else
 		flag->p = flag->precision;
@@ -26,7 +27,44 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 		w = 0;
 	// printf("w = %ld\n", w);
 
-	flag->written += ft_putstrn(str, flag->p);
+	if (arg >= 0 && flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN))
+	{
+		--w;
+	}
+
+	if (flag->precision > len - (arg < 0))
+		z = flag->precision - len + (arg < 0); // ? negative-sign should be ignored for this.
+	else
+		z = 0;
+	// printf("{w = %d, pre = %d, len = %lu, z = %d}\n", w, flag->precision, len, z);
+
+	if (z > 0)
+		w -= z;
+
+	if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0) && (w >= len + z))
+	{
+		z += w;
+		w = 0;
+	}
+
+	if (flag->bit & FLAG_FORCE_SIGN && arg >= 0)
+		flag->written += ft_putstr("+");
+	else if (flag->bit & FLAG_PAD_SIGN && arg >= 0)
+		flag->written += ft_putstr(" ");
+	else if (arg < 0)
+		flag->written += ft_putstrn(str++, 1); // ? Advance the pointer...
+
+	while (z > 0)
+	{
+		write(1, "0", 1);
+		// ft_putstr(FG_GREEN "0" TX_NORMAL);
+		++flag->written;
+		--z;
+	}
+
+	// Note: Negative sign has already been printed.
+	// Todo: Find a more elegant solution?
+	flag->written += ft_putstrn(str, flag->p - (arg < 0));
 
 	while (w > 0)
 	{
