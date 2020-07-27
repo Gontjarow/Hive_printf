@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output_pointer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/26 07:48:21 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/26 10:54:28 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/27 13:22:31 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static void justify_left(void *arg, const char *str, t_data *flag)
 	size_t	len;
 	int		prefix;
 
-	prefix = 2 * (arg != NULL);
+	// prefix = 2 * (arg != NULL);
+	prefix = 2;
 	len = ft_strlen(str) + prefix;
 	// printf("len = %ld\n", len);
 
@@ -59,7 +60,8 @@ static void justify_right(void *arg, const char *str, t_data *flag)
 	size_t	len;
 	int		prefix;
 
-	prefix = 2 * (arg != NULL);
+	// prefix = 2 * (arg != NULL);
+	prefix = 2;
 	len = ft_strlen(str);
 	// printf("len = %ld\n", len);
 
@@ -93,6 +95,7 @@ static void justify_right(void *arg, const char *str, t_data *flag)
 // Undefined flags: #, 0, ' ', +
 // Applicable flags: -
 // Precision: Undefined
+// note: School Mac prints 0x0 for null.
 void	output_pointer(void *arg, t_data *flag)
 {
 	// printf("\n");
@@ -102,7 +105,8 @@ void	output_pointer(void *arg, t_data *flag)
 	if (arg)
 		str = ft_itoa_base((long long)arg, 16);
 	else
-		str = ft_strdup("(nil)"); // todo: change to "(null)"
+		// str = ft_strdup("(nil)"); // todo: change to "(null)"
+		str = ft_strdup("0");
 
 	if (flag->bit & FLAG_JUSTIFY_LEFT)
 		justify_left(arg, str, flag);
