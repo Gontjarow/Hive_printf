@@ -476,355 +476,380 @@ int			main(int argc, char **argv)
 
 	// printf("\n===========================\n");
 
-	// printf("\nInteger format (negative flag)\n");
-	// printf("\n0:\n");
-	// a =    printf("real: |%-d|\n", 0);
-	// b = ft_printf("mine: |%-d|\n", 0);
-	// assert(a == b);
-	// a =    printf("real: |%-5.0d|\n", 0);
-	// b = ft_printf("mine: |%-5.0d|\n", 0);
-	// assert(a == b);
+	printf("\nInteger format (negative flag)\n");
+	printf("\n0:\n");
+	a =    printf("real: |%-d|\n", 0);
+	b = ft_printf("mine: |%-d|\n", 0);
+	assert(a == b);
+	a =    printf("real: |%-5.0d|\n", 0);
+	b = ft_printf("mine: |%-5.0d|\n", 0);
+	assert(a == b);
 
-	// printf("\n-1:\n");
-	// a =    printf("real: |%-d|\n", -1);
-	// b = ft_printf("mine: |%-d|\n", -1);
-	// assert(a == b);
+	printf("\n-1:\n");
+	a =    printf("real: |%-d|\n", -1);
+	b = ft_printf("mine: |%-d|\n", -1);
+	assert(a == b);
 
-	// printf("\nMAX_INT:\n");
-	// a =    printf("real: |%-d|\n", MAX_INT);
-	// b = ft_printf("mine: |%-d|\n", MAX_INT);
-	// assert(a == b);
+	printf("\nMAX_INT:\n");
+	a =    printf("real: |%-d|\n", MAX_INT);
+	b = ft_printf("mine: |%-d|\n", MAX_INT);
+	assert(a == b);
 
-	// printf("\nMIN_INT:\n");
-	// a =    printf("real: |%-d|\n", MIN_INT);
-	// b = ft_printf("mine: |%-d|\n", MIN_INT);
-	// assert(a == b);
+	printf("\nMIN_INT:\n");
+	a =    printf("real: |%-d|\n", MIN_INT);
+	b = ft_printf("mine: |%-d|\n", MIN_INT);
+	assert(a == b);
 
-	// printf("\nprecison == 0\n");
-	// a =    printf("real: |%-.0d|\n", 0);
-	// b = ft_printf("mine: |%-.0d|\n", 0);
-	// assert(a == b);
-	// a =    printf("real: |%-.0d|\n", 1);
-	// b = ft_printf("mine: |%-.0d|\n", 1);
-	// assert(a == b);
-	// a =    printf("real: |%-.0d|\n", -123);
-	// b = ft_printf("mine: |%-.0d|\n", -123);
-	// assert(a == b);
+	printf("\nprecison == 0\n");
+	a =    printf("real: |%-.0d|\n", 0);
+	b = ft_printf("mine: |%-.0d|\n", 0);
+	assert(a == b);
+	a =    printf("real: |%-.0d|\n", 1);
+	b = ft_printf("mine: |%-.0d|\n", 1);
+	assert(a == b);
+	a =    printf("real: |%-.0d|\n", -123);
+	b = ft_printf("mine: |%-.0d|\n", -123);
+	assert(a == b);
 
-	// printf("\nwidth: (greater)\n");
-	// printf("\n0:\n");
-	// a =    printf("real: |%-15d|\n", 0);
-	// b = ft_printf("mine: |%-15d|\n", 0);
-	// assert(a == b);
+	printf("\nwidth: (greater)\n");
+	printf("\n0:\n");
+	a =    printf("real: |%-15d|\n", 0);
+	b = ft_printf("mine: |%-15d|\n", 0);
+	assert(a == b);
 
-	// printf("\n-1:\n");
-	// a =    printf("real: |%-15d|\n", -1);
-	// b = ft_printf("mine: |%-15d|\n", -1);
-	// assert(a == b);
+	printf("\n-1:\n");
+	a =    printf("real: |%-15d|\n", -1);
+	b = ft_printf("mine: |%-15d|\n", -1);
+	assert(a == b);
 
-	// printf("\nMAX_INT:\n");
-	// a =    printf("real: |%-15d|\n", MAX_INT);
-	// b = ft_printf("mine: |%-15d|\n", MAX_INT);
-	// assert(a == b);
+	printf("\nMAX_INT:\n");
+	a =    printf("real: |%-15d|\n", MAX_INT);
+	b = ft_printf("mine: |%-15d|\n", MAX_INT);
+	assert(a == b);
 
-	// printf("\nMIN_INT:\n");
-	// a =    printf("real: |%-15d|\n", MIN_INT);
-	// b = ft_printf("mine: |%-15d|\n", MIN_INT);
-	// assert(a == b);
+	printf("\nMIN_INT:\n");
+	a =    printf("real: |%-15d|\n", MIN_INT);
+	b = ft_printf("mine: |%-15d|\n", MIN_INT);
+	assert(a == b);
 
-	// printf("\nwidth: (1)\n");
-	// printf("\n0:\n");
-	// a =    printf("real: |%-1d|\n", 0);
-	// b = ft_printf("mine: |%-1d|\n", 0);
-	// assert(a == b);
+	printf("\nwidth: (1)\n");
+	printf("\n0:\n");
+	a =    printf("real: |%-1d|\n", 0);
+	b = ft_printf("mine: |%-1d|\n", 0);
+	assert(a == b);
 
-	// printf("\n-1:\n");
-	// a =    printf("real: |%-1d|\n", -1);
-	// b = ft_printf("mine: |%-1d|\n", -1);
-	// assert(a == b);
+	printf("\n-1:\n");
+	a =    printf("real: |%-1d|\n", -1);
+	b = ft_printf("mine: |%-1d|\n", -1);
+	assert(a == b);
 
-	// printf("\nMAX_INT:\n");
-	// a =    printf("real: |%-1d|\n", MAX_INT);
-	// b = ft_printf("mine: |%-1d|\n", MAX_INT);
-	// assert(a == b);
+	printf("\nMAX_INT:\n");
+	a =    printf("real: |%-1d|\n", MAX_INT);
+	b = ft_printf("mine: |%-1d|\n", MAX_INT);
+	assert(a == b);
 
-	// printf("\nMIN_INT:\n");
-	// a =    printf("real: |%-1d|\n", MIN_INT);
-	// b = ft_printf("mine: |%-1d|\n", MIN_INT);
-	// assert(a == b);
+	printf("\nMIN_INT:\n");
+	a =    printf("real: |%-1d|\n", MIN_INT);
+	b = ft_printf("mine: |%-1d|\n", MIN_INT);
+	assert(a == b);
 
-	// printf("\nwidth: (equal)\n");
-	// printf("\n0:\n");
-	// a =    printf("real: |%-1d|\n", 0);
-	// b = ft_printf("mine: |%-1d|\n", 0);
-	// assert(a == b);
+	printf("\nwidth: (equal)\n");
+	printf("\n0:\n");
+	a =    printf("real: |%-1d|\n", 0);
+	b = ft_printf("mine: |%-1d|\n", 0);
+	assert(a == b);
 
-	// printf("\n-1:\n");
-	// a =    printf("real: |%-2d|\n", -1);
-	// b = ft_printf("mine: |%-2d|\n", -1);
-	// assert(a == b);
+	printf("\n-1:\n");
+	a =    printf("real: |%-2d|\n", -1);
+	b = ft_printf("mine: |%-2d|\n", -1);
+	assert(a == b);
 
-	// printf("\nMAX_INT:\n");
-	// a =    printf("real: |%-10d|\n", MAX_INT);
-	// b = ft_printf("mine: |%-10d|\n", MAX_INT);
-	// assert(a == b);
+	printf("\nMAX_INT:\n");
+	a =    printf("real: |%-10d|\n", MAX_INT);
+	b = ft_printf("mine: |%-10d|\n", MAX_INT);
+	assert(a == b);
 
-	// printf("\nMIN_INT:\n");
-	// a =    printf("real: |%-11d|\n", MIN_INT);
-	// b = ft_printf("mine: |%-11d|\n", MIN_INT);
-	// assert(a == b);
+	printf("\nMIN_INT:\n");
+	a =    printf("real: |%-11d|\n", MIN_INT);
+	b = ft_printf("mine: |%-11d|\n", MIN_INT);
+	assert(a == b);
 
-	// printf("\n+ flag\n");
-	// printf("\npositive (greater width)\n");
-	// a =    printf("real: |%-+5d|\n", 123);
-	// b = ft_printf("mine: |%-+5d|\n", 123);
-	// assert(a == b);
+	printf("\n+ flag\n");
+	printf("\npositive (greater width)\n");
+	a =    printf("real: |%-+5d|\n", 123);
+	b = ft_printf("mine: |%-+5d|\n", 123);
+	assert(a == b);
 
-	// printf("\npositive (equal width)\n");
-	// a =    printf("real: |%-+3d|\n", 123);
-	// b = ft_printf("mine: |%-+3d|\n", 123);
-	// assert(a == b);
+	printf("\npositive (equal width)\n");
+	a =    printf("real: |%-+3d|\n", 123);
+	b = ft_printf("mine: |%-+3d|\n", 123);
+	assert(a == b);
 
-	// printf("\npositive (no width)\n");
-	// a =    printf("real: |%-+d|\n", 123);
-	// b = ft_printf("mine: |%-+d|\n", 123);
-	// assert(a == b);
+	printf("\npositive (no width)\n");
+	a =    printf("real: |%-+d|\n", 123);
+	b = ft_printf("mine: |%-+d|\n", 123);
+	assert(a == b);
 
-	// printf("\nzero (no width)\n");
-	// a =    printf("real: |%-+d|\n", 0);
-	// b = ft_printf("mine: |%-+d|\n", 0);
-	// assert(a == b);
+	printf("\nzero (no width)\n");
+	a =    printf("real: |%-+d|\n", 0);
+	b = ft_printf("mine: |%-+d|\n", 0);
+	assert(a == b);
 
-	// printf("\nnegative (greater width)\n");
-	// a =    printf("real: |%-+5d|\n", -123);
-	// b = ft_printf("mine: |%-+5d|\n", -123);
-	// assert(a == b);
+	printf("\nnegative (greater width)\n");
+	a =    printf("real: |%-+5d|\n", -123);
+	b = ft_printf("mine: |%-+5d|\n", -123);
+	assert(a == b);
 
-	// printf("\nnegative (equal width)\n");
-	// a =    printf("real: |%-+3d|\n", -123);
-	// b = ft_printf("mine: |%-+3d|\n", -123);
-	// assert(a == b);
+	printf("\nnegative (equal width)\n");
+	a =    printf("real: |%-+3d|\n", -123);
+	b = ft_printf("mine: |%-+3d|\n", -123);
+	assert(a == b);
 
-	// printf("\nnegative (no width)\n");
-	// a =    printf("real: |%-+d|\n", -123);
-	// b = ft_printf("mine: |%-+d|\n", -123);
-	// assert(a == b);
+	printf("\nnegative (no width)\n");
+	a =    printf("real: |%-+d|\n", -123);
+	b = ft_printf("mine: |%-+d|\n", -123);
+	assert(a == b);
 
-	// printf("\n+ flag (precision > width)\n");
-	// a =    printf("real: |%-+.15d|\n", MIN_INT);
-	// b = ft_printf("mine: |%-+.15d|\n", MIN_INT);
-	// assert(a == b);
+	printf("\n+ flag (precision > width)\n");
+	a =    printf("real: |%-+.15d|\n", MIN_INT);
+	b = ft_printf("mine: |%-+.15d|\n", MIN_INT);
+	assert(a == b);
 
-	// printf("\n+ flag (precision < width)\n");
-	// a =    printf("real: |%-+20.15d|\n", MIN_INT);
-	// b = ft_printf("mine: |%-+20.15d|\n", MIN_INT);
-	// assert(a == b);
+	printf("\n+ flag (precision < width)\n");
+	a =    printf("real: |%-+20.15d|\n", MIN_INT);
+	b = ft_printf("mine: |%-+20.15d|\n", MIN_INT);
+	assert(a == b);
 
-	// printf("\n+ flag ((precision == width) < length)\n");
-	// a =    printf("real: |%-+5.5d|\n", MIN_INT);
-	// b = ft_printf("mine: |%-+5.5d|\n", MIN_INT);
-	// assert(a == b);
+	printf("\n+ flag ((precision == width) < length)\n");
+	a =    printf("real: |%-+5.5d|\n", MIN_INT);
+	b = ft_printf("mine: |%-+5.5d|\n", MIN_INT);
+	assert(a == b);
 
-	// printf("\n' ' flag, negative (precision > width)\n");
-	// a =    printf("real: |%- .15d|\n", MIN_INT);
-	// b = ft_printf("mine: |%- .15d|\n", MIN_INT);
-	// assert(a == b);
+	printf("\n' ' flag, negative (precision > width)\n");
+	a =    printf("real: |%- .15d|\n", MIN_INT);
+	b = ft_printf("mine: |%- .15d|\n", MIN_INT);
+	assert(a == b);
 
-	// printf("\n' ' flag, negative (precision < width)\n");
-	// a =    printf("real: |%- 20.15d|\n", MIN_INT);
-	// b = ft_printf("mine: |%- 20.15d|\n", MIN_INT);
-	// assert(a == b);
+	printf("\n' ' flag, negative (precision < width)\n");
+	a =    printf("real: |%- 20.15d|\n", MIN_INT);
+	b = ft_printf("mine: |%- 20.15d|\n", MIN_INT);
+	assert(a == b);
 
-	// printf("\n' ' flag, negative ((precision == width) < length)\n");
-	// a =    printf("real: |%- 5.5d|\n", MIN_INT);
-	// b = ft_printf("mine: |%- 5.5d|\n", MIN_INT);
-	// assert(a == b);
+	printf("\n' ' flag, negative ((precision == width) < length)\n");
+	a =    printf("real: |%- 5.5d|\n", MIN_INT);
+	b = ft_printf("mine: |%- 5.5d|\n", MIN_INT);
+	assert(a == b);
 
-	// printf("\n' ' flag, positive (precision > width)\n");
-	// a =    printf("real: |%- .15d|\n", 1);
-	// b = ft_printf("mine: |%- .15d|\n", 1);
-	// assert(a == b);
+	printf("\n' ' flag, positive (precision > width)\n");
+	a =    printf("real: |%- .15d|\n", 1);
+	b = ft_printf("mine: |%- .15d|\n", 1);
+	assert(a == b);
 
-	// printf("\n' ' flag, positive (precision < width)\n");
-	// a =    printf("real: |%- 20.15d|\n", 1);
-	// b = ft_printf("mine: |%- 20.15d|\n", 1);
-	// assert(a == b);
+	printf("\n' ' flag, positive (precision < width)\n");
+	a =    printf("real: |%- 20.15d|\n", 1);
+	b = ft_printf("mine: |%- 20.15d|\n", 1);
+	assert(a == b);
 
-	// printf("\n' ' flag, positive ((precision == width) > length)\n");
-	// a =    printf("real: |%- 5.5d|\n", 1);
-	// b = ft_printf("mine: |%- 5.5d|\n", 1);
-	// assert(a == b);
+	printf("\n' ' flag, positive ((precision == width) > length)\n");
+	a =    printf("real: |%- 5.5d|\n", 1);
+	b = ft_printf("mine: |%- 5.5d|\n", 1);
+	assert(a == b);
 
-	// printf("\n' ' flag, positive ((precision == width) < length)\n");
-	// a =    printf("real: |%- 2.2d|\n", 123);
-	// b = ft_printf("mine: |%- 2.2d|\n", 123);
-	// assert(a == b);
+	printf("\n' ' flag, positive ((precision == width) < length)\n");
+	a =    printf("real: |%- 2.2d|\n", 123);
+	b = ft_printf("mine: |%- 2.2d|\n", 123);
+	assert(a == b);
 
-	// printf("\n%% +5.5d\n");
-	// a =    printf("real: |%- +5.5d|\n", 1);
-	// b = ft_printf("mine: |%- +5.5d|\n", 1);
-	// assert(a == b);
+	printf("\n%% +5.5d\n");
+	a =    printf("real: |%- +5.5d|\n", 1);
+	b = ft_printf("mine: |%- +5.5d|\n", 1);
+	assert(a == b);
 
-	// printf("\n%% +15.5d\n");
-	// a =    printf("real: |%- +15.5d|\n", 1);
-	// b = ft_printf("mine: |%- +15.5d|\n", 1);
-	// assert(a == b);
+	printf("\n%% +15.5d\n");
+	a =    printf("real: |%- +15.5d|\n", 1);
+	b = ft_printf("mine: |%- +15.5d|\n", 1);
+	assert(a == b);
 
-	// printf("\n%% +5.15d\n");
-	// a =    printf("real: |%- +5.15d|\n", 1);
-	// b = ft_printf("mine: |%- +5.15d|\n", 1);
-	// assert(a == b);
+	printf("\n%% +5.15d\n");
+	a =    printf("real: |%- +5.15d|\n", 1);
+	b = ft_printf("mine: |%- +5.15d|\n", 1);
+	assert(a == b);
 
-	// printf("\n0 flag, negative (width)\n");
-	// a =    printf("real: |%-010d|\n", -123);
-	// b = ft_printf("mine: |%-010d|\n", -123);
-	// assert(a == b);
+	printf("\n-0 flag, negative (width)\n");
+	a =    printf("real: |%-010d|\n", -123);
+	b = ft_printf("mine: |%-010d|\n", -123);
+	assert(a == b);
 
-	// printf("\n0 flag, negative (precision > width)\n");
-	// a =    printf("real: |%-01.10d|\n", -123);
-	// b = ft_printf("mine: |%-01.10d|\n", -123);
-	// assert(a == b);
+	printf("\n-0 flag, negative (precision > width)\n");
+	a =    printf("real: |%-01.10d|\n", -123);
+	b = ft_printf("mine: |%-01.10d|\n", -123);
+	assert(a == b);
 
-	// printf("\n0 flag, negative ((precision == width) > length)\n");
-	// a =    printf("real: |%-010.10d|\n", -123);
-	// b = ft_printf("mine: |%-010.10d|\n", -123);
-	// assert(a == b);
+	printf("\n-0 flag, negative ((precision == width) > length)\n");
+	a =    printf("real: |%-010.10d|\n", -123);
+	b = ft_printf("mine: |%-010.10d|\n", -123);
+	assert(a == b);
 
-	// printf("\n0 flag, negative ((precision == width) < length)\n");
-	// a =    printf("real: |%-02.2d|\n", -123);
-	// b = ft_printf("mine: |%-02.2d|\n", -123);
-	// assert(a == b);
+	printf("\n-0 flag, negative ((precision == width) < length)\n");
+	a =    printf("real: |%-02.2d|\n", -123);
+	b = ft_printf("mine: |%-02.2d|\n", -123);
+	assert(a == b);
 
-	// printf("\n0 flag, negative (precision < width)\n");
-	// a =    printf("real: |%-010.5d|\n", -123);
-	// b = ft_printf("mine: |%-010.5d|\n", -123);
-	// assert(a == b);
+	printf("\n-0 flag, negative (precision < width)\n");
+	a =    printf("real: |%-010.5d|\n", -123);
+	b = ft_printf("mine: |%-010.5d|\n", -123);
+	assert(a == b);
+
+	printf("\n0 flag, negative (width)\n");
+	a =    printf("real: |%010d|\n", -123);
+	b = ft_printf("mine: |%010d|\n", -123);
+	assert(a == b);
+
+	printf("\n0 flag, negative (precision > width)\n");
+	a =    printf("real: |%01.10d|\n", -123);
+	b = ft_printf("mine: |%01.10d|\n", -123);
+	assert(a == b);
+
+	printf("\n0 flag, negative ((precision == width) > length)\n");
+	a =    printf("real: |%010.10d|\n", -123);
+	b = ft_printf("mine: |%010.10d|\n", -123);
+	assert(a == b);
+
+	printf("\n0 flag, negative ((precision == width) < length)\n");
+	a =    printf("real: |%02.2d|\n", -123);
+	b = ft_printf("mine: |%02.2d|\n", -123);
+	assert(a == b);
+
+	printf("\n0 flag, negative (precision < width)\n");
+	a =    printf("real: |%010.5d|\n", -123);
+	b = ft_printf("mine: |%010.5d|\n", -123);
+	assert(a == b);
 
 	// printf("\n===========================\n");
 	// printf("===========================  \n");
 	// printf("===========================\n\n");
 
-	printf("Hexadecimal format\n");
-	printf("\ndefault: (no flags)\n");
-	printf("\n0:\n");
-	a =    printf("real: |%x|\n", 0);
-	b = ft_printf("mine: |%x|\n", 0);
-	assert(a == b);
-	a =    printf("real: |%5.0x|\n", 0);
-	b = ft_printf("mine: |%5.0x|\n", 0);
-	assert(a == b);
+	// printf("Hexadecimal format\n");
+	// printf("\ndefault: (no flags)\n");
+	// printf("\n0:\n");
+	// a =    printf("real: |%x|\n", 0);
+	// b = ft_printf("mine: |%x|\n", 0);
+	// assert(a == b);
+	// a =    printf("real: |%5.0x|\n", 0);
+	// b = ft_printf("mine: |%5.0x|\n", 0);
+	// assert(a == b);
 
-	printf("\n-1:\n");
-	a =    printf("real: |%x|\n", -1);
-	b = ft_printf("mine: |%x|\n", -1);
-	assert(a == b);
+	// printf("\n-1:\n");
+	// a =    printf("real: |%x|\n", -1);
+	// b = ft_printf("mine: |%x|\n", -1);
+	// assert(a == b);
 
-	printf("\nMAX_INT:\n");
-	a =    printf("real: |%x|\n", MAX_INT);
-	b = ft_printf("mine: |%x|\n", MAX_INT);
-	assert(a == b);
+	// printf("\nMAX_INT:\n");
+	// a =    printf("real: |%x|\n", MAX_INT);
+	// b = ft_printf("mine: |%x|\n", MAX_INT);
+	// assert(a == b);
 
-	printf("\nMIN_INT:\n");
-	a =    printf("real: |%x|\n", MIN_INT);
-	b = ft_printf("mine: |%x|\n", MIN_INT);
-	assert(a == b);
+	// printf("\nMIN_INT:\n");
+	// a =    printf("real: |%x|\n", MIN_INT);
+	// b = ft_printf("mine: |%x|\n", MIN_INT);
+	// assert(a == b);
 
-	printf("\nprecison == 0\n");
-	a =    printf("real: |%.0x|\n", 0);
-	b = ft_printf("mine: |%.0x|\n", 0);
-	assert(a == b);
-	a =    printf("real: |%.0x|\n", 1);
-	b = ft_printf("mine: |%.0x|\n", 1);
-	assert(a == b);
-	a =    printf("real: |%.0x|\n", -123);
-	b = ft_printf("mine: |%.0x|\n", -123);
-	assert(a == b);
+	// printf("\nprecison == 0\n");
+	// a =    printf("real: |%.0x|\n", 0);
+	// b = ft_printf("mine: |%.0x|\n", 0);
+	// assert(a == b);
+	// a =    printf("real: |%.0x|\n", 1);
+	// b = ft_printf("mine: |%.0x|\n", 1);
+	// assert(a == b);
+	// a =    printf("real: |%.0x|\n", -123);
+	// b = ft_printf("mine: |%.0x|\n", -123);
+	// assert(a == b);
 
-	printf("\nwidth: (greater)\n");
-	printf("\n0:\n");
-	a =    printf("real: |%15x|\n", 0);
-	b = ft_printf("mine: |%15x|\n", 0);
-	assert(a == b);
+	// printf("\nwidth: (greater)\n");
+	// printf("\n0:\n");
+	// a =    printf("real: |%15x|\n", 0);
+	// b = ft_printf("mine: |%15x|\n", 0);
+	// assert(a == b);
 
-	printf("\n-1:\n");
-	a =    printf("real: |%15x|\n", -1);
-	b = ft_printf("mine: |%15x|\n", -1);
-	assert(a == b);
+	// printf("\n-1:\n");
+	// a =    printf("real: |%15x|\n", -1);
+	// b = ft_printf("mine: |%15x|\n", -1);
+	// assert(a == b);
 
-	printf("\nMAX_INT:\n");
-	a =    printf("real: |%15x|\n", MAX_INT);
-	b = ft_printf("mine: |%15x|\n", MAX_INT);
-	assert(a == b);
+	// printf("\nMAX_INT:\n");
+	// a =    printf("real: |%15x|\n", MAX_INT);
+	// b = ft_printf("mine: |%15x|\n", MAX_INT);
+	// assert(a == b);
 
-	printf("\nMIN_INT:\n");
-	a =    printf("real: |%15x|\n", MIN_INT);
-	b = ft_printf("mine: |%15x|\n", MIN_INT);
-	assert(a == b);
+	// printf("\nMIN_INT:\n");
+	// a =    printf("real: |%15x|\n", MIN_INT);
+	// b = ft_printf("mine: |%15x|\n", MIN_INT);
+	// assert(a == b);
 
-	printf("\nwidth: (1)\n");
-	printf("\n0:\n");
-	a =    printf("real: |%1x|\n", 0);
-	b = ft_printf("mine: |%1x|\n", 0);
-	assert(a == b);
+	// printf("\nwidth: (1)\n");
+	// printf("\n0:\n");
+	// a =    printf("real: |%1x|\n", 0);
+	// b = ft_printf("mine: |%1x|\n", 0);
+	// assert(a == b);
 
-	printf("\n-1:\n");
-	a =    printf("real: |%1x|\n", -1);
-	b = ft_printf("mine: |%1x|\n", -1);
-	assert(a == b);
+	// printf("\n-1:\n");
+	// a =    printf("real: |%1x|\n", -1);
+	// b = ft_printf("mine: |%1x|\n", -1);
+	// assert(a == b);
 
-	printf("\nMAX_INT:\n");
-	a =    printf("real: |%1x|\n", MAX_INT);
-	b = ft_printf("mine: |%1x|\n", MAX_INT);
-	assert(a == b);
+	// printf("\nMAX_INT:\n");
+	// a =    printf("real: |%1x|\n", MAX_INT);
+	// b = ft_printf("mine: |%1x|\n", MAX_INT);
+	// assert(a == b);
 
-	printf("\nMIN_INT:\n");
-	a =    printf("real: |%1x|\n", MIN_INT);
-	b = ft_printf("mine: |%1x|\n", MIN_INT);
-	assert(a == b);
+	// printf("\nMIN_INT:\n");
+	// a =    printf("real: |%1x|\n", MIN_INT);
+	// b = ft_printf("mine: |%1x|\n", MIN_INT);
+	// assert(a == b);
 
-	printf("\nwidth: (equal)\n");
-	printf("\n0:\n");
-	a =    printf("real: |%1x|\n", 0);
-	b = ft_printf("mine: |%1x|\n", 0);
-	assert(a == b);
+	// printf("\nwidth: (equal)\n");
+	// printf("\n0:\n");
+	// a =    printf("real: |%1x|\n", 0);
+	// b = ft_printf("mine: |%1x|\n", 0);
+	// assert(a == b);
 
-	printf("\n-1:\n");
-	a =    printf("real: |%2x|\n", -1);
-	b = ft_printf("mine: |%2x|\n", -1);
-	assert(a == b);
+	// printf("\n-1:\n");
+	// a =    printf("real: |%2x|\n", -1);
+	// b = ft_printf("mine: |%2x|\n", -1);
+	// assert(a == b);
 
-	printf("\nMAX_INT:\n");
-	a =    printf("real: |%10x|\n", MAX_INT);
-	b = ft_printf("mine: |%10x|\n", MAX_INT);
-	assert(a == b);
+	// printf("\nMAX_INT:\n");
+	// a =    printf("real: |%10x|\n", MAX_INT);
+	// b = ft_printf("mine: |%10x|\n", MAX_INT);
+	// assert(a == b);
 
-	printf("\nMIN_INT:\n");
-	a =    printf("real: |%11x|\n", MIN_INT);
-	b = ft_printf("mine: |%11x|\n", MIN_INT);
-	assert(a == b);
+	// printf("\nMIN_INT:\n");
+	// a =    printf("real: |%11x|\n", MIN_INT);
+	// b = ft_printf("mine: |%11x|\n", MIN_INT);
+	// assert(a == b);
 
-	printf("\n0 flag, negative (width)\n");
-	a =    printf("real: |%010x|\n", -123);
-	b = ft_printf("mine: |%010x|\n", -123);
-	assert(a == b);
+	// printf("\n0 flag, negative (width)\n");
+	// a =    printf("real: |%010x|\n", -123);
+	// b = ft_printf("mine: |%010x|\n", -123);
+	// assert(a == b);
 
-	printf("\n0 flag, negative (precision > width)\n");
-	a =    printf("real: |%01.10x|\n", -123);
-	b = ft_printf("mine: |%01.10x|\n", -123);
-	assert(a == b);
+	// printf("\n0 flag, negative (precision > width)\n");
+	// a =    printf("real: |%01.10x|\n", -123);
+	// b = ft_printf("mine: |%01.10x|\n", -123);
+	// assert(a == b);
 
-	printf("\n0 flag, negative ((precision == width) > length)\n");
-	a =    printf("real: |%010.10x|\n", -123);
-	b = ft_printf("mine: |%010.10x|\n", -123);
-	assert(a == b);
+	// printf("\n0 flag, negative ((precision == width) > length)\n");
+	// a =    printf("real: |%010.10x|\n", -123);
+	// b = ft_printf("mine: |%010.10x|\n", -123);
+	// assert(a == b);
 
-	printf("\n0 flag, negative ((precision == width) < length)\n");
-	a =    printf("real: |%02.2x|\n", -123);
-	b = ft_printf("mine: |%02.2x|\n", -123);
-	assert(a == b);
+	// printf("\n0 flag, negative ((precision == width) < length)\n");
+	// a =    printf("real: |%02.2x|\n", -123);
+	// b = ft_printf("mine: |%02.2x|\n", -123);
+	// assert(a == b);
 
-	printf("\n0 flag, negative (precision < width)\n");
-	a =    printf("real: |%010.5x|\n", -123);
-	b = ft_printf("mine: |%010.5x|\n", -123);
-	assert(a == b);
+	// printf("\n0 flag, negative (precision < width)\n");
+	// a =    printf("real: |%010.5x|\n", -123);
+	// b = ft_printf("mine: |%010.5x|\n", -123);
+	// assert(a == b);
 }

@@ -17,7 +17,7 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 		flag->p = flag->precision;
 	// printf("flag->p = %ld\n", flag->p);
 
-	if (flag->p > len)
+	if (flag->p > (size_t)len)
 		flag->p = len;
 	// printf("flag->p = %ld\n", flag->p);
 
@@ -40,12 +40,6 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 
 	if (z > 0)
 		w -= z;
-
-	if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0) && (w >= len + z))
-	{
-		z += w;
-		w = 0;
-	}
 
 	if (flag->bit & FLAG_FORCE_SIGN && arg >= 0)
 		flag->written += ft_putstr("+");
@@ -97,7 +91,7 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 		flag->p = flag->precision;
 	// printf("flag->p = %ld\n", flag->p);
 
-	if (flag->p > len)
+	if (flag->p > (size_t)len)
 		flag->p = len;
 	// printf("flag->p = %ld\n", flag->p);
 
@@ -121,7 +115,11 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	if (z > 0)
 		w -= z;
 
-	if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0) && (w >= len + z))
+	// note: FLAG_LEADING_ZERO is ignored with precision and '-' flag
+	if (flag->bit & FLAG_LEADING_ZERO && ~flag->precision)
+		flag->bit &= ~FLAG_LEADING_ZERO;
+
+	if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0))
 	{
 		z += w;
 		w = 0;
