@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/27 08:32:19 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/28 18:46:59 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ static char	try_parsing(const char *format, t_data *flag)
 	}
 
 	// printf("\tLet's see what it is...\n");
-	if (flag->type == 's')
+	if (flag->type == 's') // ? done
 		output_str(va_arg(flag->ap, char *), flag);
-	else if (flag->type == '%')
+	else if (flag->type == '%') // ? done
 		output_str("%", flag);
-	else if (ft_strchr("dci", flag->type))
+	else if (ft_strchr("dci", flag->type)) // ? done
 	{
 		if (flag->specifier == SPECIFIER_L)
 			output_int(va_arg(flag->ap, long), flag);
@@ -74,11 +74,18 @@ static char	try_parsing(const char *format, t_data *flag)
 		else
 			output_int(va_arg(flag->ap, int), flag);
 	}
-	else if (ft_strchr("Xxuo", flag->type))
-		output_uint(va_arg(flag->ap, unsigned long long), flag);
-	else if (flag->type == 'p')
+	else if (ft_strchr("Xxuo", flag->type)) // todo: Xxuo
+	{
+		if (flag->specifier == SPECIFIER_L)
+			output_uint(va_arg(flag->ap, unsigned long), flag);
+		else if (flag->specifier == SPECIFIER_LL)
+			output_uint(va_arg(flag->ap, unsigned long long), flag);
+		else
+			output_uint(va_arg(flag->ap, unsigned int), flag);
+	}
+	else if (flag->type == 'p') // ? done
 		output_pointer(va_arg(flag->ap, void *), flag);
-	else if (flag->type == 'f')
+	else if (flag->type == 'f') // todo: f
 	{
 		if (flag->specifier == SPECIFIER_L)
 			output_double(va_arg(flag->ap, long double), flag);

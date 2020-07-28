@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/27 17:29:32 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/28 18:54:05 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <stdio.h>
 # include <math.h>
 
-# define SPECIFIER_H	1
-# define SPECIFIER_HH	2
+# define SPECIFIER_HH	1
+# define SPECIFIER_H	2
 # define SPECIFIER_L	3
 # define SPECIFIER_LL	4
 
@@ -62,7 +62,8 @@ void			output_uint(unsigned long long arg, t_data *flag);
 void			output_pointer(void *arg, t_data *flag);
 void			output_double(long double arg, t_data *flag);
 
-void			putstr_case(const char *str, int mode);
+size_t			putstr_case(const char *str, int mode);
+size_t			putstrn_case(const char *str, size_t n, int mode);
 // int				width_padder(int length, t_data *flag, long long arg);
 // int				zero_padder(int length, t_data *flag, long long arg);
 // void			ft_putnstr(char *str, int bytes);
