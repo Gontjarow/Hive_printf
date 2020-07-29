@@ -6,8 +6,12 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 	int		w;
 	int		z;
 	int		len;
+	int		prefix;
 
+	prefix = 2 * (arg != 0);
 	len = (flag->precision == 0 && arg == 0) ? 0 : (int)ft_strlen(str);
+	// len += prefix;
+
 	// printf("len = %ld\n", len);
 
 	if (flag->precision == -1 || flag->precision < len)
@@ -23,7 +27,7 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 	// printf("flag->p = %ld, len = %d\n", flag->p, len);
 
 	if ((size_t)flag->width > flag->p)
-		w = (size_t)flag->width - flag->p;
+		w = (size_t)flag->width - flag->p - prefix;
 	else
 		w = 0;
 	// printf("{init w = %d}\n", w);
@@ -43,6 +47,8 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 	// printf("{leading zero %-3d|p%-3lu|w%-3d|len%-3d|z%-3d}\n", !!(flag->bit & FLAG_LEADING_ZERO), flag->p, w, len, z);
 	// if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0) && (w >= len + z))
 
+	if (prefix)
+		flag->written += ft_putstr("0x");
 	while (z > 0)
 	{
 		write(1, "0", 1);
@@ -67,15 +73,19 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	int		w;
 	int		z;
 	int		len;
+	int		prefix;
 
+	prefix = 2 * (arg != 0);
 	len = (flag->precision == 0 && arg == 0) ? 0 : (int)ft_strlen(str);
+	// len += prefix;
+
 	// printf("len = %ld\n", len);
 
 	if (flag->precision == -1 || flag->precision < len)
 		flag->p = len;
 	else
 		flag->p = flag->precision;
-	// printf("flag->p = %ld\n", flag->p);
+	// printf("flag->precision = %d, flag->p = %ld\n", flag->precision, flag->p);
 
 	if (flag->p > (size_t)len)
 		flag->p = len;
@@ -84,7 +94,7 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	// printf("flag->p = %ld, len = %d\n", flag->p, len);
 
 	if ((size_t)flag->width > flag->p)
-		w = (size_t)flag->width - flag->p;
+		w = (size_t)flag->width - flag->p - prefix;
 	else
 		w = 0;
 	// printf("{init w = %d}\n", w);
@@ -124,6 +134,8 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 		--w;
 	}
 
+	if (prefix)
+		flag->written += ft_putstr("0x");
 	while (z > 0)
 	{
 		write(1, "0", 1);
