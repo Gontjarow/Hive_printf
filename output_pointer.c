@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output_pointer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/26 07:48:21 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/27 13:22:31 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/29 21:12:14 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ static void justify_left(void *arg, const char *str, t_data *flag)
 	// printf("\n");
 
 	int		w;
+	int		z;
 	size_t	len;
 	int		prefix;
 
 	// prefix = 2 * (arg != NULL);
 	prefix = 2;
-	len = ft_strlen(str) + prefix;
+	len = ft_strlen(str);
 	// printf("len = %ld\n", len);
 
 	if (flag->precision == -1)
@@ -39,12 +40,32 @@ static void justify_left(void *arg, const char *str, t_data *flag)
 		w = (size_t)flag->width - flag->p;
 	else
 		w = 0;
-	// printf("w = %ld\n", w);
+	// printf("{w = %d}\n", w);
+
+	if (flag->precision > len)
+		z = flag->precision - len;
+	else
+		z = 0;
+	// printf("{init z = %d}\n", z);
+
+	if (z > 0)
+		w -= z;
+	// printf("{w = %d}\n", w);
 
 	flag->written += ft_putstrn("0x", prefix);
-	flag->written += ft_putstr(str);
 
-	while (w > 0)
+	// printf("{z = %d}\n", z);
+	while (z > 0)
+	{
+		write(1, "0", 1);
+		// ft_putstr(FG_GREEN "0" TX_NORMAL);
+		++flag->written;
+		--z;
+	}
+
+	flag->written += putstr_case(str, -1);
+
+	while (w - prefix > 0)
 	{
 		write(1, " ", 1);
 		++flag->written;
@@ -57,6 +78,7 @@ static void justify_right(void *arg, const char *str, t_data *flag)
 	// printf("\n");
 
 	int		w;
+	int		z;
 	size_t	len;
 	int		prefix;
 
@@ -81,6 +103,15 @@ static void justify_right(void *arg, const char *str, t_data *flag)
 		w = 0;
 	// printf("w = %ld\n", w);
 
+	if (flag->precision > len)
+		z = flag->precision - len;
+	else
+		z = 0;
+	// printf("{init z = %d}\n", z);
+
+	if (z > 0)
+		w -= z;
+
 	while (w - prefix > 0)
 	{
 		write(1, " ", 1);
@@ -89,13 +120,24 @@ static void justify_right(void *arg, const char *str, t_data *flag)
 	}
 
 	flag->written += ft_putstrn("0x", prefix);
-	flag->written += ft_putstr(str);
+
+	// printf("{z = %d}\n", z);
+	while (z > 0)
+	{
+		write(1, "0", 1);
+		// ft_putstr(FG_GREEN "0" TX_NORMAL);
+		++flag->written;
+		--z;
+	}
+
+	flag->written += putstr_case(str, -1);
 }
 
 // Undefined flags: #, 0, ' ', +
 // Applicable flags: -
-// Precision: Undefined
-// note: School Mac prints 0x0 for null.
+// Precision: Minimum amount of digits.
+// Leading zeroes (after prefix) if necessary.
+// Note: School Mac prints 0x0 for null instead of (nil) or (null).
 void	output_pointer(void *arg, t_data *flag)
 {
 	// printf("\n");

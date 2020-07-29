@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:07:10 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/28 21:16:22 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/29 21:12:55 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ unsigned int	unsigned_str_num(char *str)
 		++str;
 	while (*str == '+')
 		++str;
+	number = 0;
 	while (ft_isdigit(*str))
 	{
 		number *= 10;
@@ -46,9 +47,9 @@ size_t			putstr_case(const char *str, int mode)
 			while (str[i])
 			{
 				c = (mode < 0) ? ft_tolower(str[i]) : ft_toupper(str[i]);
-				ft_putstr(FG_YELLOW);
+				ft_putstr(FG_YELLOW); // ! TODO: remove
 				write(1, &c, 1);
-				ft_putstr(TX_NORMAL);
+				ft_putstr(TX_NORMAL); // ! TODO: remove
 				++i;
 			}
 		}
