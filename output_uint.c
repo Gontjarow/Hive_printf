@@ -6,11 +6,11 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 	// printf("{bit=%d}\n", flag->bit);
 	int		w;
 	int		z;
-	int		len;
+	size_t	len;
 	int		prefix;
 
 	prefix = 2 * (flag->bit & FLAG_PREFIX && arg != 0);
-	len = (flag->precision == 0 && arg == 0) ? 0 : (int)ft_strlen(str);
+	len = (flag->precision == 0 && arg == 0) ? 0 : ft_strlen(str);
 	// len += prefix;
 
 	// printf("len = %ld\n", len);
@@ -21,14 +21,14 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 		flag->p = flag->precision;
 	// printf("flag->p = %ld\n", flag->p);
 
-	if (flag->p > (size_t)len)
+	if (flag->p > len)
 		flag->p = len;
 
 	// flag->p is always the length of the actual content before any padding.
 	// printf("flag->p = %ld, len = %d\n", flag->p, len);
 
-	if ((size_t)flag->width > flag->p)
-		w = (size_t)flag->width - flag->p - prefix;
+	if (flag->width > flag->p)
+		w = flag->width - flag->p - prefix;
 	else
 		w = 0;
 	// printf("{init w = %d}\n", w);
@@ -89,14 +89,14 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 		flag->p = flag->precision;
 	// printf("flag->precision = %d, flag->p = %ld\n", flag->precision, flag->p);
 
-	if (flag->p > (size_t)len)
+	if (flag->p > len)
 		flag->p = len;
 
 	// flag->p is always the length of the actual content before any padding.
 	// printf("flag->p = %ld, len = %d\n", flag->p, len);
 
-	if ((size_t)flag->width > flag->p)
-		w = (size_t)flag->width - flag->p - prefix;
+	if (flag->width > flag->p)
+		w = flag->width - flag->p - prefix;
 	else
 		w = 0;
 	// printf("{init w = %d}\n", w);
