@@ -3,12 +3,13 @@
 static void justify_left(long long arg, const char *str, t_data *flag)
 {
 	// printf("\n");
+	// printf("{bit=%d}\n", flag->bit);
 	int		w;
 	int		z;
 	int		len;
 	int		prefix;
 
-	prefix = 2 * (arg != 0);
+	prefix = 2 * (flag->bit & FLAG_PREFIX && arg != 0);
 	len = (flag->precision == 0 && arg == 0) ? 0 : (int)ft_strlen(str);
 	// len += prefix;
 
@@ -70,12 +71,13 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 static void justify_right(long long arg, const char *str, t_data *flag)
 {
 	// printf("\n");
+	// printf("{bit=%d}\n", flag->bit);
 	int		w;
 	int		z;
 	int		len;
 	int		prefix;
 
-	prefix = 2 * (arg != 0);
+	prefix = 2 * (flag->bit & FLAG_PREFIX && arg != 0);
 	len = (flag->precision == 0 && arg == 0) ? 0 : (int)ft_strlen(str);
 	// len += prefix;
 
