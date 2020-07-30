@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/28 18:54:05 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/30 14:56:14 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,26 @@ typedef struct	s_data
 int				ft_printf(const char *format, ...);
 char			parse_format(const char *format, t_data *flag);
 
+// s
 void			output_str(char *arg, t_data *flag);
-void			output_char(unsigned char arg, t_data *flag);
+
+// di c
 void			output_int(long long arg, t_data *flag);
+void			output_char(unsigned char arg, t_data *flag);
+
+// Xx u o
 void			output_uint(unsigned long long arg, t_data *flag);
+void			output_unsigned(unsigned long long arg, t_data *flag);
+void			output_octal(unsigned long long arg, t_data *flag);
+
+// p
 void			output_pointer(void *arg, t_data *flag);
+
+// f
 void			output_double(long double arg, t_data *flag);
 
 size_t			putstr_case(const char *str, int mode);
 size_t			putstrn_case(const char *str, size_t n, int mode);
-// int				width_padder(int length, t_data *flag, long long arg);
-// int				zero_padder(int length, t_data *flag, long long arg);
-// void			ft_putnstr(char *str, int bytes);
-
 
 char			*strany(const char *string, char *specifiers);
 char			*strany_skip(const char *string, char *specifiers);

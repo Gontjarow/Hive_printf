@@ -7,6 +7,8 @@ SOURCES = ft_printf.c \
 	output_pointer.c  \
 	output_float.c    \
 	output_uint.c     \
+	output_unsigned.c \
+	output_octal.c    \
 	output_int.c      \
 	output_char.c     \
 	ft_abs.c          \
