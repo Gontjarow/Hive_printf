@@ -6,13 +6,13 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/26 07:48:21 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/29 21:12:14 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/31 18:33:52 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void justify_left(void *arg, const char *str, t_data *flag)
+static void justify_left(const char *str, t_data *flag)
 {
 	// printf("\n");
 
@@ -42,7 +42,7 @@ static void justify_left(void *arg, const char *str, t_data *flag)
 		w = 0;
 	// printf("{w = %d}\n", w);
 
-	if (flag->precision > len)
+	if (flag->precision > (int)len)
 		z = flag->precision - len;
 	else
 		z = 0;
@@ -73,7 +73,7 @@ static void justify_left(void *arg, const char *str, t_data *flag)
 	}
 }
 
-static void justify_right(void *arg, const char *str, t_data *flag)
+static void justify_right(const char *str, t_data *flag)
 {
 	// printf("\n");
 
@@ -103,7 +103,7 @@ static void justify_right(void *arg, const char *str, t_data *flag)
 		w = 0;
 	// printf("w = %ld\n", w);
 
-	if (flag->precision > len)
+	if (flag->precision > (int)len)
 		z = flag->precision - len;
 	else
 		z = 0;
@@ -151,8 +151,8 @@ void	output_pointer(void *arg, t_data *flag)
 		str = ft_strdup("0");
 
 	if (flag->bit & FLAG_JUSTIFY_LEFT)
-		justify_left(arg, str, flag);
+		justify_left(str, flag);
 	else
-		justify_right(arg, str, flag);
+		justify_right(str, flag);
 	free(str);
 }
