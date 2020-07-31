@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/28 18:46:59 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/31 16:12:08 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static char	try_parsing(const char *format, t_data *flag)
 		else
 			output_int(va_arg(flag->ap, int), flag);
 	}
-	else if (ft_strchr("Xxuo", flag->type)) // todo: Xxuo
+	else if (ft_strchr("Xxuo", flag->type)) // ? done
 	{
 		if (flag->specifier == SPECIFIER_L)
 			output_uint(va_arg(flag->ap, unsigned long), flag);

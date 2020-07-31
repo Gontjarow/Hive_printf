@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 14:51:20 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/30 17:13:14 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/07/31 15:56:05 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 		--z;
 	}
 
-	flag->written += putstrn_case(str, flag->p, -1 * (flag->type == 'x'));
+	flag->written += ft_putstrn(str, flag->p);
 
 	while (w > 0)
 	{
@@ -93,46 +93,46 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	len = (flag->precision == 0 && arg == 0) ? 0 : ft_strlen(str);
 	// len += prefix;
 
-	printf("len = %ld\n", len);
+	// printf("len = %ld\n", len);
 
 	if (flag->precision == -1 || flag->precision < len)
 		flag->p = len;
 	else
 		flag->p = flag->precision;
-	printf("flag->precision = %d, flag->p = %ld\n", flag->precision, flag->p);
+	// printf("flag->precision = %d, flag->p = %ld\n", flag->precision, flag->p);
 
 	if (flag->p > len)
 		flag->p = len;
 
 	// flag->p is always the length of the actual content before any padding.
-	printf("flag->p = %ld, len = %d\n", flag->p, len);
+	// printf("flag->p = %ld, len = %d\n", flag->p, len);
 
 	if (flag->width > flag->p)
 		w = flag->width - flag->p - prefix;
 	else
 		w = 0;
-	printf("{init w = %d}\n", w);
+	// printf("{init w = %d}\n", w);
 
 	if (flag->precision > (int)len)
 		z = flag->precision - len - prefix;
 	else
 		z = 0;
-	printf("{init z = %d}\n", z);
+	// printf("{init z = %d}\n", z);
 
 
-	printf("{p %-3lu|w %-3d|z %-3d|len %-3d}\n", flag->p, w, z, len);
+	// printf("{p %-3lu|w %-3d|z %-3d|len %-3d}\n", flag->p, w, z, len);
 	if (z > 0)
 		w -= z;
-	printf("{p %-3lu|w %-3d|z %-3d|len %-3d}\n", flag->p, w, z, len);
+	// printf("{p %-3lu|w %-3d|z %-3d|len %-3d}\n", flag->p, w, z, len);
 
 
-	printf("{leading zero %-3d|p%-3lu|w%-3d|len%-3d|z%-3d}\n", !!(flag->bit & FLAG_LEADING_ZERO), flag->p, w, len, z);
+	// printf("{leading zero %-3d|p%-3lu|w%-3d|len%-3d|z%-3d}\n", !!(flag->bit & FLAG_LEADING_ZERO), flag->p, w, len, z);
 	// if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0) && (w >= len + z))
 
-	printf("{bit %d}\n", flag->bit);
+	// printf("{bit %d}\n", flag->bit);
 	if (flag->bit & FLAG_LEADING_ZERO && ~flag->precision)
 		flag->bit &= ~FLAG_LEADING_ZERO;
-	printf("{bit %d}\n", flag->bit);
+	// printf("{bit %d}\n", flag->bit);
 
 	if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0))
 	{
@@ -157,7 +157,7 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 		--z;
 	}
 
-	flag->written += putstrn_case(str, flag->p, -1 * (flag->type == 'x'));
+	flag->written += ft_putstrn(str, flag->p);
 }
 
 // Undefined flags: +, ' '
