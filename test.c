@@ -2215,14 +2215,63 @@ int			main(int argc, char **argv)
 	b = ft_printf("mine: |%.1f|\n", -123.456);
 	assert(a == b);
 
-	printf("\nPrecision == 0\n");
-	a =    printf("real: |%.0f|\n", 0.0);
-	b = ft_printf("mine: |%.0f|\n", 0.0);
+	printf("\nPrecision == 0 && width == 10\n");
+	a =    printf("real: |%10.0f|\n", 0.0);
+	b = ft_printf("mine: |%10.0f|\n", 0.0);
 	assert(a == b);
-	a =    printf("real: |%.0f|\n", 0.1);
-	b = ft_printf("mine: |%.0f|\n", 0.1);
+	a =    printf("real: |%10.0f|\n", 0.1);
+	b = ft_printf("mine: |%10.0f|\n", 0.1);
 	assert(a == b);
-	a =    printf("real: |%.0f|\n", -123.456);
-	b = ft_printf("mine: |%.0f|\n", -123.456);
+	a =    printf("real: |%10.0f|\n", -123.456);
+	b = ft_printf("mine: |%10.0f|\n", -123.456);
+	assert(a == b);
+
+	printf("\nPrecision == 6 && width == 10\n");
+	a =    printf("real: |%10.6f|\n", 0.0);
+	b = ft_printf("mine: |%10.6f|\n", 0.0);
+	assert(a == b);
+	a =    printf("real: |%10.6f|\n", 0.1);
+	b = ft_printf("mine: |%10.6f|\n", 0.1);
+	assert(a == b);
+	a =    printf("real: |%10.6f|\n", -123.456);
+	b = ft_printf("mine: |%10.6f|\n", -123.456);
+	assert(a == b);
+
+	printf("\nPrecision == 16 && width == 10\n");
+	a =    printf("real: |%10.16f|\n", 0.0);
+	b = ft_printf("mine: |%10.16f|\n", 0.0);
+	assert(a == b);
+	a =    printf("real: |%10.16f|\n", 0.1);
+	b = ft_printf("mine: |%10.16f|\n", 0.1);
+	assert(a == b);
+	a =    printf("real: |%10.16f|\n", -123.456);
+	b = ft_printf("mine: |%10.16f|\n", -123.456);
+	assert(a == b);
+
+	printf("\nPrecision == 1 && width == 10\n");
+	a =    printf("real: |%10.1f|\n", 0.0);
+	b = ft_printf("mine: |%10.1f|\n", 0.0);
+	assert(a == b);
+	a =    printf("real: |%10.1f|\n", 0.1);
+	b = ft_printf("mine: |%10.1f|\n", 0.1);
+	assert(a == b);
+	a =    printf("real: |%10.1f|\n", -123.456);
+	b = ft_printf("mine: |%10.1f|\n", -123.456);
+	assert(a == b);
+
+	printf("\nPrecision == 0 && width == 10\n");
+	a =    printf("real: |%10.0f|\n", 0.0);
+	b = ft_printf("mine: |%10.0f|\n", 0.0);
+	assert(a == b);
+	a =    printf("real: |%10.0f|\n", 0.1);
+	b = ft_printf("mine: |%10.0f|\n", 0.1);
+	assert(a == b);
+	a =    printf("real: |%10.0f|\n", -123.456);
+	b = ft_printf("mine: |%10.0f|\n", -123.456);
+	assert(a == b);
+
+	printf("\nboi\n");
+	a =    printf("real: |%050.40f|\n", -PI);
+	b = ft_printf("mine: |%050.40f|\n", -PI);
 	assert(a == b);
 }

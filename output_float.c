@@ -72,6 +72,11 @@ static void justify_right(long double arg, const char *str, t_data *flag)
 	// Note: Negative sign has already been printed.
 	// Todo: Find a more elegant solution?
 	flag->written += ft_putstrn(str, len - (arg < 0)); // ? Integer part
+
+	if (arg < 0)
+	{
+		arg *= -1;
+	}
 	flag->p -= len;
 	if (flag->p)
 	{
@@ -79,6 +84,7 @@ static void justify_right(long double arg, const char *str, t_data *flag)
 		while (--flag->p)
 		{
 			arg *= 10;
+			arg += 0.5 * (flag->p == 1);
 			flag->written += ft_putchar('0' + (unsigned char)arg);
 			// printf("{%hhu}\n", (unsigned char)arg);
 			arg -= (long int)arg;
@@ -113,11 +119,6 @@ void	output_double(long double arg, t_data *flag)
 	if (str == NULL)
 		str = ft_itoa((long int)arg);
 
-	if (arg < 0)
-	{
-		arg *= -1;
-		// printf("{negative}\n");
-	}
 	arg -= (long int)arg; // ? Remove the integer part already...
 	// printf("|%Lf|\n", arg);
 	if (flag->bit & FLAG_JUSTIFY_LEFT)
