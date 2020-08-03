@@ -9,10 +9,10 @@ int			main(int argc, char **argv)
 	// ? GNU: The ‘%%’ conversion prints a literal ‘%’ character.
 	// ? This conversion doesn’t use an argument, and
 	// ? no flags, field width, precision, or type modifiers are permitted.
-	printf("percentage\n");
-	a =    printf("real: |%%|\n");
-	b = ft_printf("mine: |%%|\n");
-	assert(a == b);
+	// printf("percentage\n");
+	// a =    printf("real: |%%|\n");
+	// b = ft_printf("mine: |%%|\n");
+	// assert(a == b);
 	// printf("percentage with flags\n");
 	// a =    printf("real: |%5%|\n");
 	// b = ft_printf("mine: |%5%|\n");
@@ -26,37 +26,39 @@ int			main(int argc, char **argv)
 
 	// printf("\n===========================\n");
 
-	printf("x vs X\n");
-	a =    printf("real: |%#X %#x|\n", 42, 42);
-	b = ft_printf("mine: |%#X %#x|\n", 42, 42);
-	assert(a == b);
-	printf("octal # flag, 0 precision\n");
-	a =    printf("real: |%#.o %#.0o|\n", 0, 0);
-	b = ft_printf("mine: |%#.o %#.0o|\n", 0, 0);
-	assert(a == b);
-	printf("octal width\n");
-	a =    printf("real: |%#13o|\n", -2500);
-	b = ft_printf("mine: |%#13o|\n", -2500);
-	assert(a == b);
-	a =    printf("real: |%#6o|\n", 2500);
-	b = ft_printf("mine: |%#6o|\n", 2500);
-	assert(a == b);
-	a =    printf("real: |%-#6o|\n", 2500);
-	b = ft_printf("mine: |%-#6o|\n", 2500);
-	assert(a == b);
-	printf("specifier conversons\n");
-	a =    printf("real: |%hd|\n", 32768);
-	b = ft_printf("mine: |%hd|\n", 32768);
-	assert(a == b);
-	a =    printf("real: |%hhd|\n", 128);
-	b = ft_printf("mine: |%hhd|\n", 128);
-	assert(a == b);
-	a =    printf("real: |%hhd|\n", -129);
-	b = ft_printf("mine: |%hhd|\n", -129);
-	assert(a == b);
-	a =    printf("real: |%lu|\n", -42);
-	b = ft_printf("mine: |%lu|\n", -42);
-	assert(a == b);
+	// printf("x vs X\n");
+	// a =    printf("real: |%#X %#x|\n", 42, 42);
+	// b = ft_printf("mine: |%#X %#x|\n", 42, 42);
+	// assert(a == b);
+	// printf("octal # flag, 0 precision\n");
+	// a =    printf("real: |%#.o %#.0o|\n", 0, 0);
+	// b = ft_printf("mine: |%#.o %#.0o|\n", 0, 0);
+	// assert(a == b);
+	// printf("octal width\n");
+	// a =    printf("real: |%#13o|\n", -2500);
+	// b = ft_printf("mine: |%#13o|\n", -2500);
+	// assert(a == b);
+	// a =    printf("real: |%#6o|\n", 2500);
+	// b = ft_printf("mine: |%#6o|\n", 2500);
+	// assert(a == b);
+	// a =    printf("real: |%-#6o|\n", 2500);
+	// b = ft_printf("mine: |%-#6o|\n", 2500);
+	// assert(a == b);
+	// printf("specifier conversons\n");
+	// a =    printf("real: |%hd|\n", 32768);
+	// b = ft_printf("mine: |%hd|\n", 32768);
+	// assert(a == b);
+	// a =    printf("real: |%hhd|\n", 128);
+	// b = ft_printf("mine: |%hhd|\n", 128);
+	// assert(a == b);
+	// a =    printf("real: |%hhd|\n", -129);
+	// b = ft_printf("mine: |%hhd|\n", -129);
+	// assert(a == b);
+	// a =    printf("real: |%lu|\n", -42);
+	// b = ft_printf("mine: |%lu|\n", -42);
+	// assert(a == b);
+
+	// printf("\n===========================\n");
 
 	// printf("String format:\n");
 	// printf("\nbasic: (no flags, empty string, null string)\n");
@@ -3106,4 +3108,18 @@ int			main(int argc, char **argv)
 	// a =    printf("real |%10.f|\n", PI);
 	// b = ft_printf("mine |%10.f|\n", PI);
 	// assert(a == b);
+
+	printf("\n===========================\n");
+	printf("===========================  \n");
+	printf("===========================\n\n");
+
+	printf("\nUndefined cases\n");
+
+	printf("\nInvalid specifiers\n");
+
+	ft_printf("no arg: |%d|\n");
+	ft_printf("invalid type: |%z|\n");
+	ft_printf("single percent: |%|\n");
+	ft_printf("flags for percent: |%-+ 05.0%|\n");
+	// ft_printf("percent at end of string: %"); // ! Segfault
 }
