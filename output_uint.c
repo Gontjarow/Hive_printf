@@ -49,7 +49,7 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 	// if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0) && (w >= len + z))
 
 	if (prefix)
-		flag->written += ft_putstr("0x");
+		flag->written += putstr_case("0X", -1 * (flag->type == 'x'));
 	while (z > 0)
 	{
 		write(1, "0", 1);
@@ -137,7 +137,7 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	}
 
 	if (prefix)
-		flag->written += ft_putstr("0x");
+		flag->written += putstr_case("0X", -1 * (flag->type == 'x'));
 	while (z > 0)
 	{
 		write(1, "0", 1);

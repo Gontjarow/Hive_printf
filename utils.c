@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:07:10 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/29 21:12:55 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/03 20:25:01 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ size_t			putstr_case(const char *str, int mode)
 			while (str[i])
 			{
 				c = (mode < 0) ? ft_tolower(str[i]) : ft_toupper(str[i]);
-				ft_putstr(FG_YELLOW); // ! TODO: remove
+				// ft_putstr(FG_YELLOW); // ! TODO: remove
 				write(1, &c, 1);
-				ft_putstr(TX_NORMAL); // ! TODO: remove
+				// ft_putstr(TX_NORMAL); // ! TODO: remove
 				++i;
 			}
 		}

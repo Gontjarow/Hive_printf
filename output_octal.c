@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 14:51:20 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/31 15:56:05 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/03 20:42:35 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 	size_t	len;
 	int		prefix;
 
-	prefix = 1 * (flag->bit & FLAG_PREFIX && arg != 0);
+	prefix = !!(flag->bit & FLAG_PREFIX);
 	len = (flag->precision == 0 && arg == 0) ? 0 : ft_strlen(str);
 	// len += prefix;
 
@@ -89,7 +89,7 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	size_t	len;
 	int		prefix;
 
-	prefix = 1 * (flag->bit & FLAG_PREFIX && arg != 0);
+	prefix = !!(flag->bit & FLAG_PREFIX);
 	len = (flag->precision == 0 && arg == 0) ? 0 : ft_strlen(str);
 	// len += prefix;
 
@@ -107,8 +107,12 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	// flag->p is always the length of the actual content before any padding.
 	// printf("flag->p = %ld, len = %d\n", flag->p, len);
 
-	if (flag->width > flag->p)
-		w = flag->width - flag->p - prefix;
+	// printf("{f->p%d, f->w%d w%d, p%d, len%lu, z%d}\n", flag->precision, flag->width, w, flag->p, len, z);
+	if (flag->width > (int)flag->p)
+	{
+		w = flag->width - (int)flag->p - prefix;
+		// printf("%d - %d - %d = %d\n", flag->width, (int)flag->p, prefix, w);
+	}
 	else
 		w = 0;
 	// printf("{init w = %d}\n", w);

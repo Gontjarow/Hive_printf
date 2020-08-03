@@ -30,7 +30,7 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	@ar -rc $(NAME) $(OBJECTS)
-	# @libtool -static -o $(NAME) $(NAME)
+	@libtool $(NAME) $(LIBFT) -o $(NAME)
 	@echo "$(MSG)$(NAME) done!$(END)"
 
 $(OBJECTS): $(LIBFT) $(SOURCES)

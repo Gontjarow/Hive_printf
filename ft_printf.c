@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/31 16:12:08 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/03 21:11:48 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,36 @@ static char	try_parsing(const char *format, t_data *flag)
 	if (flag->type == 's') // ? done
 		output_str(va_arg(flag->ap, char *), flag);
 	else if (flag->type == '%') // ? done
-		output_str("%", flag);
+		flag->written += write(1, "%", 1);
 	else if (ft_strchr("dci", flag->type)) // ? done
 	{
-		if (flag->specifier == SPECIFIER_L)
-			output_int(va_arg(flag->ap, long), flag);
-		else if (flag->specifier == SPECIFIER_LL)
-			output_int(va_arg(flag->ap, long long), flag);
-		else
+		if (flag->specifier == 0)
+		{
+			// printf("{spec 0}\n");
 			output_int(va_arg(flag->ap, int), flag);
+		}
+		else if (flag->specifier == SPECIFIER_L)
+		{
+			// printf("{SPECIFIER_L}\n");
+			output_int(va_arg(flag->ap, long), flag);
+		}
+		else if (flag->specifier == SPECIFIER_LL)
+		{
+			// printf("{SPECIFIER_LL}\n");
+			output_int(va_arg(flag->ap, long long), flag);
+		}
+		else if (flag->specifier == SPECIFIER_H)
+		{
+			// printf("{SPECIFIER_H}\n");
+			output_int((signed short)va_arg(flag->ap, int), flag);
+		}
+		else if (flag->specifier == SPECIFIER_HH)
+		{
+			// printf("{SPECIFIER_HH}\n");
+			output_int((signed char)va_arg(flag->ap, int), flag);
+		}
+		else
+			ft_putstr("{specifier error}");
 	}
 	else if (ft_strchr("Xxuo", flag->type)) // ? done
 	{
@@ -85,7 +106,7 @@ static char	try_parsing(const char *format, t_data *flag)
 	}
 	else if (flag->type == 'p') // ? done
 		output_pointer(va_arg(flag->ap, void *), flag);
-	else if (flag->type == 'f') // todo: f
+	else if (flag->type == 'f') // ? done
 	{
 		if (flag->specifier == SPECIFIER_L)
 			output_double(va_arg(flag->ap, long double), flag);

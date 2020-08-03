@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/03 19:09:40 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/03 21:11:05 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static char parse_specifier(const char **format, t_data *flag)
 	{
 		++(*format);
 		++bytes;
-		if ((*format)[1] == 'h')
+		if (**format == 'h')
 		{
 			++(*format);
 			++bytes;
