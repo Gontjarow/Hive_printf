@@ -1,11 +1,11 @@
 #include "ft_printf.h"
 
-static void justify_left(long double arg, const char *str, t_data *flag)
+static void	justify_left(long double arg, const char *str, int e, t_data *flag)
 {
 	(void)arg; (void)str; (void)flag;
 }
 
-static void justify_right(long double arg, const char *str, t_data *flag)
+static void	justify_right(long double arg, const char *str, int e, t_data *flag)
 {
 	int w;
 	int z;
@@ -14,33 +14,45 @@ static void justify_right(long double arg, const char *str, t_data *flag)
 	len = ft_strlen(str);
 	// printf("len %ld\n", len);
 
-	if (flag->precision == -1)
+	if (!e && flag->precision == -1)
+	{
 		flag->p = len + 1 + 6;
-	else if (flag->precision != 0)
+		// printf("{if 1}\n");
+	}
+	else if (!e && flag->precision != 0)
+	{
 		flag->p = len + 1 + flag->precision;
+		// printf("{if 2}\n");
+	}
 	else
-		flag->p = len;
+	{
+		flag->p = len + !!(flag->bit & FLAG_PREFIX);
+		// printf("{if 3 (%d + %d)}\n", len, !!(flag->bit & FLAG_PREFIX));
+	}
+	// printf("{1 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
 
 	if (flag->width > (int)flag->p)
 		w = flag->width - (int)flag->p;
 	else
 		w = 0;
+	// printf("{2 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
 
-	if (flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN))
+	if (arg >= 0 && flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN))
 	{
 		--w;
 	}
+	// printf("{3 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
 
-	if (flag->precision > flag->p)
+	if (!e && flag->precision > flag->p)
 		z = flag->precision - flag->p; // ? negative-sign should be ignored for this.
 	else
 		z = 0;
-	// printf("{pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
+	// printf("{4 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
 	// real: |0.000000|
 	if (z > 0)
 		w -= z;
 
-	if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0))
+	if (!e && (flag->bit & FLAG_LEADING_ZERO) && (w > 0))
 	{
 		z += w;
 		w = 0;
@@ -75,7 +87,7 @@ static void justify_right(long double arg, const char *str, t_data *flag)
 
 	if (arg < 0)
 	{
-		arg *= -1;
+		arg = -arg;
 	}
 	flag->p -= len;
 	if (flag->p)
@@ -90,6 +102,8 @@ static void justify_right(long double arg, const char *str, t_data *flag)
 			arg -= (long int)arg;
 		}
 	}
+	else if (flag->bit & FLAG_PREFIX)
+		flag->written += ft_putstr(".");
 }
 
 static char				*check_invalid(long double floating)
@@ -114,17 +128,23 @@ void	output_double(long double arg, t_data *flag)
 {
 	// printf("\n{output_double: '%Lf', w%d p%d}\n", arg, flag->width, flag->precision);
 	char *str;
+	char error;
 
+	error = FALSE;
 	str = check_invalid(arg);
 	if (str == NULL)
-		str = ft_itoa((long int)arg);
+		// str = ft_itoa((long int)arg);
+		str = ft_ftoa(arg, 0);
+	else
+		error = TRUE;
 
 	arg -= (long int)arg; // ? Remove the integer part already...
 	// printf("|%Lf|\n", arg);
+
 	if (flag->bit & FLAG_JUSTIFY_LEFT)
-		justify_left(arg, str, flag);
+		justify_left(arg, str, error, flag);
 	else
-		justify_right(arg, str, flag);
+		justify_right(arg, str, error, flag);
 
 	free(str);
 }
