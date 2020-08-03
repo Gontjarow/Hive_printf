@@ -3051,4 +3051,8 @@ int			main(int argc, char **argv)
 	a =    printf("real: |%- +6.2Lf|\n", PI * 1.0L);
 	b = ft_printf("mine: |%- +6.2Lf|\n", PI * 1.0L);
 	assert(a == b);
+
+	a =    printf("real |%10.f|\n", PI);
+	b = ft_printf("mine |%10.f|\n", PI);
+	assert(a == b);
 }

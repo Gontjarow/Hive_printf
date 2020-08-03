@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_format.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/07/27 17:29:21 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/03 19:09:40 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,7 @@ static char	parse_precision(const char **format, t_data *flag)
 			++(*format);
 			++bytes;
 		}
-		else if (**format == 'f' || **format == 'L') // todo: needed?
-		{
-			flag->precision = 0;
-		}
-		else //if (**format != 'f' || **format != 'L') // todo: test
+		else if (**format != 'f' || **format != 'L')
 		{
 			if (!ft_isdigit(**format))
 				flag->precision = 0;
