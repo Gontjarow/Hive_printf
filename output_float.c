@@ -2,7 +2,78 @@
 
 static void	justify_left(long double arg, const char *str, int e, t_data *flag)
 {
-	(void)arg; (void)str; (void)flag;
+	int w;
+	size_t len;
+
+	len = ft_strlen(str);
+	// printf("len %ld\n", len);
+
+	if (!e && flag->precision == -1)
+	{
+		flag->p = len + 1 + 6;
+		// printf("{if 1}\n");
+	}
+	else if (!e && flag->precision != 0)
+	{
+		flag->p = len + 1 + flag->precision;
+		// printf("{if 2}\n");
+	}
+	else
+	{
+		flag->p = len + !!(flag->bit & FLAG_PREFIX);
+		// printf("{if 3 (%d + %d)}\n", len, !!(flag->bit & FLAG_PREFIX));
+	}
+	// printf("{1 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
+
+	if (flag->width > (int)flag->p)
+		w = flag->width - (int)flag->p;
+	else
+		w = 0;
+	// printf("{2 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
+
+	if (arg >= 0 && flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN))
+	{
+		--w;
+	}
+	// printf("{3 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
+
+	if (flag->bit & FLAG_FORCE_SIGN && arg >= 0)
+		flag->written += ft_putstr("+");
+	else if (flag->bit & FLAG_PAD_SIGN && arg >= 0)
+		flag->written += ft_putstr(" ");
+	else if (arg < 0)
+		flag->written += ft_putstrn(str++, 1);
+
+	// Note: Negative sign has already been printed.
+	// Todo: Find a more elegant solution?
+	flag->written += ft_putstrn(str, len - (arg < 0)); // ? Integer part
+
+	if (arg < 0)
+	{
+		arg = -arg;
+	}
+	flag->p -= len;
+	if (flag->p)
+	{
+		flag->written += ft_putstr(".");
+		while (--flag->p)
+		{
+			arg *= 10;
+			arg += 0.5 * (flag->p == 1);
+			flag->written += ft_putchar('0' + (unsigned char)arg);
+			// printf("{%hhu}\n", (unsigned char)arg);
+			arg -= (long int)arg;
+		}
+	}
+	else if (flag->bit & FLAG_PREFIX)
+		flag->written += ft_putstr(".");
+
+	while (w > 0)
+	{
+		write(1, " ", 1);
+		++flag->written;
+		--w;
+	}
 }
 
 static void	justify_right(long double arg, const char *str, int e, t_data *flag)
