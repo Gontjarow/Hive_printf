@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/03 21:11:05 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 14:38:01 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,10 +188,10 @@ char		parse_format(const char *format, t_data *flag)
 	type = ft_strchr("sdfciXxu%op", *format);
 	flag->type = (type ? *type : 0);
 	if (!flag->type)
-	{
+	// {
 		// ft_putstr("{Unrecognized type}");
-		printf("{Unrecognized type:%s}\n", type);
+		// printf("{Unrecognized type:%s}\n", type);
 		return (0);
-	}
+	// }
 	return (bytes);
 }
