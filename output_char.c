@@ -6,12 +6,13 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/26 11:37:43 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 18:23:12 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 19:04:04 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 ** Precision: Ignored.
+**
 ** Flag: -
 ** Summary: Left-justification.
 */
