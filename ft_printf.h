@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 18:15:21 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 18:20:14 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int				ft_printf(const char *format, ...);
 char			parse_format(const char *format, t_data *flag);
 
 /*
-** Helpers
+** Parser helpers
 */
 
 char			*strany(const char *string, char *specifiers);
@@ -90,10 +90,11 @@ void			output_pointer(void *arg, t_data *flag);
 void			output_double(long double arg, t_data *flag);
 
 /*
-** Output
+** Output helpers
 */
 
 size_t			putstr_case(const char *str, int mode);
 size_t			putstrn_case(const char *str, size_t n, int mode);
+void			width_padder(int w, const char c, t_data *flag);
 
 #endif

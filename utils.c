@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:07:10 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 16:02:14 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 18:19:38 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,14 @@ size_t			putstrn_case(const char *str, size_t n, int mode)
 	else
 		return (putstr_case("(null)", mode));
 	return (i);
+}
+
+void			width_padder(int w, const char c, t_data *flag)
+{
+	while (w > 0)
+	{
+		write(1, &c, 1);
+		++flag->written;
+		--w;
+	}
 }
