@@ -6,29 +6,11 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:07:10 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/03 20:25:01 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 16:02:14 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-unsigned int	unsigned_str_num(char *str)
-{
-	unsigned int	number;
-
-	while (ft_isspace(*str))
-		++str;
-	while (*str == '+')
-		++str;
-	number = 0;
-	while (ft_isdigit(*str))
-	{
-		number *= 10;
-		number += (*str - '0');
-		++str;
-	}
-	return (number);
-}
 
 size_t			putstr_case(const char *str, int mode)
 {
@@ -47,9 +29,7 @@ size_t			putstr_case(const char *str, int mode)
 			while (str[i])
 			{
 				c = (mode < 0) ? ft_tolower(str[i]) : ft_toupper(str[i]);
-				// ft_putstr(FG_YELLOW); // ! TODO: remove
 				write(1, &c, 1);
-				// ft_putstr(TX_NORMAL); // ! TODO: remove
 				++i;
 			}
 		}

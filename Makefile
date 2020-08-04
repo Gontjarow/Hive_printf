@@ -1,7 +1,6 @@
 NAME = libftprintf.a
 
 SOURCES = ft_printf.c \
-	strany.c          \
 	parse_format.c    \
 	output_string.c   \
 	output_pointer.c  \
@@ -11,7 +10,7 @@ SOURCES = ft_printf.c \
 	output_octal.c    \
 	output_int.c      \
 	output_char.c     \
-	ft_abs.c          \
+	strany.c          \
 	utils.c
 
 OBJECTS = $(subst .c,.o,$(SOURCES))

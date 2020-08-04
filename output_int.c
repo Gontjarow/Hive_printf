@@ -162,12 +162,6 @@ void	output_int(long long arg, t_data *flag)
 	// printf("\n{output_int: '%lld', w%d p%d}\n", arg, flag->width, flag->precision);
 	char *str;
 
-	if (flag->type == 'c')
-	{
-		output_char(arg, flag);
-		return ;
-	}
-
 	str = ft_itoa(arg);
 
 	if (flag->bit & FLAG_JUSTIFY_LEFT)
