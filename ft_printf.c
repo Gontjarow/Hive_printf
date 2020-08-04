@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 17:29:30 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 18:15:14 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int			ft_printf(const char *format, ...)
 		if (format[0] == '%' && format[1] != '\0')
 		{
 			flag.bit = 0;
-			flag.padder = ' ';
 			flag.width = 0;
 			flag.precision = -1;
 			flag.specifier = 0;

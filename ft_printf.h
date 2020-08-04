@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 16:13:26 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 18:15:21 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct	s_data
 	int		width;
 	int		precision;
 	int		specifier;
-	char	padder;
 	char	type;
 	size_t	written;
 	size_t	p;
