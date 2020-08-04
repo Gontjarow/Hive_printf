@@ -2198,13 +2198,19 @@ int			main(int argc, char **argv)
 	printf("\nFloating-point format\n");
 	printf("\nBasic (no flags)\n");
 
-	// a =    printf("real: |{%f}|\n", 1.42);
-	// b = ft_printf("mine: |{%f}|\n", 1.42);
-	// assert(a == b);
-	// a =    printf("real: |{%f}{%lf}{%Lf}|\n", 1.42, 1.42, 1.42l);
-	// b = ft_printf("mine: |{%f}{%lf}{%Lf}|\n", 1.42, 1.42, 1.42l);
-	// assert(a == b);
-	// return 0;
+	a =    printf("real: |{%f}|\n", 0.42); // |{0.420000}|
+	b = ft_printf("mine: |{%f}|\n", 0.42); // |{0.419999}| //! without rounding
+	assert(a == b);
+	a =    printf("real: |{%f}|\n", 12.42); // |{12.420000}|
+	b = ft_printf("mine: |{%f}|\n", 12.42); // |{12.419999}| //! without rounding
+	assert(a == b);
+	a =    printf("real: |{%f}|\n", 1.42); // |{1.420000}|
+	b = ft_printf("mine: |{%f}|\n", 1.42); // |{1.41999:}| //! with rounding
+	assert(a == b);
+	a =    printf("real: |{%f}{%lf}{%Lf}|\n", 1.42, 1.42, 1.42l); // !
+	b = ft_printf("mine: |{%f}{%lf}{%Lf}|\n", 1.42, 1.42, 1.42l); // !
+	assert(a == b);
+	return 0;
 
 	a =    printf("real: |%f|\n", 0.0);
 	b = ft_printf("mine: |%f|\n", 0.0);

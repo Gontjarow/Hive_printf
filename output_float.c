@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 18:52:28 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 20:05:55 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 21:15:20 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ static void	write_sign(const long double *arg, const char **str, t_data *flag)
 
 static void	justify_left(long double arg, const char *str, int e, t_data *flag)
 {
-	int w;
-	size_t len;
+	int		w;
+	size_t	len;
 
 	len = ft_strlen(str);
 	init(&len, &w, &e, flag);
 	w -= (arg >= 0 && flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN));
 	write_sign(&arg, &str, flag);
-	flag->written += ft_putstrn(str, len - (arg < 0)); // ? Integer part
+	flag->written += ft_putstrn(str, len - (arg < 0));
 	arg = (arg < 0) ? -arg : arg;
 	flag->p -= len;
 	if (flag->p)
@@ -124,9 +124,9 @@ static void	justify_left(long double arg, const char *str, int e, t_data *flag)
 
 static void	justify_right(long double arg, const char *str, int e, t_data *flag)
 {
-	int w;
-	int z;
-	size_t len;
+	int		w;
+	int		z;
+	size_t	len;
 
 	len = ft_strlen(str);
 	init(&len, &w, &e, flag);
@@ -135,22 +135,21 @@ static void	justify_right(long double arg, const char *str, int e, t_data *flag)
 	width_padder(w, ' ', flag);
 	write_sign(&arg, &str, flag);
 	width_padder(z, '0', flag);
-	flag->written += ft_putstrn(str, len - (arg < 0)); // ? Integer part
+	flag->written += ft_putstrn(str, len - (arg < 0));
 	arg = (arg < 0) ? -arg : arg;
 	flag->p -= len;
+	if (flag->p || flag->bit & FLAG_PREFIX)
+		flag->written += ft_putstr(".");
 	if (flag->p)
 	{
-		flag->written += ft_putstr(".");
 		while (--flag->p)
 		{
-			arg *= 10;
+			arg *= 10; // ! ROUNDING ERRORS AAAAAAA
 			arg += 0.5 * (flag->p == 1);
 			flag->written += ft_putchar('0' + (unsigned char)arg);
 			arg -= (long int)arg;
 		}
 	}
-	else if (flag->bit & FLAG_PREFIX)
-		flag->written += ft_putstr(".");
 }
 
 static char				*check_invalid(long double floating)
