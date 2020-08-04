@@ -1,4 +1,98 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   output_float.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/04 18:52:28 by ngontjar          #+#    #+#             */
+/*   Updated: 2020/08/04 20:05:55 by ngontjar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/*
+** Precision: The number of digits to appear after the decimal-point.
+** Note: The default precision is 6. If precision is 0, no digits
+**       nor the decimal-point will be printed.
+**
+** Flag: #
+** Summary: The decimal-point is always printed, even if no digits follow it.
+**
+** Flag: -
+** Summary: Left-justification.
+**
+** Flag: +
+** Summary: The sign is always printed.
+**
+** Flag: (space)
+** Summary: If the first wide character of a signed conversion is not a sign,
+**          or if a signed conversion results in no wide characters,
+**          a space is prefixed to the result.
+** Note: If the space and + flags both appear, the space flag is ignored.
+**
+** Flag: 0
+** Summary: Leading zeros (following any indication of sign or base) are used
+**          to pad to the field width rather than performing space padding,
+**          except when converting an infinity or NaN.
+** Note: If the 0 and - flags both appear, the 0 flag is ignored.
+*/
+
 #include "ft_printf.h"
+
+static void	init(size_t *len, int *w, int *e, t_data *flag)
+{
+	if (!(*e) && flag->precision == -1)
+	{
+		flag->p = *len + 1 + 6;
+	}
+	else if (!(*e) && flag->precision != 0)
+	{
+		flag->p = *len + 1 + flag->precision;
+	}
+	else
+	{
+		flag->p = *len + !!(flag->bit & FLAG_PREFIX);
+	}
+	if (flag->width > (int)flag->p)
+	{
+		*w = flag->width - (int)flag->p;
+	}
+	else
+	{
+		*w = 0;
+	}
+}
+
+static void	init_zeros(int *z, int *w, int *e, t_data *flag)
+{
+	if (!(*e) && flag->precision > (int)flag->p)
+	{
+		*z = flag->precision - (int)flag->p;
+	}
+	else
+	{
+		*z = 0;
+	}
+	if (*z > 0)
+	{
+		*w -= *z;
+	}
+	if (!(*e) && (flag->bit & FLAG_LEADING_ZERO) && (*w > 0))
+	{
+		*z += *w;
+		*w = 0;
+	}
+}
+
+static void	write_sign(const long double *arg, const char **str, t_data *flag)
+{
+	if (flag->bit & FLAG_FORCE_SIGN && *arg >= 0)
+		flag->written += ft_putstr("+");
+	else if (flag->bit & FLAG_PAD_SIGN && *arg >= 0)
+		flag->written += ft_putstr(" ");
+	else if (*arg < 0)
+		flag->written += ft_putstrn((*str)++, 1);
+}
 
 static void	justify_left(long double arg, const char *str, int e, t_data *flag)
 {
@@ -6,52 +100,11 @@ static void	justify_left(long double arg, const char *str, int e, t_data *flag)
 	size_t len;
 
 	len = ft_strlen(str);
-	// printf("len %ld\n", len);
-
-	if (!e && flag->precision == -1)
-	{
-		flag->p = len + 1 + 6;
-		// printf("{if 1}\n");
-	}
-	else if (!e && flag->precision != 0)
-	{
-		flag->p = len + 1 + flag->precision;
-		// printf("{if 2}\n");
-	}
-	else
-	{
-		flag->p = len + !!(flag->bit & FLAG_PREFIX);
-		// printf("{if 3 (%d + %d)}\n", len, !!(flag->bit & FLAG_PREFIX));
-	}
-	// printf("{1 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
-
-	if (flag->width > (int)flag->p)
-		w = flag->width - (int)flag->p;
-	else
-		w = 0;
-	// printf("{2 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
-
-	if (arg >= 0 && flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN))
-	{
-		--w;
-	}
-	// printf("{3 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
-
-	if (flag->bit & FLAG_FORCE_SIGN && arg >= 0)
-		flag->written += ft_putstr("+");
-	else if (flag->bit & FLAG_PAD_SIGN && arg >= 0)
-		flag->written += ft_putstr(" ");
-	else if (arg < 0)
-		flag->written += ft_putstrn(str++, 1);
-
-	// Note: Negative sign has already been printed.
-	// Todo: Find a more elegant solution?
+	init(&len, &w, &e, flag);
+	w -= (arg >= 0 && flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN));
+	write_sign(&arg, &str, flag);
 	flag->written += ft_putstrn(str, len - (arg < 0)); // ? Integer part
-
-	if (arg < 0)
-	{
-		arg = -arg;
-	}
+	arg = (arg < 0) ? -arg : arg;
 	flag->p -= len;
 	if (flag->p)
 	{
@@ -61,19 +114,12 @@ static void	justify_left(long double arg, const char *str, int e, t_data *flag)
 			arg *= 10;
 			arg += 0.5 * (flag->p == 1);
 			flag->written += ft_putchar('0' + (unsigned char)arg);
-			// printf("{%hhu}\n", (unsigned char)arg);
 			arg -= (long int)arg;
 		}
 	}
 	else if (flag->bit & FLAG_PREFIX)
 		flag->written += ft_putstr(".");
-
-	while (w > 0)
-	{
-		write(1, " ", 1);
-		++flag->written;
-		--w;
-	}
+	width_padder(w, ' ', flag);
 }
 
 static void	justify_right(long double arg, const char *str, int e, t_data *flag)
@@ -83,83 +129,14 @@ static void	justify_right(long double arg, const char *str, int e, t_data *flag)
 	size_t len;
 
 	len = ft_strlen(str);
-	// printf("len %ld\n", len);
-
-	if (!e && flag->precision == -1)
-	{
-		flag->p = len + 1 + 6;
-		// printf("{if 1}\n");
-	}
-	else if (!e && flag->precision != 0)
-	{
-		flag->p = len + 1 + flag->precision;
-		// printf("{if 2}\n");
-	}
-	else
-	{
-		flag->p = len + !!(flag->bit & FLAG_PREFIX);
-		// printf("{if 3 (%d + %d)}\n", len, !!(flag->bit & FLAG_PREFIX));
-	}
-	// printf("{1 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
-
-	if (flag->width > (int)flag->p)
-		w = flag->width - (int)flag->p;
-	else
-		w = 0;
-	// printf("{2 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
-
-	if (arg >= 0 && flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN))
-	{
-		--w;
-	}
-	// printf("{3 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
-
-	if (!e && flag->precision > flag->p)
-		z = flag->precision - flag->p; // ? negative-sign should be ignored for this.
-	else
-		z = 0;
-	// printf("{4 pre%d, w%d, p%d, len%lu, z%d}\n", flag->precision, w, flag->p, len, z);
-	// real: |0.000000|
-	if (z > 0)
-		w -= z;
-
-	if (!e && (flag->bit & FLAG_LEADING_ZERO) && (w > 0))
-	{
-		z += w;
-		w = 0;
-	}
-	// printf("{z %d}\n", z);
-
-	while (w > 0)
-	{
-		write(1, " ", 1);
-		++flag->written;
-		--w;
-	}
-
-	if (flag->bit & FLAG_FORCE_SIGN && arg >= 0)
-		flag->written += ft_putstr("+");
-	else if (flag->bit & FLAG_PAD_SIGN && arg >= 0)
-		flag->written += ft_putstr(" ");
-	else if (arg < 0)
-		flag->written += ft_putstrn(str++, 1);
-
-	while (z > 0)
-	{
-		write(1, "0", 1);
-		// ft_putstr(FG_GREEN "0" TX_NORMAL);
-		++flag->written;
-		--z;
-	}
-
-	// Note: Negative sign has already been printed.
-	// Todo: Find a more elegant solution?
+	init(&len, &w, &e, flag);
+	w -= (arg >= 0 && flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN));
+	init_zeros(&z, &w, &e, flag);
+	width_padder(w, ' ', flag);
+	write_sign(&arg, &str, flag);
+	width_padder(z, '0', flag);
 	flag->written += ft_putstrn(str, len - (arg < 0)); // ? Integer part
-
-	if (arg < 0)
-	{
-		arg = -arg;
-	}
+	arg = (arg < 0) ? -arg : arg;
 	flag->p -= len;
 	if (flag->p)
 	{
@@ -169,7 +146,6 @@ static void	justify_right(long double arg, const char *str, int e, t_data *flag)
 			arg *= 10;
 			arg += 0.5 * (flag->p == 1);
 			flag->written += ft_putchar('0' + (unsigned char)arg);
-			// printf("{%hhu}\n", (unsigned char)arg);
 			arg -= (long int)arg;
 		}
 	}
@@ -189,33 +165,21 @@ static char				*check_invalid(long double floating)
 		return (NULL);
 }
 
-// Undefined flags:
-// Applicable flags: -, +, ' ', #, 0
-// Precision: The amount of digits following the decimal point.
-// If precision == 0, no decimal point is printed.
-// The default precision is 6.
-
 void	output_double(long double arg, t_data *flag)
 {
-	// printf("\n{output_double: '%Lf', w%d p%d}\n", arg, flag->width, flag->precision);
 	char *str;
 	char error;
 
 	error = FALSE;
 	str = check_invalid(arg);
 	if (str == NULL)
-		// str = ft_itoa((long int)arg);
 		str = ft_ftoa(arg, 0);
 	else
 		error = TRUE;
-
-	arg -= (long int)arg; // ? Remove the integer part already...
-	// printf("|%Lf|\n", arg);
-
+	arg -= (long int)arg;
 	if (flag->bit & FLAG_JUSTIFY_LEFT)
 		justify_left(arg, str, error, flag);
 	else
 		justify_right(arg, str, error, flag);
-
 	free(str);
 }
