@@ -239,30 +239,30 @@ int			main(int argc, char **argv)
 	// printf("===========================  \n");
 	// printf("===========================\n\n");
 
-	// printf("Character format\n");
-	// printf("\nbasic: (no flags)\n");
-	// a =    printf("real: |%c|\n", '@');
-	// b = ft_printf("mine: |%c|\n", '@');
-	// assert(a == b);
-	// printf("\n");
+	printf("Character format\n");
+	printf("\nbasic: (no flags)\n");
+	a =    printf("real: |%c|\n", '@');
+	b = ft_printf("mine: |%c|\n", '@');
+	assert(a == b);
+	printf("\n");
 
-	// printf("\nwidth (greater, equal)\n");
-	// a =    printf("real: |%5c|\n", '@');
-	// b = ft_printf("mine: |%5c|\n", '@');
-	// assert(a == b);
-	// a =    printf("real: |%1c|\n", '@');
-	// b = ft_printf("mine: |%1c|\n", '@');
-	// assert(a == b);
-	// printf("\n");
+	printf("\nwidth (greater, equal)\n");
+	a =    printf("real: |%5c|\n", '@');
+	b = ft_printf("mine: |%5c|\n", '@');
+	assert(a == b);
+	a =    printf("real: |%1c|\n", '@');
+	b = ft_printf("mine: |%1c|\n", '@');
+	assert(a == b);
+	printf("\n");
 
-	// printf("\nwidth (flags: -)\n");
-	// a =    printf("real: |%-5c|\n", '@');
-	// b = ft_printf("mine: |%-5c|\n", '@');
-	// assert(a == b);
-	// a =    printf("real: |%-1c|\n", '@');
-	// b = ft_printf("mine: |%-1c|\n", '@');
-	// assert(a == b);
-	// printf("\n");
+	printf("\nwidth (flags: -)\n");
+	a =    printf("real: |%-5c|\n", '@');
+	b = ft_printf("mine: |%-5c|\n", '@');
+	assert(a == b);
+	a =    printf("real: |%-1c|\n", '@');
+	b = ft_printf("mine: |%-1c|\n", '@');
+	assert(a == b);
+	printf("\n");
 
 	// printf("\n===========================\n");
 	// printf("===========================  \n");
