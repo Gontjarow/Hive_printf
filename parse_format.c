@@ -6,14 +6,11 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 14:38:01 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 17:36:00 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-// width, precision, signage, justification, fill
-// https://www.cypress.com/file/54441/download
 
 static char	parse_width(const char **format, t_data *flag)
 {
@@ -28,8 +25,7 @@ static char	parse_width(const char **format, t_data *flag)
 			flag->bit |= FLAG_JUSTIFY_LEFT;
 			flag->width = -flag->width;
 		}
-		++(*format);
-		++bytes;
+		++(*format) && ++bytes;
 	}
 	else
 	{
@@ -37,8 +33,7 @@ static char	parse_width(const char **format, t_data *flag)
 		{
 			flag->width *= 10;
 			flag->width += (**format - '0');
-			++(*format);
-			++bytes;
+			++(*format) && ++bytes;
 		}
 	}
 	return (bytes);
@@ -48,77 +43,55 @@ static char	parse_precision(const char **format, t_data *flag)
 {
 	char bytes;
 
-	bytes = 0;
-	// printf("piss %c\n", **format);
-	if (**format == '.')
+	if (**format != '.')
+		return (0);
+	++(*format) && (bytes = 1);
+	if (**format == '*' && ++(*format) && ++bytes)
 	{
-		++(*format);
-		++bytes;
-		// printf("parse next: %c\n", **format);
-		if (**format == '*')
-		{
-			flag->precision = va_arg(flag->ap, int); // ? negative = none
-			flag->precision = (flag->precision < 0 ? 0 : flag->precision);
-			++(*format);
-			++bytes;
-		}
-		else if (**format != 'f' || **format != 'L')
-		{
-			if (!ft_isdigit(**format))
-				flag->precision = 0;
-			while (ft_isdigit(**format))
-			{
-				if (flag->precision == -1)
-					flag->precision = (**format - '0');
-				else
-				{
-					flag->precision = (flag->precision * 10) + (**format - '0');
-				}
-				++(*format);
-				++bytes;
-			}
-		}
-		if (flag->precision < -1)
-			flag->precision = -flag->precision;
+		flag->precision = va_arg(flag->ap, int);
+		flag->precision = (flag->precision < 0 ? 0 : flag->precision);
 	}
-	// printf("parse precision {%d}\n", flag->precision);
+	else if (**format != 'f' || **format != 'L')
+	{
+		flag->precision = (!ft_isdigit(**format)) ? 0 : flag->precision;
+		while (ft_isdigit(**format))
+		{
+			if (flag->precision == -1)
+				flag->precision = (**format - '0');
+			else
+				flag->precision = (flag->precision * 10) + (**format - '0');
+			++(*format) && ++bytes;
+		}
+	}
+	if (flag->precision < -1)
+		flag->precision = -flag->precision;
 	return (bytes);
 }
 
-static char parse_specifier(const char **format, t_data *flag)
+static char	parse_specifier(const char **format, t_data *flag)
 {
-	char bytes;
+	char			bytes;
+	unsigned long	skip;
 
 	bytes = 0;
 	if (**format == 'h')
 	{
-		++(*format);
-		++bytes;
-		if (**format == 'h')
-		{
-			++(*format);
-			++bytes;
+		++(*format) && ++bytes;
+		if (**format == 'h' && ++(*format) && ++bytes)
 			flag->specifier = SPECIFIER_HH;
-		}
 		else
 			flag->specifier = SPECIFIER_H;
 	}
 	else if (**format == 'l' || **format == 'L')
 	{
-		++(*format);
-		++bytes;
-		if ((*format)[1] == 'l' && **format == 'l') //? Don't accept Ll format
-		{
-			++(*format);
-			++bytes;
+		++(*format) && ++bytes;
+		if ((*format)[1] == 'l' && **format == 'l' && ++(*format) && ++bytes)
 			flag->specifier = SPECIFIER_LL;
-		}
 		else
 			flag->specifier = SPECIFIER_L;
 	}
-	unsigned long skip = strany_skip(*format, "hlL") - (*format);
-	bytes += skip;
-	(*format) += skip;
+	skip = strany_skip(*format, "hlL") - (*format);
+	(bytes += skip) && ((*format) += skip);
 	return (bytes);
 }
 
@@ -133,33 +106,17 @@ static char	parse_flags(const char **format, t_data *flag)
 		|| **format == '#'
 		|| **format == '0')
 	{
-		// printf("read: '%c'\n", **format);
 		if (**format == '-')
-		{
 			flag->bit |= FLAG_JUSTIFY_LEFT;
-			// printf("FLAG_JUSTIFY_LEFT set\n");
-		}
 		if (**format == '+')
-		{
 			flag->bit |= FLAG_FORCE_SIGN;
-			// printf("FLAG_FORCE_SIGN set\n");
-		}
 		if (**format == ' ')
-		{
 			flag->bit |= FLAG_PAD_SIGN;
-			// printf("FLAG_PAD_SIGN set\n");
-		}
 		if (**format == '#')
-		{
 			flag->bit |= FLAG_PREFIX;
-			// printf("FLAG_PREFIX set\n");
-		}
 		if (**format == '0')
-		{
 			flag->bit |= FLAG_LEADING_ZERO;
-			// printf("FLAG_LEADING_ZERO set\n");
-		}
-		++(*format) && ++bytes; // ? Norminette is okay with this. I'm not, but it's better than potentially having to split this function in two.
+		++(*format) && ++bytes;
 	}
 	return (bytes);
 }
@@ -169,29 +126,14 @@ char		parse_format(const char *format, t_data *flag)
 	int		bytes;
 	char	*type;
 
-	bytes = 1; // ? percentage-sign
-	// printf("format first char: %c\n\n", *format);
-
+	bytes = 1;
 	bytes += parse_flags(&format, flag);
-	// printf("\nbytes: %d (flags), next: %c\n", bytes, *format);
-	// printf("Flags set: {%d}\n", flag->bit);
-
 	bytes += parse_width(&format, flag);
-	// printf("\nbytes: %d (width), next: %c\n", bytes, *format);
-
 	bytes += parse_precision(&format, flag);
-	// printf("\nbytes: %d (precision), next: %c\n", bytes, *format);
-
 	bytes += parse_specifier(&format, flag);
-	// printf("\nbytes: %d (specifier), next: %c\n\n", bytes, *format);
-
 	type = ft_strchr("sdfciXxu%op", *format);
 	flag->type = (type ? *type : 0);
 	if (!flag->type)
-	// {
-		// ft_putstr("{Unrecognized type}");
-		// printf("{Unrecognized type:%s}\n", type);
 		return (0);
-	// }
 	return (bytes);
 }

@@ -24,6 +24,12 @@ int			main(int argc, char **argv)
 	// a =    printf("real: |%.%|\n");
 	// b = ft_printf("mine: |%.%|\n");
 	// assert(a == b);
+	// a =    printf("real: |%hx|\n", 4294967296);
+	// b = ft_printf("mine: |%hx|\n", 4294967296);
+	// assert(a == b);
+	// a =    printf("real: |%hhX|\n", 4294967296);
+	// b = ft_printf("mine: |%hhX|\n", 4294967296);
+	// assert(a == b);
 
 	// printf("\n===========================\n");
 
@@ -3123,8 +3129,9 @@ int			main(int argc, char **argv)
 	// ft_printf("single percent: |%|\n");                  // ? print nothing
 	// ft_printf("flags for percent: |%-+ 05.0%|\n");       // ? print literal '%'
 	// ft_printf("percent at end of string: %");            // ? print literal '%'
-	// ft_printf("undef specifier: |%hhhd|\n", -42);        // ? undef
+	// ft_printf("\nundef specifier: |%hhhd|\n", -42);      // ? undef
 	// ft_printf("undef specifier: |%lhd|\n", -42);         // ? undef
 	// ft_printf("undef specifier: |%hld|\n", -42);         // ? undef
-	// system("leaks FT_PRINTF");
+	printf("\n\n\n");
+	system("leaks FT_PRINTF");
 }
