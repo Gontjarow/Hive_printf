@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:54:29 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/03 21:11:48 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 14:50:07 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int			ft_printf(const char *format, ...)
 	while (*format)
 	{
 		// printf("\treading str: %c\n", *format);
-		if (*format == '%')
+		if (format[0] == '%' && format[1] != '\0')
 		{
 			// printf("\tTry parsing...\n");
 			bytes = 1;
