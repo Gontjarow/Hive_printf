@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 14:51:20 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/03 20:42:35 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 15:20:51 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 	prefix = !!(flag->bit & FLAG_PREFIX);
 	len = (flag->precision == 0 && arg == 0) ? 0 : ft_strlen(str);
 	// len += prefix;
-
+	if (prefix && arg == 0)
+		len = 0;
 	// printf("len = %ld\n", len);
 
 	if (flag->precision == -1 || flag->precision < len)
@@ -92,7 +93,9 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 	prefix = !!(flag->bit & FLAG_PREFIX);
 	len = (flag->precision == 0 && arg == 0) ? 0 : ft_strlen(str);
 	// len += prefix;
-
+	// printf("{prefix %d len %lu}\n", prefix, len);
+	if (prefix && arg == 0)
+		len = 0;
 	// printf("len = %ld\n", len);
 
 	if (flag->precision == -1 || flag->precision < len)
