@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 17:36:00 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/04 20:43:01 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static char	parse_specifier(const char **format, t_data *flag)
 	else if (**format == 'l' || **format == 'L')
 	{
 		++(*format) && ++bytes;
-		if ((*format)[1] == 'l' && **format == 'l' && ++(*format) && ++bytes)
+		if (**format == 'l' && ++(*format) && ++bytes)
 			flag->specifier = SPECIFIER_LL;
 		else
 			flag->specifier = SPECIFIER_L;
