@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output_float.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
+/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 18:52:28 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 21:15:20 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/05 22:50:40 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,30 @@
 **          except when converting an infinity or NaN.
 ** Note: If the 0 and - flags both appear, the 0 flag is ignored.
 */
+
+static long double	g_round[] =
+{
+	0.5L,
+	0.05000000000000000278L,
+	0.005000000000000000104L,
+	0.0005000000000000000104L,
+	5.00000000000000024e-05L,
+	5.000000000000000409e-06L,
+	5.000000000000000833e-07L,
+	5.000000000000000435e-08L,
+	5.000000000000000105e-09L,
+	5.000000000000000311e-10L,
+	5.000000000000000182e-11L,
+	5.000000000000000505e-12L,
+	5.000000000000000909e-13L,
+	5.000000000000000152e-14L,
+	5.000000000000000783e-15L,
+	5.000000000000000389e-16L,
+	5.000000000000000512e-17L,
+	5.000000000000000358e-18L,
+	5.000000000000000358e-19L,
+	5.000000000000000478e-20L
+};
 
 #include "ft_printf.h"
 
@@ -142,11 +166,13 @@ static void	justify_right(long double arg, const char *str, int e, t_data *flag)
 		flag->written += ft_putstr(".");
 	if (flag->p)
 	{
+		// arg += (flag->p <= 16) * g_round[flag->p];
+		// printf("{%Lf, %d}\n", (flag->p <= 16) * g_round[flag->p], flag->p <= 16);
 		while (--flag->p)
 		{
 			arg *= 10; // ! ROUNDING ERRORS AAAAAAA
 			arg += 0.5 * (flag->p == 1);
-			flag->written += ft_putchar('0' + (unsigned char)arg);
+			flag->written += ft_putchar('0' + (long int)arg);
 			arg -= (long int)arg;
 		}
 	}

@@ -2198,8 +2198,12 @@ int			main(int argc, char **argv)
 	printf("\nFloating-point format\n");
 	printf("\nBasic (no flags)\n");
 
+	// 0.42 = 0.419999999999999984456877655247808434069156646728515625
 	a =    printf("real: |{%f}|\n", 0.42); // |{0.420000}|
 	b = ft_printf("mine: |{%f}|\n", 0.42); // |{0.419999}| //! without rounding
+	assert(a == b);
+	a =    printf("real: |{%.16f}|\n", 0.42); // |{0.420000}|
+	b = ft_printf("mine: |{%.16f}|\n", 0.42); // |{0.419999}| //! without rounding
 	assert(a == b);
 	a =    printf("real: |{%f}|\n", 12.42); // |{12.420000}|
 	b = ft_printf("mine: |{%f}|\n", 12.42); // |{12.419999}| //! without rounding
