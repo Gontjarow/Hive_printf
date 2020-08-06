@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 19:06:59 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/06 19:07:00 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/06 20:49:49 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	justify_left(char *arg, t_data *flag)
 	size_t	len;
 
 	len = ft_strlen(arg);
-	init(len, w, flag);
+	init(&len, &w, flag);
 	flag->written += ft_putstrn(arg, flag->p);
 	width_padder(w, ' ', flag);
 }
@@ -53,7 +53,7 @@ static void	justify_right(char *arg, t_data *flag)
 	size_t	len;
 
 	len = ft_strlen(arg);
-	init(len, w, flag);
+	init(&len, &w, flag);
 	width_padder(w, ' ', flag);
 	flag->written += ft_putstrn(arg, flag->p);
 }
