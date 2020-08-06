@@ -6,7 +6,7 @@
 /*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 14:51:48 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/06 20:31:34 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/06 20:54:33 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,25 @@
 static void	init(size_t *len, int *w, t_data *flag)
 {
 	if (flag->precision == -1 || flag->precision < (int)(*len))
+	{
 		flag->p = *len;
+	}
 	else
+	{
 		flag->p = flag->precision;
+	}
 	if (flag->p > *len)
+	{
 		flag->p = *len;
-	if (flag->width > flag->p)
+	}
+	if ((size_t)flag->width > flag->p)
+	{
 		*w = flag->width - flag->p;
+	}
 	else
+	{
 		*w = 0;
+	}
 }
 
 static void	init_zeros(size_t *len, int *z, int *w, t_data *flag)
@@ -54,7 +64,7 @@ static void	justify_right(long long arg, const char *str, t_data *flag)
 {
 	int		w;
 	int		z;
-	int		len;
+	size_t	len;
 
 	len = (flag->precision == 0 && arg == 0) ? 0 : (int)ft_strlen(str);
 	init(&len, &w, flag);
