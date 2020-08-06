@@ -1,9 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   output_uint.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/06 19:21:53 by ngontjar          #+#    #+#             */
+/*   Updated: 2020/08/06 19:21:54 by ngontjar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-static void justify_left(long long arg, const char *str, t_data *flag)
+static void	init(size_t *len, int *prefix, int *w, t_data *flag)
 {
-	// printf("\n");
-	// printf("{bit=%d}\n", flag->bit);
+	if (flag->precision == -1 || flag->precision < (int)(*len))
+	{
+		flag->p = *len;
+	}
+	else
+	{
+		flag->p = flag->precision;
+	}
+	if (flag->p > *len)
+	{
+		flag->p = *len;
+	}
+	if (flag->width > flag->p)
+	{
+		*w = flag->width - flag->p - *prefix;
+	}
+	else
+	{
+		*w = 0;
+	}
+}
+
+static void	init_zeros(size_t *len, int *z, int *w, t_data *flag)
+{
+	if (flag->precision > (int)(*len))
+	{
+		*z = flag->precision - *len;
+	}
+	else
+	{
+		*z = 0;
+	}
+	if (*z > 0)
+	{
+		*w -= *z;
+	}
+}
+
+static void	justify_left(long long arg, const char *str, t_data *flag)
+{
 	int		w;
 	int		z;
 	size_t	len;
@@ -11,67 +61,17 @@ static void justify_left(long long arg, const char *str, t_data *flag)
 
 	prefix = 2 * (flag->bit & FLAG_PREFIX && arg != 0);
 	len = (flag->precision == 0 && arg == 0) ? 0 : ft_strlen(str);
-	// len += prefix;
-
-	// printf("len = %ld\n", len);
-
-	if (flag->precision == -1 || flag->precision < len)
-		flag->p = len;
-	else
-		flag->p = flag->precision;
-	// printf("flag->p = %ld\n", flag->p);
-
-	if (flag->p > len)
-		flag->p = len;
-
-	// flag->p is always the length of the actual content before any padding.
-	// printf("flag->p = %ld, len = %d\n", flag->p, len);
-
-	if (flag->width > flag->p)
-		w = flag->width - flag->p - prefix;
-	else
-		w = 0;
-	// printf("{init w = %d}\n", w);
-
-	if (flag->precision > len)
-		z = flag->precision - len;
-	else
-		z = 0;
-	// printf("{init z = %d}\n", z);
-
-
-	// printf("{p %-3lu|w %-3d|z %-3d|len %-3d}\n", flag->p, w, z, len);
-	if (z > 0)
-		w -= z;
-	// printf("{p %-3lu|w %-3d|z %-3d|len %-3d}\n", flag->p, w, z, len);
-
-	// printf("{leading zero %-3d|p%-3lu|w%-3d|len%-3d|z%-3d}\n", !!(flag->bit & FLAG_LEADING_ZERO), flag->p, w, len, z);
-	// if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0) && (w >= len + z))
-
+	init(&len, &prefix, &w, flag);
+	init_zeros(&len, &z, &w, flag);
 	if (prefix)
 		flag->written += putstr_case("0X", -1 * (flag->type == 'x'));
-	while (z > 0)
-	{
-		write(1, "0", 1);
-		// ft_putstr(FG_GREEN "0" TX_NORMAL);
-		++flag->written;
-		--z;
-	}
-
+	width_padder(z, '0', flag);
 	flag->written += putstrn_case(str, flag->p, -1 * (flag->type == 'x'));
-
-	while (w > 0)
-	{
-		write(1, " ", 1);
-		++flag->written;
-		--w;
-	}
+	width_padder(w, ' ', flag);
 }
 
-static void justify_right(long long arg, const char *str, t_data *flag)
+static void	justify_right(long long arg, const char *str, t_data *flag)
 {
-	// printf("\n");
-	// printf("{bit=%d}\n", flag->bit);
 	int		w;
 	int		z;
 	int		len;
@@ -79,83 +79,31 @@ static void justify_right(long long arg, const char *str, t_data *flag)
 
 	prefix = 2 * (flag->bit & FLAG_PREFIX && arg != 0);
 	len = (flag->precision == 0 && arg == 0) ? 0 : (int)ft_strlen(str);
-	// len += prefix;
-
-	// printf("len = %ld\n", len);
-
-	if (flag->precision == -1 || flag->precision < len)
-		flag->p = len;
-	else
-		flag->p = flag->precision;
-	// printf("flag->precision = %d, flag->p = %ld\n", flag->precision, flag->p);
-
-	if (flag->p > len)
-		flag->p = len;
-
-	// flag->p is always the length of the actual content before any padding.
-	// printf("flag->p = %ld, len = %d\n", flag->p, len);
-
-	if (flag->width > flag->p)
-		w = flag->width - flag->p - prefix;
-	else
-		w = 0;
-	// printf("{init w = %d}\n", w);
-
-	if (flag->precision > len)
-		z = flag->precision - len;
-	else
-		z = 0;
-	// printf("{init z = %d}\n", z);
-
-
-	// printf("{p %-3lu|w %-3d|z %-3d|len %-3d}\n", flag->p, w, z, len);
-	if (z > 0)
-		w -= z;
-	// printf("{p %-3lu|w %-3d|z %-3d|len %-3d}\n", flag->p, w, z, len);
-
-
-	// printf("{leading zero %-3d|p%-3lu|w%-3d|len%-3d|z%-3d}\n", !!(flag->bit & FLAG_LEADING_ZERO), flag->p, w, len, z);
-	// if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0) && (w >= len + z))
-
-	// printf("{bit %d}\n", flag->bit);
+	init(&len, &prefix, &w, flag);
+	init_zeros(&len, &z, &w, flag);
 	if (flag->bit & FLAG_LEADING_ZERO && ~flag->precision)
 		flag->bit &= ~FLAG_LEADING_ZERO;
-	// printf("{bit %d}\n", flag->bit);
-
-	// {leading zero: 1, p8 w2 len8, z0}
 	if ((flag->bit & FLAG_LEADING_ZERO) && (w > 0))
 	{
 		z += w;
 		w = 0;
 	}
-
-	while (w > 0)
-	{
-		write(1, " ", 1);
-		++flag->written;
-		--w;
-	}
-
+	width_padder(w, ' ', flag);
 	if (prefix)
 		flag->written += putstr_case("0X", -1 * (flag->type == 'x'));
-	while (z > 0)
-	{
-		write(1, "0", 1);
-		// ft_putstr(FG_GREEN "0" TX_NORMAL);
-		++flag->written;
-		--z;
-	}
-
+	width_padder(z, '0', flag);
 	flag->written += putstrn_case(str, flag->p, -1 * (flag->type == 'x'));
 }
 
-// Undefined flags: +, ' '
-// Applicable flags: -, 0, #
-// Precision: Minimum amount of digits, leading zeroes if necessary.
-// If value is zero and precision is exactly zero, print nothing.
-void	output_uint(unsigned long long arg, t_data *flag)
+/*
+** Undefined flags: +, ' '
+** Applicable flags: -, 0, #
+** Precision: Minimum amount of digits, leading zeroes if necessary.
+** If value is zero and precision is exactly zero, print nothing.
+*/
+
+void		output_uint(unsigned long long arg, t_data *flag)
 {
-	// printf("\n{output_uint: '%llu', w%d p%d}\n", arg, flag->width, flag->precision);
 	char *str;
 
 	if (flag->type == 'o')
@@ -165,13 +113,10 @@ void	output_uint(unsigned long long arg, t_data *flag)
 	else
 	{
 		str = ft_itoa_base(arg, 16);
-		// printf("{%s}\n", str);
-
 		if (flag->bit & FLAG_JUSTIFY_LEFT)
 			justify_left(arg, str, flag);
 		else
 			justify_right(arg, str, flag);
-
 		free(str);
 	}
 }
