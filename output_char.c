@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
+/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/26 11:37:43 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 19:04:04 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/06 20:29:58 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@
 
 #include "ft_printf.h"
 
-static void justify_left(unsigned char arg, t_data *flag)
+static void	justify_left(unsigned char arg, t_data *flag)
 {
 	write(1, &arg, 1);
 	++flag->written;
 	width_padder(flag->width - 1, ' ', flag);
 }
 
-static void justify_right(unsigned char arg, t_data *flag)
+static void	justify_right(unsigned char arg, t_data *flag)
 {
 	width_padder(flag->width - 1, ' ', flag);
 	write(1, &arg, 1);
 	++flag->written;
 }
 
-void	output_char(unsigned char arg, t_data *flag)
+void		output_char(unsigned char arg, t_data *flag)
 {
 	if (flag->bit & FLAG_JUSTIFY_LEFT)
 		justify_left(arg, flag);
