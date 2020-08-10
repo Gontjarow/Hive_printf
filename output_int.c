@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output_int.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 17:46:21 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/06 17:46:41 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/10 13:36:02 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,6 @@ static void	init_zeros(int *len, int *z, long long *arg, t_data *flag)
 	}
 }
 
-static void	write_sign(const long long *arg, const char **str, t_data *flag)
-{
-	if (flag->bit & FLAG_FORCE_SIGN && *arg >= 0)
-		flag->written += ft_putstr("+");
-	else if (flag->bit & FLAG_PAD_SIGN && *arg >= 0)
-		flag->written += ft_putstr(" ");
-	else if (*arg < 0)
-		flag->written += ft_putstrn((*str)++, 1);
-}
-
 static void	justify_left(long long arg, const char *str, t_data *flag)
 {
 	int		w;
@@ -69,7 +59,12 @@ static void	justify_left(long long arg, const char *str, t_data *flag)
 	w -= (arg >= 0 && flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN));
 	init_zeros(&len, &z, &arg, flag);
 	w = (z > 0) ? w - z : w;
-	write_sign(&arg, &str, flag);
+	if (flag->bit & FLAG_FORCE_SIGN && arg >= 0)
+		flag->written += ft_putstr("+");
+	else if (flag->bit & FLAG_PAD_SIGN && arg >= 0)
+		flag->written += ft_putstr(" ");
+	else if (arg < 0)
+		flag->written += ft_putstrn(str++, 1);
 	width_padder(z, '0', flag);
 	flag->written += ft_putstrn(str, flag->p - (arg < 0));
 	width_padder(w, ' ', flag);
@@ -94,7 +89,12 @@ static void	justify_right(long long arg, const char *str, t_data *flag)
 		w = 0;
 	}
 	width_padder(w, ' ', flag);
-	write_sign(&arg, &str, flag);
+	if (flag->bit & FLAG_FORCE_SIGN && arg >= 0)
+		flag->written += ft_putstr("+");
+	else if (flag->bit & FLAG_PAD_SIGN && arg >= 0)
+		flag->written += ft_putstr(" ");
+	else if (arg < 0)
+		flag->written += ft_putstrn(str++, 1);
 	width_padder(z, '0', flag);
 	flag->written += ft_putstrn(str, flag->p - (arg < 0));
 }
