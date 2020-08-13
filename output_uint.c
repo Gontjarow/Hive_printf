@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output_uint.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 19:21:53 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/06 20:52:50 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/13 19:14:17 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void		output_uint(unsigned long long arg, t_data *flag)
 		output_unsigned(arg, flag);
 	else
 	{
-		str = ft_itoa_base(arg, 16);
+		str = ft_utoa_base(arg, 16);
 		if (flag->bit & FLAG_JUSTIFY_LEFT)
 			justify_left(arg, str, flag);
 		else
