@@ -6,13 +6,12 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/26 07:48:21 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/13 21:24:31 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/13 21:37:40 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-// static void	init(size_t *len, int *w, t_data *flag)
 static void	init(size_t *len, int *prefix, int *w, t_data *flag)
 {
 	if (flag->precision == -1)
@@ -27,10 +26,6 @@ static void	init(size_t *len, int *prefix, int *w, t_data *flag)
 	{
 		flag->p = *len;
 	}
-	// if ((size_t)flag->width > flag->p)
-	// {
-	// 	*w = (size_t)flag->width - flag->p;
-	// }
 	if ((size_t)flag->width - *prefix > flag->p)
 	{
 		*w = (size_t)flag->width - *prefix - flag->p;

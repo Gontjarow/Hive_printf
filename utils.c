@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:07:10 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/13 18:12:10 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/13 21:37:53 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			width_padder(int w, const char c, t_data *flag)
 	}
 }
 
-char	*ft_utoa(unsigned long long number)
+char			*ft_utoa(unsigned long long number)
 {
 	char				string[20 + 1];
 	unsigned int		length;
@@ -87,7 +87,7 @@ char	*ft_utoa(unsigned long long number)
 	return (ft_strdup(string));
 }
 
-char	*ft_utoa_base(unsigned long long number, int base)
+char			*ft_utoa_base(unsigned long long number, int base)
 {
 	char				string[64 + 1];
 	unsigned int		mod;
