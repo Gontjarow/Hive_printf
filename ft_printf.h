@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:57:36 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 18:20:14 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/13 18:12:33 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,7 @@ void			output_double(long double arg, t_data *flag);
 size_t			putstr_case(const char *str, int mode);
 size_t			putstrn_case(const char *str, size_t n, int mode);
 void			width_padder(int w, const char c, t_data *flag);
+char			*ft_utoa(unsigned long long number);
+char			*ft_utoa_base(unsigned long long number, int base);
 
 #endif

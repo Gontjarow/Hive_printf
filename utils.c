@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:07:10 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/10 13:33:32 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/13 18:12:10 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,47 @@ void			width_padder(int w, const char c, t_data *flag)
 		++flag->written;
 		--w;
 	}
+}
+
+char	*ft_utoa(unsigned long long number)
+{
+	char				string[20 + 1];
+	unsigned int		length;
+
+	if (number == 0)
+		return (ft_strdup("0"));
+	ft_memset(string, 0, 21);
+	length = ft_numlen_ull(number);
+	while (length--)
+	{
+		if (number)
+			string[length] = '0' + (number % 10);
+		number /= 10;
+	}
+	return (ft_strdup(string));
+}
+
+char	*ft_utoa_base(unsigned long long number, int base)
+{
+	char				string[64 + 1];
+	unsigned int		mod;
+	unsigned int		i;
+
+	if (base < 2 || base > 36)
+		return (NULL);
+	if (number == 0)
+		return (ft_strdup("0"));
+	if (base == 10)
+		return (ft_utoa(number));
+	ft_memset(string, 0, 65);
+	i = 0;
+	while (number)
+	{
+		mod = number % base;
+		string[i++] = (mod > 9 ? 'A' + (mod - 10) : '0' + mod);
+		number /= base;
+	}
+	string[i] = '\0';
+	ft_strrev(string);
+	return (ft_strdup(string));
 }
