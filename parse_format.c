@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/13 16:29:28 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/13 16:31:30 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static char	parse_precision(const char **format, t_data *flag)
 static char	parse_specifier(const char **format, t_data *flag)
 {
 	char			bytes;
-	unsigned long	skip;
+	size_t			skip;
 
 	bytes = 0;
 	if (**format == 'h')
@@ -90,7 +90,8 @@ static char	parse_specifier(const char **format, t_data *flag)
 		else
 			flag->specifier = SPECIFIER_L;
 	}
-	skip = strany_skip(*format, "hlL") - (*format);
+	if ((skip = (size_t)strany_skip(*format, "hlL")))
+		skip -= (size_t)(*format);
 	(bytes += skip) && ((*format) += skip);
 	return (bytes);
 }
