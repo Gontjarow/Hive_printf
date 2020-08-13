@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 21:42:32 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/04 20:43:01 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/13 16:29:28 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	parse_precision(const char **format, t_data *flag)
 	if (**format == '*' && ++(*format) && ++bytes)
 	{
 		flag->precision = va_arg(flag->ap, int);
-		flag->precision = (flag->precision < 0 ? 0 : flag->precision);
+		flag->precision = (flag->precision < 0 ? -1 : flag->precision);
 	}
 	else if (**format != 'f' || **format != 'L')
 	{
