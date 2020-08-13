@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   output_pointer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngontjar <ngontjar@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/26 07:48:21 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/06 18:51:35 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/13 21:24:31 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	init(size_t *len, int *w, t_data *flag)
+// static void	init(size_t *len, int *w, t_data *flag)
+static void	init(size_t *len, int *prefix, int *w, t_data *flag)
 {
 	if (flag->precision == -1)
 	{
@@ -26,9 +27,17 @@ static void	init(size_t *len, int *w, t_data *flag)
 	{
 		flag->p = *len;
 	}
-	if ((size_t)flag->width > flag->p)
+	// if ((size_t)flag->width > flag->p)
+	// {
+	// 	*w = (size_t)flag->width - flag->p;
+	// }
+	if ((size_t)flag->width - *prefix > flag->p)
 	{
-		*w = (size_t)flag->width - flag->p;
+		*w = (size_t)flag->width - *prefix - flag->p;
+		if (*len > flag->p)
+		{
+			*w -= (*len - flag->p);
+		}
 	}
 	else
 	{
@@ -61,7 +70,7 @@ static void	justify_left(const char *str, t_data *flag)
 
 	prefix = 2;
 	len = ft_strlen(str);
-	init(&len, &w, flag);
+	init(&len, &prefix, &w, flag);
 	init_zeros(&len, &z, &w, flag);
 	flag->written += ft_putstrn("0x", prefix);
 	width_padder(z, '0', flag);
@@ -78,7 +87,7 @@ static void	justify_right(const char *str, t_data *flag)
 
 	prefix = 2;
 	len = ft_strlen(str);
-	init(&len, &w, flag);
+	init(&len, &prefix, &w, flag);
 	init_zeros(&len, &z, &w, flag);
 	width_padder(w, ' ', flag);
 	flag->written += ft_putstrn("0x", prefix);
