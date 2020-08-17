@@ -6,7 +6,7 @@
 /*   By: ngontjar <niko.gontjarow@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 18:52:28 by ngontjar          #+#    #+#             */
-/*   Updated: 2020/08/10 16:44:26 by ngontjar         ###   ########.fr       */
+/*   Updated: 2020/08/17 13:33:54 by ngontjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 
 #include "ft_printf.h"
 
-static void	init(size_t *len, int *w, int *e, t_data *flag)
+static void	init(size_t *len, int *w, t_data *flag)
 {
 	flag->p = *len + (flag->precision == 0 && flag->bit & FLAG_PREFIX);
 	if (flag->width > (int)flag->p)
@@ -73,13 +73,13 @@ static void	init_zeros(int *z, int *w, int *e, t_data *flag)
 	}
 }
 
-static void	justify_left(long double arg, const char *str, int e, t_data *flag)
+static void	justify_left(long double arg, const char *str, t_data *flag)
 {
 	int		w;
 	size_t	len;
 
 	len = ft_strlen(str);
-	init(&len, &w, &e, flag);
+	init(&len, &w, flag);
 	w -= (arg >= 0 && flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN));
 	if (flag->bit & FLAG_FORCE_SIGN && arg >= 0)
 		flag->written += ft_putstr("+");
@@ -100,7 +100,7 @@ static void	justify_right(long double arg, const char *str, int e, t_data *flag)
 	size_t	len;
 
 	len = ft_strlen(str);
-	init(&len, &w, &e, flag);
+	init(&len, &w, flag);
 	w -= (arg >= 0 && flag->bit & (FLAG_FORCE_SIGN | FLAG_PAD_SIGN));
 	init_zeros(&z, &w, &e, flag);
 	width_padder(w, ' ', flag);
@@ -134,7 +134,7 @@ void		output_double(long double arg, t_data *flag)
 	else
 		error = TRUE;
 	if (flag->bit & FLAG_JUSTIFY_LEFT)
-		justify_left(arg, str, error, flag);
+		justify_left(arg, str, flag);
 	else
 		justify_right(arg, str, error, flag);
 	free(str);
