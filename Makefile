@@ -17,7 +17,7 @@ OBJECTS = $(subst .c,.o,$(SOURCES))
 
 LIBFT = libft/libft.a
 
-FLAGS = -g -Wall -Wextra #-Werror
+FLAGS = -Wall -Wextra #-Werror
 LINKS = -I libft -L libft -l ft
 
 MSG = \033[38;5;214m
@@ -28,8 +28,8 @@ END = \033[0m
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
+	@cp $(LIBFT) $(NAME)
 	@ar -rc $(NAME) $(OBJECTS)
-	@libtool $(NAME) $(LIBFT) -o $(NAME)
 	@echo "$(MSG)$(NAME) done!$(END)"
 
 $(OBJECTS): $(LIBFT) $(SOURCES)
